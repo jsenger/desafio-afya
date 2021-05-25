@@ -1,11 +1,11 @@
 import GlobalStyles from "./assets/GlobalStyles";
-import Home from "./views/pages/Home"
+import Routes from "./routes";
 
 const App: React.FC = () => {
   return (
     <>
       <GlobalStyles />
-      <Home />
+      <Routes />
     </>
   );
 }
