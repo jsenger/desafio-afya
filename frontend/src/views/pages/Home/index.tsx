@@ -1,12 +1,12 @@
-import { Container } from "./styles";
+import { HomeContainer } from "./styles";
 
 const Home: React.FC = () => {
   return (
-    <Container>
+    <HomeContainer>
       <img src="/img/afya-logo-pink.svg" alt="Logo Afya" />
       <button>Cadastro</button>
       <button>Login</button>
-    </Container>
+    </HomeContainer>
   );
 }
 
