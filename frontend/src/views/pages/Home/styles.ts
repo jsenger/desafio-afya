@@ -19,13 +19,17 @@ export const HomeContainer = styled.main`
     align-self: flex-end;
   }
 
-  button {
+  a {
     color: var(--main-color);
     font-size: 2rem;
     font-weight: bold;
 
     height: 3.5rem;
     width: 43%;
+
+    line-height: 3rem;
+    text-align: center;
+    text-decoration: none;
 
     background: transparent;
     border: 3px solid var(--main-color);
