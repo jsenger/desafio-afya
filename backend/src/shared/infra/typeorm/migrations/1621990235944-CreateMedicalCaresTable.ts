@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export default class CreateClientsTable1621895640072 implements MigrationInterface {
+export default class CreateMedicalCaresTable1621990235944 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'clients',
+                name: 'medicalCares',
                 columns: [
                     {
                         name: 'id',
@@ -15,27 +15,19 @@ export default class CreateClientsTable1621895640072 implements MigrationInterfa
                         default: 'uuid_generate_v4()'
                     },
                     {
-                        name: 'name',
-                        type: 'varchar',
+                        name: 'appointment_date',
+                        type: 'timestamp with time zone'
                     },
                     {
-                        name: 'cpf',
-                        type: 'varchar'
+                        name: 'date',
+                        type: 'timestamp with time zone'
                     },
                     {
-                        name: 'phone',
-                        type: 'varchar'
+                        name: 'amount',
+                        type: 'decimal'
                     },
                     {
-                        name: 'cellphone',
-                        type: 'varchar'
-                    },
-                    {
-                        name: 'email',
-                        type: 'varchar'
-                    },
-                    {
-                        name: 'blood-type',
+                        name: 'status',
                         type: 'varchar'
                     },
                     {
@@ -54,7 +46,7 @@ export default class CreateClientsTable1621895640072 implements MigrationInterfa
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('clients');
+        await queryRunner.dropTable('medicalCares');
     }
 
 }

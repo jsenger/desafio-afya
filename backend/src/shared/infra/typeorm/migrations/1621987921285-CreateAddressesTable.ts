@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export default class CreateClientsTable1621895640072 implements MigrationInterface {
+export default class CreateAddressesTable1621987921285 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'clients',
+                name: 'addresses',
                 columns: [
                     {
                         name: 'id',
@@ -15,27 +15,27 @@ export default class CreateClientsTable1621895640072 implements MigrationInterfa
                         default: 'uuid_generate_v4()'
                     },
                     {
-                        name: 'name',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'cpf',
+                        name: 'cep',
                         type: 'varchar'
                     },
                     {
-                        name: 'phone',
+                        name: 'street',
                         type: 'varchar'
                     },
                     {
-                        name: 'cellphone',
+                        name: 'number',
+                        type: 'int'
+                    },
+                    {
+                        name: 'neighborhood',
                         type: 'varchar'
                     },
                     {
-                        name: 'email',
+                        name: 'city',
                         type: 'varchar'
                     },
                     {
-                        name: 'blood-type',
+                        name: 'state',
                         type: 'varchar'
                     },
                     {
@@ -54,7 +54,7 @@ export default class CreateClientsTable1621895640072 implements MigrationInterfa
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('clients');
+        await queryRunner.dropTable('addresses');
     }
 
 }

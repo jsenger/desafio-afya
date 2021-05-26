@@ -1,12 +1,13 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export default class CreateClientsTable1621895640072 implements MigrationInterface {
+export default class CreateSpecialistsTable1621898769280 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
-            new Table({
-                name: 'clients',
-                columns: [
+            new Table ({
+                name: 'specialists',
+                columns:
+                [
                     {
                         name: 'id',
                         type: 'uuid',
@@ -15,27 +16,23 @@ export default class CreateClientsTable1621895640072 implements MigrationInterfa
                         default: 'uuid_generate_v4()'
                     },
                     {
-                        name: 'name',
+                        name: 'register',
                         type: 'varchar',
                     },
                     {
-                        name: 'cpf',
+                        name: 'name',
                         type: 'varchar'
                     },
                     {
                         name: 'phone',
-                        type: 'varchar'
+                        type: 'integer'
                     },
                     {
                         name: 'cellphone',
-                        type: 'varchar'
+                        type: 'integer'
                     },
                     {
                         name: 'email',
-                        type: 'varchar'
-                    },
-                    {
-                        name: 'blood-type',
                         type: 'varchar'
                     },
                     {
@@ -50,11 +47,11 @@ export default class CreateClientsTable1621895640072 implements MigrationInterfa
                     }
                 ]
             })
-        );
+        )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('clients');
+        await queryRunner.dropTable('specialists');
     }
 
 }
