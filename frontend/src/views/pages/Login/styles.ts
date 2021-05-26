@@ -31,7 +31,7 @@ export const LoginContainer = styled.main`
     border-radius: 8px;
 
     width: 40%;
-    padding: 1rem;
+    padding: 2rem;
 
     h1 {
       width: 100%;
