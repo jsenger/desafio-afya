@@ -12,12 +12,6 @@ export const HomeContainer = styled.main`
   max-width: 80%;
   height: 100vh;
 
-  @media (max-width: 360px) {
-   a {
-      width: 100%;
-    }
-  }
-
   img {
     border-radius: 8px;
     width: 60%;
@@ -55,6 +49,21 @@ export const HomeContainer = styled.main`
     &:hover {
       color: #fff;
       background-color: var(--main-color);
+    }
+  }
+
+  @media (max-width: 720px) {
+    display: block;
+    text-align: center;
+    margin-top: 3rem;
+
+    a {
+      width: 100%;
+      display: block;
+
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
     }
   }
 `;
