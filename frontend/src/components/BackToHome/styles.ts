@@ -11,5 +11,12 @@ export const BackHome = styled.main`
 
     text-decoration: none;
     color: #fff;
+
+    .react-icons {
+    vertical-align: middle;
+    color: var(--main-button-color);
+    font-size: 2rem;
+    margin-right: 8px;
+  }
   }
 `

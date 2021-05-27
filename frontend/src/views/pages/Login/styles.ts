@@ -31,6 +31,7 @@ export const LoginContainer = styled.main`
     border-radius: 8px;
 
     width: 40%;
+    min-width: 300px;
     padding: 2rem;
 
     h1 {
@@ -88,6 +89,19 @@ export const LoginContainer = styled.main`
       a {
         color: #fff;
       }
+    }
+  }
+
+  @media (max-width: 720px) {
+    display: block;
+    height: fit-content;
+
+    form {
+      margin-top: 10rem;
+      width: 100%;
+    }
+    img {
+      display: none;
     }
   }
 `;

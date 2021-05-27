@@ -49,15 +49,23 @@ export const HomeContainer = styled.main`
     &:hover {
       color: #fff;
       background-color: var(--main-color);
+
+      &:not(:last-child) {
+        background-color: var(--main-button-color);
+        border: 3px solid var(--main-button-color);
+        color: var(--main-color);
+      }
     }
   }
 
   @media (max-width: 720px) {
     display: block;
+    height: 50vh;
+    margin-top: 10rem;
     text-align: center;
-    margin-top: 3rem;
 
     a {
+      align-self: center;
       width: 100%;
       display: block;
 

@@ -5,4 +5,8 @@ export const Navigation = styled.nav`
   height: 80px;
 
   background: var(--main-color);
+
+  .react-icons {
+    vertical-align: middle;
+  }
 `;

@@ -6,6 +6,7 @@ export const RegisterContainer = styled.main`
   align-items: center;
   flex-wrap: wrap;
 
+
   width: 1000px;
   max-width: 80%;
   height: 100vh;
@@ -14,10 +15,11 @@ export const RegisterContainer = styled.main`
 
   div {
     width: 40%;
+    margin-right: 25px;
 
     img {
-      object-fit: cover;
       width: 120%;
+
     }
   }
 
@@ -29,7 +31,7 @@ export const RegisterContainer = styled.main`
     color:var(--background-color);
 
     border-radius: 8px;
-
+    min-width: 300px;
     width: 40%;
     padding: 2rem;
 
@@ -88,6 +90,19 @@ export const RegisterContainer = styled.main`
       a {
         color: #fff;
       }
+    }
+  }
+
+  @media (max-width: 720px) {
+    display: block;
+    height: fit-content;
+
+    form {
+      margin-top: 10rem;
+      width: 100%;
+    }
+    img {
+      display: none;
     }
   }
 `
