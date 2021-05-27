@@ -12,8 +12,15 @@ export const HomeContainer = styled.main`
   max-width: 80%;
   height: 100vh;
 
+  @media (max-width: 360px) {
+   a {
+      width: 100%;
+    }
+  }
+
   img {
-    width: 100%;
+    border-radius: 8px;
+    width: 60%;
     margin-bottom: 3rem;
 
     align-self: flex-end;

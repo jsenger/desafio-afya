@@ -6,7 +6,7 @@ const Register: React.FC = () => {
     <RegisterContainer>
       <BackToHome />
       <div>
-        <img src="/img/register_icon.svg" alt="" />
+        <img src="/img/register_illustration.svg" alt="" />
       </div>
       <form>
         <h1>Cadastro</h1>

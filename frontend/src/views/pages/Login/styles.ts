@@ -25,8 +25,8 @@ export const LoginContainer = styled.main`
     display: flex;
     flex-wrap: wrap;
 
-    background: #f70054;
-    color: #fff;
+    background: var(--main-color);
+    color: var(--background-color);
 
     border-radius: 8px;
 
@@ -48,7 +48,7 @@ export const LoginContainer = styled.main`
 
     input {
       width: 100%;
-      background: #fff;
+      background: var(--background-color);
       border: none;
       border-radius: 8px;
       padding: 10px;
@@ -63,8 +63,8 @@ export const LoginContainer = styled.main`
       height: 4rem;
       margin-top: 1rem;
 
-      background: #2f2e41;
-      color: #fff;
+      background: var(--main-button-color);
+      color: var(--main-text-color);
 
       font-size: 2rem;
       font-weight: bold;

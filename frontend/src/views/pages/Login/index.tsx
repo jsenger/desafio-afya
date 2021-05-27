@@ -9,7 +9,7 @@ const Login: React.FC = () => {
     <LoginContainer>
       <BackToHome />
       <div>
-        <img src="/img/login_icon.svg" alt="" />
+        <img src="/img/login_illustration.svg" alt="" />
       </div>
       <form>
         <h1>Login</h1>
