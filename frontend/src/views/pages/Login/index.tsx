@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormEvent, useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -27,20 +26,29 @@ const Login: React.FC = () => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      setIsLoading(true);
+      if (formDataContent.login && formDataContent.password) {
+        setIsLoading(true);
 
-      api
-        .post('sessions', formDataContent)
-        .then(response => history.push('/dashboard'))
-        .catch(err => {
-          Swal.fire({
-            title: 'Ops!',
-            text: 'Dados incorretos.',
-            icon: 'error',
-            confirmButtonText: 'Fechar',
-          });
-        })
-        .finally(() => setIsLoading(false));
+        api
+          .post('sessions', formDataContent)
+          .then(response => history.push('/dashboard'))
+          .catch(err => {
+            Swal.fire({
+              title: 'Ops!',
+              text: 'Dados incorretos.',
+              icon: 'error',
+              confirmButtonText: 'Fechar',
+            });
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        Swal.fire({
+          title: 'Ops!',
+          text: 'Preencha todos os campos.',
+          icon: 'error',
+          confirmButtonText: 'Fechar',
+        });
+      }
     },
     [formDataContent, history]
   );
@@ -62,7 +70,6 @@ const Login: React.FC = () => {
               type="text"
               name="login"
               id="login"
-              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
@@ -76,7 +83,6 @@ const Login: React.FC = () => {
               type="password"
               name="password"
               id="password"
-              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,

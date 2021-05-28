@@ -24,34 +24,47 @@ const Register: React.FC = () => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      setIsLoading(true);
+      if (
+        formDataContent.name &&
+        formDataContent.login &&
+        formDataContent.password
+      ) {
+        setIsLoading(true);
 
-      api
-        .post('users', formDataContent)
-        .then(response => {
-          Swal.fire({
-            title: 'Sucesso!',
-            text: 'Sua conta foi criada com sucesso.',
-            icon: 'success',
-            confirmButtonText: 'Ir para login',
-          }).then(response => history.push('/login'));
-        })
-        .catch(err => {
-          let errorMessage;
+        api
+          .post('users', formDataContent)
+          .then(response => {
+            Swal.fire({
+              title: 'Sucesso!',
+              text: 'Sua conta foi criada com sucesso.',
+              icon: 'success',
+              confirmButtonText: 'Ir para login',
+            }).then(response => history.push('/login'));
+          })
+          .catch(err => {
+            let errorMessage;
 
-          if (err.response.data.message === 'User already booked')
-            errorMessage = 'Nome de usuário não está disponível.';
-          else
-            errorMessage = 'Não foi possível criar usuário, tente novamente.';
+            if (err.response.data.message === 'User already booked')
+              errorMessage = 'Nome de usuário não está disponível.';
+            else
+              errorMessage = 'Não foi possível criar usuário, tente novamente.';
 
-          Swal.fire({
-            title: 'Ops!',
-            text: errorMessage,
-            icon: 'error',
-            confirmButtonText: 'Fechar',
-          });
-        })
-        .finally(() => setIsLoading(false));
+            Swal.fire({
+              title: 'Ops!',
+              text: errorMessage,
+              icon: 'error',
+              confirmButtonText: 'Fechar',
+            });
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        Swal.fire({
+          title: 'Ops!',
+          text: 'Preencha todos os campos.',
+          icon: 'error',
+          confirmButtonText: 'Fechar',
+        });
+      }
     },
     [formDataContent, history]
   );
@@ -73,7 +86,6 @@ const Register: React.FC = () => {
               type="text"
               name="name"
               id="name"
-              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
@@ -88,7 +100,6 @@ const Register: React.FC = () => {
               name="login"
               id="login"
               maxLength={20}
-              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
@@ -102,7 +113,6 @@ const Register: React.FC = () => {
               type="password"
               name="password"
               id="password"
-              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
