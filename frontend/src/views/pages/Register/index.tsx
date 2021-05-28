@@ -73,6 +73,7 @@ const Register: React.FC = () => {
               type="text"
               name="name"
               id="name"
+              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
@@ -87,6 +88,7 @@ const Register: React.FC = () => {
               name="login"
               id="login"
               maxLength={20}
+              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
@@ -100,6 +102,7 @@ const Register: React.FC = () => {
               type="password"
               name="password"
               id="password"
+              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
