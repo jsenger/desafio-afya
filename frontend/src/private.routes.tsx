@@ -1,15 +1,16 @@
-import { Route, Redirect } from 'react-router-dom'; 
+import { Route, Redirect } from 'react-router-dom';
 
-export const isAuthenticade = () => true;
+const PrivateRoute = ({ component: Component, ...rest }: any) => {
+  const isAuthenticated = () => localStorage.getItem('@tokenVitality') ? true : false;
 
-const PrivateRoute = ({component: Component, ...rest} : any ) => {
-    return (
-        <Route {...rest} render={props => (
-            isAuthenticade() ?
-                <Component {...props} />
-            : <Redirect to="/login" />
-        )} />
-    );
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated() ? <Component {...props} /> : <Redirect to="/login" />
+      }
+    />
+  );
 };
 
 export default PrivateRoute;
