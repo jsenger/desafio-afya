@@ -1,5 +1,4 @@
-// import { Container } from './styles';
-import Sidebar from '../../../components/Sidebar'
+import Sidebar from '../../../components/Sidebar';
 
 const Dashboard: React.FC = () => {
   return (

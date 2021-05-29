@@ -8,7 +8,7 @@ import Register from './views/pages/Register';
 import PrivateRoute from './private.routes';
 
 import Dashboard from './views/pages/Dashboard';
-import React from 'react';
+import Clients from './views/pages/Clients';
 
 const Routes: React.FC = () => {
   return (
@@ -26,6 +26,7 @@ const Routes: React.FC = () => {
 
 
         <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/clients" component={Clients} />
       </Switch>
     </BrowserRouter>
   );
