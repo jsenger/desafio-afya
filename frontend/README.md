@@ -2,7 +2,7 @@
 
 <div align="center">
   
-![Vitality logo](https://raw.githubusercontent.com/jsenger/desafio-afya/2b632f7036d9b06f99c0117ad7e7d1249f977aea/frontend/public/img/vit_logo.svg?token=AIFDURQZZ7ZPCCNC5RKTEM3AWJDI6)
+![Vitality logo](https://github.com/jsenger/desafio-afya/blob/frontend/frontend/public/img/vit_logo.svg)
   
 </div>
 
