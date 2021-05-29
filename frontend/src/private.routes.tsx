@@ -1,8 +1,7 @@
 import { Route, Redirect } from 'react-router-dom';
+import isAuthenticated from './auth';
 
 const PrivateRoute = ({ component: Component, ...rest }: any) => {
-  const isAuthenticated = () => localStorage.getItem('@tokenVitality') ? true : false;
-
   return (
     <Route
       {...rest}
