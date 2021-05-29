@@ -31,7 +31,10 @@ const Login: React.FC = () => {
 
         api
           .post('sessions', formDataContent)
-          .then(response => history.push('/dashboard'))
+          .then(response => {
+            localStorage.setItem('@tokenVitality', response.data.token);
+            history.push('/dashboard');
+          })
           .catch(err => {
             Swal.fire({
               title: 'Ops!',
