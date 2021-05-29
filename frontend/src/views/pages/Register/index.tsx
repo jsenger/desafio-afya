@@ -34,6 +34,7 @@ const Register: React.FC = () => {
             text: 'Sua conta foi criada com sucesso.',
             icon: 'success',
             confirmButtonText: 'Ir para login',
+            confirmButtonColor: "#004AAD"
           }).then(response => history.push('/login'));
         })
         .catch(err => {
@@ -49,6 +50,7 @@ const Register: React.FC = () => {
             text: errorMessage,
             icon: 'error',
             confirmButtonText: 'Fechar',
+            confirmButtonColor: '#ff312e'
           });
         })
         .finally(() => setIsLoading(false));
