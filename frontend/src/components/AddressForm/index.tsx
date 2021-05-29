@@ -94,33 +94,33 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
         }
       >
         <option value="" disabled></option>
-        <option value="AC" key="AC">AC</option>
-        <option value="AL" key="AL">AL</option>
-        <option value="AP" key="AP">AP</option>
-        <option value="AM" key="AM">AM</option>
-        <option value="BA" key="BA">BA</option>
-        <option value="CE" key="CE">CE</option>
-        <option value="DF" key="DF">DF</option>
-        <option value="ES" key="ES">ES</option>
-        <option value="GO" key="GO">GO</option>
-        <option value="MA" key="MA">MA</option>
-        <option value="MT" key="MT">MT</option>
-        <option value="MS" key="MS">MS</option>
-        <option value="MG" key="MG">MG</option>
-        <option value="PA" key="PA">PA</option>
-        <option value="PB" key="PB">PB</option>
-        <option value="PR" key="PR">PR</option>
-        <option value="PE" key="PE">PE</option>
-        <option value="PI" key="PI">PI</option>
-        <option value="RJ" key="RJ">RJ</option>
-        <option value="RN" key="RN">RN</option>
-        <option value="RS" key="RS">RS</option>
-        <option value="RO" key="RO">RO</option>
-        <option value="RR" key="RR">RR</option>
-        <option value="SC" key="SC">SC</option>
-        <option value="SP" key="SP">SP</option>
-        <option value="SE" key="SE">SE</option>
-        <option value="TO" key="TO">TO</option>
+        <option value="AC">AC</option>
+        <option value="AL">AL</option>
+        <option value="AP">AP</option>
+        <option value="AM">AM</option>
+        <option value="BA">BA</option>
+        <option value="CE">CE</option>
+        <option value="DF">DF</option>
+        <option value="ES">ES</option>
+        <option value="GO">GO</option>
+        <option value="MA">MA</option>
+        <option value="MT">MT</option>
+        <option value="MS">MS</option>
+        <option value="MG">MG</option>
+        <option value="PA">PA</option>
+        <option value="PB">PB</option>
+        <option value="PR">PR</option>
+        <option value="PE">PE</option>
+        <option value="PI">PI</option>
+        <option value="RJ">RJ</option>
+        <option value="RN">RN</option>
+        <option value="RS">RS</option>
+        <option value="RO">RO</option>
+        <option value="RR">RR</option>
+        <option value="SC">SC</option>
+        <option value="SP">SP</option>
+        <option value="SE">SE</option>
+        <option value="TO">TO</option>
       </select>
     </>
   );
