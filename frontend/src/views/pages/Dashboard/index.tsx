@@ -3,7 +3,7 @@ import Sidebar from '../../../components/Sidebar'
 
 const Dashboard: React.FC = () => {
   return (
-    <Sidebar />
+    <Sidebar title="Dashboard" />
   );
 }
 
