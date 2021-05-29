@@ -48,6 +48,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
         type="number"
         name="number"
         id="number"
+        min="1"
         onChange={e =>
           setAddress({
             ...address,
@@ -85,7 +86,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
       <label htmlFor="state">Estado:</label>
       <select
         name="state"
-        value={""}
+        defaultValue={""}
         onChange={e =>
           setAddress({
             ...address,
