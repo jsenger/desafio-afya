@@ -28,14 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       backgroundColor: '#004AAD',
     },
-    appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -62,9 +54,10 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerList: {
       backgroundColor: '#004AAD',
       display: 'flex',
-      height: '40%',
+      height: 400,
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
+      gap: 20
     },
     drawerListItems: {
       color: '#ECEBE4',
@@ -102,7 +95,7 @@ export default function Sidebar(props: SideBarProps) {
 
   return (
     <div>
-      <AppBar position="fixed">
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
