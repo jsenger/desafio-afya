@@ -2,7 +2,7 @@ import { Table } from 'react-bootstrap';
 import {TableContainer} from './styles';
 
 
-const ClientTable: React.FC = () => {
+const ClientsTable: React.FC = () => {
   return (
     <TableContainer>
       <Table striped bordered hover responsive="lg">
@@ -45,4 +45,4 @@ const ClientTable: React.FC = () => {
   );
 }
 
-export default ClientTable;
+export default ClientsTable;
