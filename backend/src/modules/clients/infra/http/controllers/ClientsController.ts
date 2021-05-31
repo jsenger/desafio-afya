@@ -1,4 +1,3 @@
-import CreateAddressService from '@modules/addresses/services/CreateAddressService';
 import CreateClientService from '@modules/clients/services/CreateClientService';
 import ListClientsService from '@modules/clients/services/ListClientsService';
 import { Request, Response } from 'express';
