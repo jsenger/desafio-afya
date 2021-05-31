@@ -1,9 +1,9 @@
-export default interface ICreateClientDTO {
+export default interface ICreateSpecialistDTO {
     name: string;
-    cpf: string;
+    register: string;
     phone: string;
     cellphone: string;
     email: string;
-    blood_type: string;
     address_id: string;
+    profession_id: string;
 }

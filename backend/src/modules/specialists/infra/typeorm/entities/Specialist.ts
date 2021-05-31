@@ -1,13 +1,14 @@
 import Address from '@modules/addresses/infra/typeorm/entities/Address';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import Profession from './Profession';
 
-@Entity('clients')
-class Client {
+@Entity('specialists')
+class Specialist {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
-    cpf: string;
+    register: string;
 
     @Column()
     name: string;
@@ -22,14 +23,18 @@ class Client {
     email: string;
 
     @Column()
-    blood_type: string;
+    address_id: string;
 
     @Column()
-    address_id: string;
+    profession_id: string;
 
     @ManyToOne(() => Address, address => address.id)
     @JoinColumn({ name: 'address_id' })
     address: Address;
+
+    @ManyToOne(() => Profession, profession => profession.id)
+    @JoinColumn({ name: 'profession_id'})
+    profession: Profession;
 
     @CreateDateColumn()
     created_at: Date;
@@ -38,4 +43,4 @@ class Client {
     updated_at: Date;
 }
 
-export default Client;
+export default Specialist;
