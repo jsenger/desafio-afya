@@ -17,6 +17,12 @@ import ISpecialistsRepository from '@modules/specialists/repositories/ISpecialis
 import IProfessionsRepository from '@modules/specialists/repositories/IProfessionsRepository';
 import ProfessionsRepository from '@modules/specialists/infra/typeorm/repositories/ProfessionsRepository';
 
+import IMedicalRecordsRepository from '@modules/medicalRecords/repositories/IMedicalRecordsRepository';
+import MedicalRecordsRepository from '@modules/medicalRecords/infra/typeorm/repositories/MedicalRecordsRepository';
+
+import IMedicalRecordHistoricRepository from '@modules/medicalRecords/repositories/IMedicalRecordHistoricRepository';
+import MedicalRecordHistoricRepository from '@modules/medicalRecords/infra/typeorm/repositories/MedicalRecordHistoricRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository
@@ -40,4 +46,14 @@ container.registerSingleton<IAddressesRepository>(
 container.registerSingleton<IProfessionsRepository>(
   'ProfessionsRepository',
   ProfessionsRepository
-)
+);
+
+container.registerSingleton<IMedicalRecordsRepository>(
+  'MedicalRecordsRepository',
+  MedicalRecordsRepository
+);
+
+container.registerSingleton<IMedicalRecordHistoricRepository>(
+  'MedicalRecordHistoricRepository',
+  MedicalRecordHistoricRepository
+);

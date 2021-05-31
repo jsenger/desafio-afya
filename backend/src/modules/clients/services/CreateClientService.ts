@@ -4,6 +4,8 @@ import Client from "../infra/typeorm/entities/Client";
 import IClientsRepository from "../repositories/IClientsRepository";
 import IAddressesRepository from "@modules/addresses/repositories/IAddressesRepository";
 import Address from "@modules/addresses/infra/typeorm/entities/Address";
+import IMedicalRecordsRepository from "@modules/medicalRecords/repositories/IMedicalRecordsRepository";
+import MedicalRecords from "@modules/medicalRecords/infra/typeorm/entities/MedicalRecords";
 
 interface IRequest {
     name: string;
@@ -22,7 +24,8 @@ interface IRequest {
 
 interface IResponse {
     client: Client,
-    address: Address
+    address: Address,
+    medicalRecords: MedicalRecords
 }
 
 @injectable()
@@ -32,7 +35,10 @@ class CreateClientService {
         private clientsRepository: IClientsRepository,
 
         @inject('AddressesRepository')
-        private addressesRepository: IAddressesRepository
+        private addressesRepository: IAddressesRepository,
+
+        @inject('MedicalRecordsRepository')
+        private medicalRecordsRepository: IMedicalRecordsRepository
     ){}
 
     public async execute({ 
@@ -74,7 +80,12 @@ class CreateClientService {
             address_id: address.id
         });
 
-        return {client, address};
+        const medicalRecords = await this.medicalRecordsRepository.create({
+            opening_date: client.created_at,
+            client_id: client.id
+        });
+
+        return {client, address, medicalRecords};
     }
 }
 
