@@ -9,31 +9,38 @@ class ClientsRepository implements IClientsRepository {
     constructor() {
         this.ormRepository = getRepository(Client);
     }
+
     
     async create(data: ICreateClientDTO): Promise<Client> {
         const client = this.ormRepository.create(data);
-
+        
         await this.ormRepository.save(client);
-
+        
         return client;
     }
-
+    
     async findByCpf(cpf: string): Promise<Client | undefined> {
         const findClient = await this.ormRepository.findOne({
             where: {
                 cpf
             }
         });
+        
+        return findClient;
+    }
+    
+    async listAllClients(): Promise<Client[] | undefined> {
+        const findClients = await this.ormRepository.find();
+        
+        return findClients;
+    }
+    
+    async findById(id: string): Promise<Client> {
+        const findClient = await this.ormRepository.findOne(id);
 
         return findClient;
     }
-
-    async listAllClients(): Promise<Client[] | undefined> {
-        const findClients = await this.ormRepository.find();
-
-        return findClients;
-    }
-
+    
 }
 
 export default ClientsRepository;

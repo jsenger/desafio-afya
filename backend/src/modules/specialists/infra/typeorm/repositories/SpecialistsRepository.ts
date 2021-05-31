@@ -12,22 +12,27 @@ class SpecialistsRepository implements ISpecialistsRepository {
     
     async create(data: ICreateSpecialistDTO): Promise<Specialist> {
         const specialist = this.ormRepository.create(data);
-
+        
         await this.ormRepository.save(specialist);
-
+        
         return specialist;
     }
-
+    
     async findByRegister(register: string): Promise<Specialist | undefined> {
         const findSpecialist = await this.ormRepository.findOne({
             where: {
                 register
             }
         });
+        
+        return findSpecialist;
+    }
+    
+    async findById(id: string): Promise<Specialist | undefined> {
+        const findSpecialist = await this.ormRepository.findOne(id);
 
         return findSpecialist;
     }
-
 }
 
 export default SpecialistsRepository;
