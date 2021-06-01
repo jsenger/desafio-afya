@@ -8,9 +8,14 @@ import SpecialistsTable from "../../../components/Table/Specialists";
 
 const Specialists: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [modalTwoIsOpen, setModalTwoIsOpen] = useState<boolean>(false);
 
   const handleModalOpen = () => {
     setModalIsOpen(true);
+  };
+
+  const handleModalTwoOpen = () => {
+    setModalTwoIsOpen(true);
   };
 
   return (
@@ -21,14 +26,14 @@ const Specialists: React.FC = () => {
         <button className="register-button" type="button" onClick={handleModalOpen}>
           Cadastrar Especialista
         </button>
-        <button className="special-button" type="button" onClick={handleModalOpen}>
+        <button className="special-button" type="button" onClick={handleModalTwoOpen}>
           Cadastrar Especialidade
         </button>
       </main>
       <SpecialistsTable />
     </SpecialistsContainer>
     <SpecialistsModal state={modalIsOpen} setState={setModalIsOpen} />
-    <ProfessionsModal state={modalIsOpen} setState={setModalIsOpen} />
+    <ProfessionsModal state={modalTwoIsOpen} setState={setModalTwoIsOpen} />
     </>
   );
 }
