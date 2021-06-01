@@ -1,6 +1,12 @@
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useCallback,
+  useState,
+} from 'react';
 import Swal from 'sweetalert2';
-import InputMask from "react-input-mask";
+import InputMask from 'react-input-mask';
 
 import { api } from '../../services/api';
 
@@ -42,10 +48,11 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
     setState(false);
   };
 
-  formDataContent.address = {...address};
+  formDataContent.address = { ...address };
 
   const clientSubmit = useCallback(
-    e => {
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
       setIsLoading(true);
 
       api
@@ -77,7 +84,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
 
   return (
     <ModalContainer className={state ? 'show' : ''}>
-      <div className="modal-content">
+      <form className="modal-content" onSubmit={clientSubmit}>
         <div className="modal-header">
           <h4>Cadastro de cliente</h4>
           <span className="close" onClick={handleModalClose}>
@@ -86,125 +93,121 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
         </div>
 
         <div className="modal-body">
-          <form>
-            <div className="form-group">
-              <label htmlFor="name">Nome:</label>
-              <input
+          <div className="form-group">
+            <label htmlFor="name">Nome:</label>
+            <input
+              className="form-control"
+              type="text"
+              name="name"
+              id="name"
+              onChange={e =>
+                setFormDataContent({
+                  ...formDataContent,
+                  name: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="form-row">
+            <div className="form-group col-md-4">
+              <label htmlFor="cpf">CPF:</label>
+              <InputMask
+                mask="999.999.999-99"
                 className="form-control"
                 type="text"
-                name="name"
-                id="name"
+                name="cpf"
+                id="cpf"
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
-                    name: e.target.value,
+                    cpf: e.target.value,
                   })
                 }
               />
             </div>
-            <div className="form-row">
-              <div className="form-group col-md-4">
-                <label htmlFor="cpf">CPF:</label>
-                <InputMask
-                  mask="999.999.999-99"
-                  className="form-control"
-                  type="text"
-                  name="cpf"
-                  id="cpf"
-                  onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
-                      cpf: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="phone">Telefone:</label>
-                <InputMask
-                  mask="(99) 9999-9999"
-                  className="form-control"
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
-                      phone: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="cellphone">Celular:</label>
-                <InputMask
-                  mask="(99) 99999-9999"
-                  className="form-control"
-                  type="text"
-                  name="cellphone"
-                  id="cellphone"
-                  onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
-                      cellphone: e.target.value,
-                    })
-                  }
-                />
-              </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="phone">Telefone:</label>
+              <InputMask
+                mask="(99) 9999-9999"
+                className="form-control"
+                type="text"
+                name="phone"
+                id="phone"
+                onChange={e =>
+                  setFormDataContent({
+                    ...formDataContent,
+                    phone: e.target.value,
+                  })
+                }
+              />
             </div>
-            <div className="form-row">
-              <div className="form-group col-md-8">
-                <label htmlFor="email">E-mail:</label>
-                <input
-                  className="form-control"
-                  type="email"
-                  name="email"
-                  id="email"
-                  onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
-                      email: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="bloodType">Tipo sanguíneo:</label>
-                <select
-                  className="form-control"
-                  name="bloodType"
-                  id="bloodType"
-                  defaultValue={''}
-                  onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
-                      blood_type: e.target.value,
-                    })
-                  }
-                >
-                  <option value="" disabled></option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                </select>
-              </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="cellphone">Celular:</label>
+              <InputMask
+                mask="(99) 99999-9999"
+                className="form-control"
+                type="text"
+                name="cellphone"
+                id="cellphone"
+                onChange={e =>
+                  setFormDataContent({
+                    ...formDataContent,
+                    cellphone: e.target.value,
+                  })
+                }
+              />
             </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-md-8">
+              <label htmlFor="email">E-mail:</label>
+              <input
+                className="form-control"
+                type="email"
+                name="email"
+                id="email"
+                onChange={e =>
+                  setFormDataContent({
+                    ...formDataContent,
+                    email: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="bloodType">Tipo sanguíneo:</label>
+              <select
+                className="form-control"
+                name="bloodType"
+                id="bloodType"
+                defaultValue={''}
+                onChange={e =>
+                  setFormDataContent({
+                    ...formDataContent,
+                    blood_type: e.target.value,
+                  })
+                }
+              >
+                <option value="" disabled></option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+          </div>
 
-            <AddressForm address={address} setAddress={setAddress} />
-          </form>
+          <AddressForm address={address} setAddress={setAddress} />
         </div>
 
         <div className="modal-footer">
-          <button type="button" onClick={clientSubmit}>
-            Salvar novo cliente
-          </button>
+          <button type="submit">Salvar novo cliente</button>
         </div>
-      </div>
+      </form>
     </ModalContainer>
   );
 };
