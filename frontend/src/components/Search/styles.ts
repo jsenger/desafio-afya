@@ -10,7 +10,7 @@ export const SearchField = styled.form`
   margin: 0 auto;
   margin-top: 50px;
 
-  width: fit-content;
+  width: 50vw;
   min-width: 300px;
   padding: 1rem;
   border-radius: 8px;
@@ -26,6 +26,7 @@ export const SearchField = styled.form`
     border: 0;
     border-radius: 4px;
     padding: 5px;
+    flex: 2;
 
   }
 
@@ -39,25 +40,40 @@ export const SearchField = styled.form`
     letter-spacing: 1px;
 
     margin-left: -12px;
-    padding: 8px;
 
     transition: ease-in-out 0.4s;
+    padding: 8px;
+    flex: 1;
 
     &:hover {
       filter: brightness(1.5);
     }
   }
 
-  @media (max-width: 500px) {
-    button {
-      margin-left: 5px;
-    }
-  }
-
   @media (max-width: 360px) {
     width: 80%;
     button {
-      margin: 5px;
+      margin-top: 10px;
+      margin-left: 0;
+
+      flex: 1;
+    }
+
+    input {
+      flex: 1;
+    }
+  }
+
+  @media (min-width: 360px) and (max-width: 720px) {
+    width: 80%;
+    button {
+      margin: 10px;
+
+      flex: 1;
+    }
+
+    input {
+      flex: 1;
     }
   }
 `

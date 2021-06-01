@@ -5,6 +5,7 @@ import { SpecialistsContainer } from './styles';
 import SpecialistsModal from '../../../components/SpecialistsModal';
 import ProfessionsModal from "../../../components/ProfessionsModal";
 import SpecialistsTable from "../../../components/Table/Specialists";
+import Search from "../../../components/Search";
 
 const Specialists: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -30,6 +31,7 @@ const Specialists: React.FC = () => {
           Cadastrar Especialidade
         </button>
       </main>
+      <Search title="Pesquisar especialistas:"/>
       <SpecialistsTable />
     </SpecialistsContainer>
     <SpecialistsModal state={modalIsOpen} setState={setModalIsOpen} />

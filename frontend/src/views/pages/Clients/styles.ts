@@ -6,12 +6,11 @@ export const ClientsContainer = styled.div`
 main {
     display: flex;
     justify-content: center ;
-    flex-grow: 2;
     margin-top: 100px;
-    /* padding: 75px 1rem;
-    margin-left: -300px; */
 
     .register-button {
+     width: 30vw;
+      margin: 1rem;
       padding: 1rem;
       //border: 1px solid var(--main-color);
       border: 0;
@@ -25,6 +24,10 @@ main {
 
       &:hover {
         filter: brightness(1.2);
+      }
+
+      @media (max-width: 720px) {
+        width: fit-content;
       }
     }
   }

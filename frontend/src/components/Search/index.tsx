@@ -1,9 +1,13 @@
 import { SearchField } from './styles';
 
-const Search: React.FC = () => {
+interface SearchProps {
+  title: string;
+}
+
+export default function Search(props: SearchProps)  {
   return (
     <SearchField>
-      <label htmlFor="header-search">Pesquisar clientes:</label>
+      <label htmlFor="header-search">{props.title}</label>
       <input
         type="text"
         id="header-search"
@@ -15,4 +19,3 @@ const Search: React.FC = () => {
   );
 };
 
-export default Search;
