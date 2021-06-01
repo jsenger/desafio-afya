@@ -53,6 +53,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
   const clientSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
       setIsLoading(true);
 
       api
@@ -100,6 +101,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
               type="text"
               name="name"
               id="name"
+              disabled={isLoading}
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
@@ -117,6 +119,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 type="text"
                 name="cpf"
                 id="cpf"
+                disabled={isLoading}
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -133,6 +136,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 type="text"
                 name="phone"
                 id="phone"
+                disabled={isLoading}
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -149,6 +153,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 type="text"
                 name="cellphone"
                 id="cellphone"
+                disabled={isLoading}
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -166,6 +171,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 type="email"
                 name="email"
                 id="email"
+                disabled={isLoading}
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -180,6 +186,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 className="form-control"
                 name="bloodType"
                 id="bloodType"
+                disabled={isLoading}
                 defaultValue={''}
                 onChange={e =>
                   setFormDataContent({
@@ -201,11 +208,13 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
             </div>
           </div>
 
-          <AddressForm address={address} setAddress={setAddress} />
+          <AddressForm address={address} setAddress={setAddress} isLoading={isLoading} />
         </div>
 
         <div className="modal-footer">
-          <button type="submit">Salvar novo cliente</button>
+          <button type="submit" disabled={isLoading} >
+            {isLoading ? 'Salvando...' : 'Salvar novo cliente'}
+          </button>
         </div>
       </form>
     </ModalContainer>

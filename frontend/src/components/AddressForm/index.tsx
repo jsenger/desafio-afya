@@ -13,9 +13,10 @@ interface Address {
 interface AddressFormProps {
   address: Address;
   setAddress: Dispatch<SetStateAction<Address>>;
+  isLoading: boolean;
 }
 
-const AddressForm = ({ address, setAddress }: AddressFormProps) => {
+const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
   return (
     <>
       <div className="form-row">
@@ -27,6 +28,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
             type="text"
             name="cep"
             id="cep"
+            disabled={isLoading}
             onChange={e =>
               setAddress({
                 ...address,
@@ -43,6 +45,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
             type="text"
             name="street"
             id="street"
+            disabled={isLoading}
             onChange={e =>
               setAddress({
                 ...address,
@@ -61,6 +64,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
             name="number"
             id="number"
             min="1"
+            disabled={isLoading}
             onChange={e =>
               setAddress({
                 ...address,
@@ -76,6 +80,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
             type="text"
             name="neighborhood"
             id="neighborhood"
+            disabled={isLoading}
             onChange={e =>
               setAddress({
                 ...address,
@@ -93,6 +98,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
             type="text"
             name="city"
             id="city"
+            disabled={isLoading}
             onChange={e =>
               setAddress({
                 ...address,
@@ -107,6 +113,7 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
             className="form-control"
             name="state"
             defaultValue={''}
+            disabled={isLoading}
             onChange={e =>
               setAddress({
                 ...address,

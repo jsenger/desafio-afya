@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import Swal from "sweetalert2";
-import { ModalContainer } from "../../assets/ModalStyles";
-import { api } from "../../services/api";
-import AddressForm from "../AddressForm";
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import Swal from 'sweetalert2';
+import { ModalContainer } from '../../assets/ModalStyles';
+import { api } from '../../services/api';
+import AddressForm from '../AddressForm';
 
 interface Address {
   cep: string;
@@ -31,15 +31,15 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
   const [formDataContent, setFormDataContent] = useState<SpecialistData>(
     {} as SpecialistData
   );
-
   const [address, setAddress] = useState<Address>({} as Address);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleModalClose = () => {
     setState(false);
   };
 
   return (
-    <ModalContainer className={state ? "show" : ""}>
+    <ModalContainer className={state ? 'show' : ''}>
       <div className="modal-content">
         <div className="modal-header">
           <h4>Cadastro de Especialista</h4>
@@ -57,7 +57,8 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                 type="text"
                 name="name"
                 id="name"
-                onChange={(e) =>
+                disabled={isLoading}
+                onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
                     name: e.target.value,
@@ -73,7 +74,8 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   type="text"
                   name="register"
                   id="register"
-                  onChange={(e) =>
+                  disabled={isLoading}
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       register: e.target.value,
@@ -89,7 +91,8 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   type="text"
                   name="phone"
                   id="phone"
-                  onChange={(e) =>
+                  disabled={isLoading}
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       phone: e.target.value,
@@ -105,7 +108,8 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   type="text"
                   name="cellphone"
                   id="cellphone"
-                  onChange={(e) =>
+                  disabled={isLoading}
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       cellphone: e.target.value,
@@ -122,7 +126,8 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   type="email"
                   name="email"
                   id="email"
-                  onChange={(e) =>
+                  disabled={isLoading}
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       email: e.target.value,
@@ -138,7 +143,8 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   type="specialtie"
                   name="specialtie"
                   id="specialtie"
-                  onChange={(e) =>
+                  disabled={isLoading}
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       specialtie: e.target.value,
@@ -147,12 +153,18 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                 />
               </div>
             </div>
-              <AddressForm address={address} setAddress={setAddress} />
+            <AddressForm
+              address={address}
+              setAddress={setAddress}
+              isLoading={isLoading}
+            />
           </form>
         </div>
 
         <div className="modal-footer">
-          <button type="button">Salvar novo Especialista</button>
+          <button type="button">
+            {isLoading ? 'Salvando...' : 'Salvar novo Especialista'}
+          </button>
         </div>
       </div>
     </ModalContainer>
