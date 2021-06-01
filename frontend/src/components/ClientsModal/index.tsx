@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import Swal from "sweetalert2";
-import { ModalContainer } from "../../assets/ModalStyles";
-import { api } from "../../services/api";
-import AddressForm from "../AddressForm";
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import Swal from 'sweetalert2';
+import { ModalContainer } from '../../assets/ModalStyles';
+import { api } from '../../services/api';
+import AddressForm from '../AddressForm';
 
 interface Address {
   cep: string;
@@ -33,13 +33,47 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
     {} as ClientData
   );
   const [address, setAddress] = useState<Address>({} as Address);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleModalClose = () => {
     setState(false);
   };
 
+  formDataContent.address = {...address};
+
+  const clientSubmit = useCallback(
+    e => {
+      setIsLoading(true);
+
+      api
+        .post('clients', formDataContent, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+          },
+        })
+        .then(response => {
+          Swal.fire({
+            title: 'Sucesso!',
+            text: 'Cliente cadastrado com sucesso.',
+            icon: 'success',
+            confirmButtonText: 'Fechar',
+          });
+        })
+        .catch(err => {
+          Swal.fire({
+            title: 'Ops!',
+            text: 'Dados incorretos.',
+            icon: 'error',
+            confirmButtonText: 'Fechar',
+          });
+        })
+        .finally(() => setIsLoading(false));
+    },
+    [formDataContent]
+  );
+
   return (
-    <ModalContainer className={state ? "show" : ""}>
+    <ModalContainer className={state ? 'show' : ''}>
       <div className="modal-content">
         <div className="modal-header">
           <h4>Cadastro de cliente</h4>
@@ -57,7 +91,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 type="text"
                 name="name"
                 id="name"
-                onChange={(e) =>
+                onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
                     name: e.target.value,
@@ -73,7 +107,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                   type="text"
                   name="cpf"
                   id="cpf"
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       cpf: e.target.value,
@@ -81,7 +115,6 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                   }
                 />
               </div>
-
               <div className="form-group col-md-4">
                 <label htmlFor="phone">Telefone:</label>
                 <input
@@ -89,7 +122,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                   type="text"
                   name="phone"
                   id="phone"
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       phone: e.target.value,
@@ -97,7 +130,6 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                   }
                 />
               </div>
-
               <div className="form-group col-md-4">
                 <label htmlFor="cellphone">Celular:</label>
                 <input
@@ -105,7 +137,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                   type="text"
                   name="cellphone"
                   id="cellphone"
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       cellphone: e.target.value,
@@ -122,7 +154,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                   type="email"
                   name="email"
                   id="email"
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       email: e.target.value,
@@ -162,7 +194,9 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
         </div>
 
         <div className="modal-footer">
-          <button type="button">Salvar novo cliente</button>
+          <button type="button" onClick={clientSubmit}>
+            Salvar novo cliente
+          </button>
         </div>
       </div>
     </ModalContainer>
