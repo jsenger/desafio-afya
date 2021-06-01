@@ -133,8 +133,8 @@ export default function Sidebar(props: SideBarProps) {
             { title: 'Atendimentos', url: '/appointments' },
             { title: 'Prontuários', url: '/records' },
           ].map((item, index) => (
-            <Link to={item.url}>
-              <ListItem button key={item.title}>
+            <Link to={item.url} key={item.title}>
+              <ListItem button>
                 <ListItemText
                   primary={item.title}
                   className={classes.drawerListItems}
