@@ -9,6 +9,7 @@ import PrivateRoute from './private.routes';
 
 import Dashboard from './views/pages/Dashboard';
 import Clients from './views/pages/Clients';
+import Specialists from './views/pages/Specialists';
 
 const Routes: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const Routes: React.FC = () => {
 
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/clients" component={Clients} />
+        <PrivateRoute path="/specialists" component={Specialists} />
       </Switch>
     </BrowserRouter>
   );

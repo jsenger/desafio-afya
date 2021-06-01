@@ -4,7 +4,7 @@ export const DashboardContainer = styled.main`
 
  h1 {
    margin-top: 100px;
-   margin-left: 10px;
+   margin-right: 50px;
    margin-bottom: 1rem;
    text-align: right;
    font-weight: lighter;
@@ -16,10 +16,12 @@ export const DashboardContainer = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  height: auto;
+  width: 90vw;
+  gap: 2rem 2rem;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 1rem;
+  margin: 0 auto;
 
   img {
     flex: 2;
@@ -29,7 +31,7 @@ export const DashboardContainer = styled.main`
 
   p {
     flex: 2;
-    height: 10vh;
+
     min-width: 300px;
     text-align: justify;
   }

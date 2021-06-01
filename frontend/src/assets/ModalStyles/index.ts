@@ -25,32 +25,34 @@ export const ModalContainer = styled.div`
     font-size: 1.2rem;
     font-weight: bold;
     letter-spacing: 1px;
-    padding: 8px;
+    padding: 1rem;
 
-    transition: 0.5s linear;
+    transition: 0.2s ease-in-out;
 
     &:hover {
-      background-color: var(--main-color);
-      color: var(--main-button-color);
+      box-shadow: 5px 6px 5px 0px rgba(0,0,0,0.49);
     }
   }
 
   .modal-content {
 
-    background-color: var(--background-color);
+    background-color: var(--main-color);
+    color: var(--main-button-color);
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid var(--main-color);
+    border: 0;
+    box-shadow: 5px 6px 5px 0px rgba(0,0,0,0.49);
     width: 80%;
-    color: var(--main-color);
 
     .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
 
+
+
       .close {
-        color: var(--main-text-color);
+        color: var(--background-color);
         float: right;
         font-size: 3rem;
         font-weight: bold;

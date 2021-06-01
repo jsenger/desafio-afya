@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ClientsContainer = styled.div`
+export const SpecialistsContainer = styled.div`
 
 
 main {
@@ -16,12 +16,12 @@ main {
       //border: 1px solid var(--main-color);
       border: 0;
       border-radius: 8px;
-      background-color: var(--main-color);
+      background-color: var(--main-button-color);
       box-shadow: 5px 6px 5px 0px rgba(0,0,0,0.49);
       font-size: 1.2rem;
       font-weight: bold;
       letter-spacing: 1px;
-      color: var(--background-color);
+      color: var(--main-color);
 
       &:hover {
         filter: brightness(1.2);
