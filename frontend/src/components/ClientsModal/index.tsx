@@ -136,13 +136,15 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                   className="form-control"
                   name="bloodType"
                   id="bloodType"
-                  onChange={(e) =>
+                  defaultValue={''}
+                  onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
                       blood_type: e.target.value,
                     })
                   }
                 >
+                  <option value="" disabled></option>
                   <option value="A+">A+</option>
                   <option value="A-">A-</option>
                   <option value="B+">B+</option>
