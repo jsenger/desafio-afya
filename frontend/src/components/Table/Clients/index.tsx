@@ -12,8 +12,6 @@ const ClientsTable: React.FC = () => {
           <th>E-mail</th>
           <th>Celular</th>
           <th>Telefone</th>
-          <th>Editar</th>
-          <th>Excluir</th>
         </tr>
       </thead>
       <tbody>
@@ -22,8 +20,6 @@ const ClientsTable: React.FC = () => {
           <td>naruto@gmail.com</td>
           <td>(21) 99990000</td>
           <td>(21)22223333</td>
-          <td><button className="btn btn-sm btn-warning rounded">Editar</button></td>
-          <td><button className="btn btn-sm btn-danger rounded">Excluir</button></td>
         </tr>
         <tr>
           <td>Sasuke Uchiha</td>
