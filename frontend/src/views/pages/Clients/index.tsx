@@ -19,12 +19,12 @@ const Clients: React.FC = () => {
       <ClientsContainer>
         <Sidebar title="Clientes" />
         <main>
-          <button type="button" onClick={handleModalOpen}>
+          <button className="register-button" type="button" onClick={handleModalOpen}>
             Cadastrar cliente
           </button>
-          <Search />
-          <ClientsTable />
         </main>
+        <Search />
+        <ClientsTable />
       </ClientsContainer>
       <ClientsModal state={modalIsOpen} setState={setModalIsOpen} />
     </>

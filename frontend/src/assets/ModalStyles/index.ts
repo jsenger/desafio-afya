@@ -6,28 +6,53 @@ export const ModalContainer = styled.div`
   z-index: 1;
   left: 0;
   top: 0;
+  overflow: auto;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
+
+  background-color: var(--background-color);
   background-color: rgba(0, 0, 0, 0.4);
 
   &.show {
     display: block;
   }
 
+  button {
+    background-color: var(--main-button-color);
+    border: 0;
+    border-radius: 8px;
+    color: var(--main-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 8px;
+
+    transition: 0.5s linear;
+
+    &:hover {
+      background-color: var(--main-color);
+      color: var(--main-button-color);
+    }
+  }
+
   .modal-content {
-    background-color: #fefefe;
+
+    background-color: var(--background-color);
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid var(--main-color);
     width: 80%;
-    
+    color: var(--main-color);
+
     .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
       .close {
-        color: #aaa;
+        color: var(--main-text-color);
         float: right;
-        font-size: 28px;
+        font-size: 3rem;
         font-weight: bold;
 
         &:hover,
@@ -37,6 +62,12 @@ export const ModalContainer = styled.div`
           cursor: pointer;
         }
       }
+    }
+
+    label {
+      font-weight: bold;
+      letter-spacing: 0.5px;
+
     }
   }
 `;

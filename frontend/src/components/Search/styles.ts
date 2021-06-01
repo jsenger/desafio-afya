@@ -8,7 +8,7 @@ export const SearchField = styled.form`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 50px;
 
   width: fit-content;
   min-width: 300px;

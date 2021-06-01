@@ -17,61 +17,78 @@ interface AddressFormProps {
 const AddressForm = ({ address, setAddress }: AddressFormProps) => {
   return (
     <>
-      <label htmlFor="cep">CEP:</label>
-      <input
-        type="text"
-        name="cep"
-        id="cep"
-        onChange={e =>
-          setAddress({
-            ...address,
-            cep: e.target.value,
-          })
-        }
-      />
+      <div className="form-row">
+        <div className="form-group col-md-4">
+          <label htmlFor="cep">CEP:</label>
+          <input
+            className="form-control"
+            type="text"
+            name="cep"
+            id="cep"
+            onChange={e =>
+              setAddress({
+                ...address,
+                cep: e.target.value,
+              })
+            }
+          />
+        </div>
 
-      <label htmlFor="street">Logradouro:</label>
-      <input
-        type="text"
-        name="street"
-        id="street"
-        onChange={e =>
-          setAddress({
-            ...address,
-            street: e.target.value,
-          })
-        }
-      />
+        <div className="form-group col-md-8">
+          <label htmlFor="street">Logradouro:</label>
+          <input
+            className="form-control"
+            type="text"
+            name="street"
+            id="street"
+            onChange={e =>
+              setAddress({
+                ...address,
+                street: e.target.value,
+              })
+            }
+          />
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="form-group col-md-4">
+        <label htmlFor="number">Número:</label>
+        <input
+          className="form-control"
+          type="number"
+          name="number"
+          id="number"
+          min="1"
+          onChange={e =>
+            setAddress({
+              ...address,
+              number: Number(e.target.value),
+            })
+          }
+        />
+        </div>
+        <div className="form-group col-md-8">
+          <label htmlFor="neighborhood">Bairro:</label>
+          <input
+          className="form-control"
+          type="text"
+          name="neighborhood"
+          id="neighborhood"
+          onChange={e =>
+            setAddress({
+              ...address,
+              neighborhood: e.target.value,
+            })
+          }
+          />
 
-      <label htmlFor="number">Número:</label>
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="form-group col-md-8">
+        <label htmlFor="city">Cidade:</label>
       <input
-        type="number"
-        name="number"
-        id="number"
-        min="1"
-        onChange={e =>
-          setAddress({
-            ...address,
-            number: Number(e.target.value),
-          })
-        }
-      />
-
-      <label htmlFor="neighborhood">Bairro:</label>
-      <input
-        type="text"
-        name="neighborhood"
-        id="neighborhood"
-        onChange={e =>
-          setAddress({
-            ...address,
-            neighborhood: e.target.value,
-          })
-        }
-      />
-
-      <label htmlFor="city">Cidade:</label>
-      <input
+      className="form-control"
         type="text"
         name="city"
         id="city"
@@ -82,9 +99,11 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
           })
         }
       />
-
-      <label htmlFor="state">Estado:</label>
+        </div>
+        <div className="form-group col-md-4">
+        <label htmlFor="state">Estado:</label>
       <select
+      className="form-control"
         name="state"
         defaultValue={""}
         onChange={e =>
@@ -123,6 +142,8 @@ const AddressForm = ({ address, setAddress }: AddressFormProps) => {
         <option value="SE">SE</option>
         <option value="TO">TO</option>
       </select>
+        </div>
+      </div>
     </>
   );
 };
