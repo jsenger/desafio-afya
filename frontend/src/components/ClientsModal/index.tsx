@@ -1,7 +1,10 @@
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
-import { ModalContainer } from '../../assets/ModalStyles';
+import InputMask from "react-input-mask";
+
 import { api } from '../../services/api';
+
+import { ModalContainer } from '../../assets/ModalStyles';
 import AddressForm from '../AddressForm';
 
 interface Address {
@@ -102,7 +105,8 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
             <div className="form-row">
               <div className="form-group col-md-4">
                 <label htmlFor="cpf">CPF:</label>
-                <input
+                <InputMask
+                  mask="999.999.999-99"
                   className="form-control"
                   type="text"
                   name="cpf"
@@ -117,7 +121,8 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="phone">Telefone:</label>
-                <input
+                <InputMask
+                  mask="(99) 9999-9999"
                   className="form-control"
                   type="text"
                   name="phone"
@@ -132,7 +137,8 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="cellphone">Celular:</label>
-                <input
+                <InputMask
+                  mask="(99) 99999-9999"
                   className="form-control"
                   type="text"
                   name="cellphone"
