@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import ClientsModal from '../../../components/ClientsModal';
 import Sidebar from '../../../components/Sidebar';
-import ClientsTable from '../../../components/Table';
+import ClientsTable from '../../../components/Table/Clients';
 import Search from '../../../components/Search';
 
 import { ClientsContainer } from './styles';
