@@ -66,6 +66,7 @@ Vitality is an application built for medical clinics to use. Its goal is to prov
 - [React Icons](https://react-icons.github.io/react-icons/)
 - [ReactDOM](https://reactjs.org/docs/react-dom.html)
 - [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+- [React-Bootstrap](https://react-bootstrap.github.io/)
 
 ## Project setup
 
