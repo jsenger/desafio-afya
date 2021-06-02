@@ -1,26 +1,25 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ClientsContainer = styled.div`
-
-
-main {
+  main {
     display: flex;
-    justify-content: center ;
+    justify-content: center;
     margin-top: 100px;
 
     .register-button {
-     width: 30vw;
       margin: 1rem;
       padding: 1rem;
-      //border: 1px solid var(--main-color);
-      border: 0;
-      border-radius: 8px;
+      width: 30vw;
+
       background-color: var(--main-color);
-      box-shadow: 5px 6px 5px 0px rgba(0,0,0,0.49);
+      border-radius: 8px;
+      border: 0;
+      box-shadow: 5px 6px 5px 0px rgba(0, 0, 0, 0.49);
+
+      color: var(--background-color);
       font-size: 1.2rem;
       font-weight: bold;
       letter-spacing: 1px;
-      color: var(--background-color);
 
       &:hover {
         filter: brightness(1.2);

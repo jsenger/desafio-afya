@@ -1,25 +1,26 @@
 import styled from 'styled-components';
 
 export const SearchField = styled.form`
+  align-items: center;
   background-color: var(--main-color);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   margin: 0 auto;
   margin-top: 50px;
 
-  width: 50vw;
+  border-radius: 8px;
   min-width: 300px;
   padding: 1rem;
-  border-radius: 8px;
+  width: 70vw;
 
   label {
     color: var(--background-color);
     font-size: 1.2rem;
     letter-spacing: 1px;
-    margin-right: 10px;
+    margin-right: 1px;
+    flex: 1;
   }
 
   input[type="text"] {
