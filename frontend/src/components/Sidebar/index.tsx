@@ -136,6 +136,7 @@ export default function Sidebar(props: SideBarProps) {
         <Divider />
         <List className={classes.drawerList}>
           {[
+            { title: "Dashboard", url: "/dashboard" },
             { title: "Clientes", url: "/clients" },
             { title: "Especialistas", url: "/specialists" },
             { title: "Atendimentos", url: "/appointments" },
