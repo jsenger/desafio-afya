@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-export const TableContainer = styled.main`
+export const TableContainer = styled.div`
   margin: 0 auto;
+  margin-top: 50px;
   height: 50vh;
   overflow: auto;
+  width: 90%;
 
   border-radius: 8px;
 
