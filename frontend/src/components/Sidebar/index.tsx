@@ -1,38 +1,39 @@
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
-import Drawer from '@material-ui/core/Drawer';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { HiMenu } from 'react-icons/hi';
-import { AiOutlineClose } from 'react-icons/ai';
-import { IconContext } from 'react-icons';
-import { useState } from 'react';
+import clsx from "clsx";
+import { Link } from "react-router-dom";
+import Drawer from "@material-ui/core/Drawer";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import { HiMenu } from "react-icons/hi";
+import { AiOutlineClose } from "react-icons/ai";
+import { IconContext } from "react-icons";
+import { useState } from "react";
+import { useHistory } from "react-router";
 
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: "flex",
     },
     appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      backgroundColor: '#004AAD',
+      backgroundColor: "#004AAD",
     },
     menuButton: {
       marginRight: theme.spacing(2),
     },
     hide: {
-      display: 'none',
+      display: "none",
     },
     drawer: {
       width: drawerWidth,
@@ -40,39 +41,39 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerPaper: {
       width: drawerWidth,
-      color: '#ecebe4',
-      backgroundColor: '#004AAD',
+      color: "#ecebe4",
+      backgroundColor: "#004AAD",
     },
     drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
-      justifyContent: 'space-between',
+      justifyContent: "space-between",
     },
     drawerList: {
-      backgroundColor: '#004AAD',
-      display: 'flex',
+      backgroundColor: "#004AAD",
+      display: "flex",
       height: 400,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      gap: 20
+      flexDirection: "column",
+      justifyContent: "center",
+      gap: 20,
     },
     drawerListItems: {
-      color: '#ECEBE4',
-      fontFamily: 'Roboto',
+      color: "#ECEBE4",
+      fontFamily: "Roboto",
     },
     logoutItem: {
-      color: '#F4E04D',
+      color: "#F4E04D",
     },
     backdrop: {
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: 0,
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: '#000000a6',
+      width: "100vw",
+      height: "100vh",
+      backgroundColor: "#000000a6",
     },
   })
 );
@@ -84,6 +85,13 @@ interface SideBarProps {
 export default function Sidebar(props: SideBarProps) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+
+  const logout = () => {
+    localStorage.clear();
+    history.push("/login");
+  };
+
+  const history = useHistory();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -120,7 +128,7 @@ export default function Sidebar(props: SideBarProps) {
         <div className={classes.drawerHeader}>
           <img src="./img/vit_logo.svg" alt="Vitality logo" width="100px" />
           <IconButton onClick={handleDrawerClose}>
-            <IconContext.Provider value={{ color: '#ECEBE4' }}>
+            <IconContext.Provider value={{ color: "#ECEBE4" }}>
               <AiOutlineClose />
             </IconContext.Provider>
           </IconButton>
@@ -128,10 +136,10 @@ export default function Sidebar(props: SideBarProps) {
         <Divider />
         <List className={classes.drawerList}>
           {[
-            { title: 'Clientes', url: '/clients' },
-            { title: 'Especialistas', url: '/specialists' },
-            { title: 'Atendimentos', url: '/appointments' },
-            { title: 'Prontuários', url: '/records' },
+            { title: "Clientes", url: "/clients" },
+            { title: "Especialistas", url: "/specialists" },
+            { title: "Atendimentos", url: "/appointments" },
+            { title: "Prontuários", url: "/records" },
           ].map((item, index) => (
             <Link to={item.url} key={item.title}>
               <ListItem button>
@@ -146,12 +154,16 @@ export default function Sidebar(props: SideBarProps) {
         <Divider />
         <List>
           <ListItem button>
-            <ListItemText primary={'Logout'} className={classes.logoutItem} />
+            <ListItemText
+              primary={"Logout"}
+              className={classes.logoutItem}
+              onClick={logout}
+            />
           </ListItem>
         </List>
       </Drawer>
       <div
-        className={clsx('', {
+        className={clsx("", {
           [classes.backdrop]: open,
         })}
       ></div>
