@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@types/react-input-mask": "^3.0.0",
-    "react-input-mask": "^2.0.4"
-  }
-}
