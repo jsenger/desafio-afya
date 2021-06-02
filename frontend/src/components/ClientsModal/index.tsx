@@ -52,40 +52,51 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
 
   const clientSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
+      const form = e.currentTarget;
+
       e.preventDefault();
 
-      setIsLoading(true);
+      if (form.checkValidity()) {
+        setIsLoading(true);
 
-      api
-        .post('clients', formDataContent, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
-          },
-        })
-        .then(response => {
-          Swal.fire({
-            title: 'Sucesso!',
-            text: 'Cliente cadastrado com sucesso.',
-            icon: 'success',
-            confirmButtonText: 'Fechar',
-          });
-        })
-        .catch(err => {
-          Swal.fire({
-            title: 'Ops!',
-            text: 'Dados incorretos.',
-            icon: 'error',
-            confirmButtonText: 'Fechar',
-          });
-        })
-        .finally(() => setIsLoading(false));
+        api
+          .post('clients', formDataContent, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+            },
+          })
+          .then(response => {
+            Swal.fire({
+              title: 'Sucesso!',
+              text: 'Cliente cadastrado com sucesso.',
+              icon: 'success',
+              confirmButtonText: 'Fechar',
+            });
+          })
+          .catch(err => {
+            Swal.fire({
+              title: 'Ops!',
+              text: 'Dados incorretos.',
+              icon: 'error',
+              confirmButtonText: 'Fechar',
+            });
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        Swal.fire({
+          title: 'Ops!',
+          text: 'Verifique se todos os campos estão preenchidos corretamente.',
+          icon: 'error',
+          confirmButtonText: 'Fechar',
+        });
+      }
     },
     [formDataContent]
   );
 
   return (
     <ModalContainer className={state ? 'show' : ''}>
-      <form className="modal-content" onSubmit={clientSubmit}>
+      <form className="modal-content" onSubmit={clientSubmit} noValidate>
         <div className="modal-header">
           <h4>Cadastro de cliente</h4>
           <span className="close" onClick={handleModalClose}>
@@ -102,6 +113,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
               name="name"
               id="name"
               disabled={isLoading}
+              required
               onChange={e =>
                 setFormDataContent({
                   ...formDataContent,
@@ -120,6 +132,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 name="cpf"
                 id="cpf"
                 disabled={isLoading}
+                required
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -137,6 +150,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 name="phone"
                 id="phone"
                 disabled={isLoading}
+                required
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -154,6 +168,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 name="cellphone"
                 id="cellphone"
                 disabled={isLoading}
+                required
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -172,6 +187,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 name="email"
                 id="email"
                 disabled={isLoading}
+                required
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -188,6 +204,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
                 id="bloodType"
                 disabled={isLoading}
                 defaultValue={''}
+                required
                 onChange={e =>
                   setFormDataContent({
                     ...formDataContent,
@@ -208,11 +225,15 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
             </div>
           </div>
 
-          <AddressForm address={address} setAddress={setAddress} isLoading={isLoading} />
+          <AddressForm
+            address={address}
+            setAddress={setAddress}
+            isLoading={isLoading}
+          />
         </div>
 
         <div className="modal-footer">
-          <button type="submit" disabled={isLoading} >
+          <button type="submit" disabled={isLoading}>
             {isLoading ? 'Salvando...' : 'Salvar novo cliente'}
           </button>
         </div>
