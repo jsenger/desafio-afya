@@ -1,5 +1,8 @@
-import clsx from "clsx";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
+
+import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -9,11 +12,15 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+
+
 import { HiMenu } from "react-icons/hi";
+import { BiLogOut } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
+import { IoClose } from "react-icons/io5";
 import { IconContext } from "react-icons";
-import { useState } from "react";
-import { useHistory } from "react-router";
+
+import{ SideBarContainer } from './styles';
 
 const drawerWidth = 300;
 
@@ -111,7 +118,9 @@ export default function Sidebar(props: SideBarProps) {
             onClick={handleDrawerOpen}
             edge="start"
           >
+            <IconContext.Provider value={{ color: "#fff", size: '35px' }}>
             <HiMenu />
+            </IconContext.Provider>
           </IconButton>
           {props.title}
         </Toolbar>
@@ -128,8 +137,8 @@ export default function Sidebar(props: SideBarProps) {
         <div className={classes.drawerHeader}>
           <img src="./img/vit_logo.svg" alt="Vitality logo" width="100px" />
           <IconButton onClick={handleDrawerClose}>
-            <IconContext.Provider value={{ color: "#ECEBE4" }}>
-              <AiOutlineClose />
+            <IconContext.Provider value={{ color: "#fff", size: '35px' }}>
+              <IoClose />
             </IconContext.Provider>
           </IconButton>
         </div>
@@ -160,6 +169,9 @@ export default function Sidebar(props: SideBarProps) {
               className={classes.logoutItem}
               onClick={logout}
             />
+            <IconContext.Provider value={{ color: "#F4E04D", size: '2rem'}}>
+              <BiLogOut />
+            </IconContext.Provider>
           </ListItem>
         </List>
       </Drawer>

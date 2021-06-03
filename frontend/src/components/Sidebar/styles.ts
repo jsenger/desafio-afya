@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SideBarContainer = styled.main`
-  background-color: var(--main-color);
+  /* background-color: var(--main-color);
   width: 25%;
   min-width: 300px;
   height: 100vh;
@@ -47,11 +47,14 @@ export const SideBarContainer = styled.main`
     margin-left: 2rem;
     a{
     color: var(--main-button-color);
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 600;
     letter-spacing: 2px;
 
     text-decoration: none;
   }
-  }
+
+
+  } */
+
 `
