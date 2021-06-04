@@ -1,0 +1,13 @@
+{
+    "entryFile": "src/shared/infra/http/app.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": ["src/modules/**/services/*Service.ts"],
+    "spec": {
+      "outputDirectory": "public",
+      "specVersion": 3
+    },
+    "routes": {
+        "routesDir": "public"
+    },
+    "ignore": ["**/node_modules/**"]
+  }

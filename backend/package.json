@@ -5,10 +5,11 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts && concurrently \"ts-node-dev\" \"ts-node-dev -x tsoa spec\"",
     "typeorm": "ts-node-dev  -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "cross-env NODE_ENV=test jest",
-    "start": "node dist/shared/infra/http/server.js"
+    "start": "node dist/shared/infra/http/server.js",
+    "swagger": "tsoa spec"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -17,13 +18,16 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "csv-parse": "^4.15.4",
+    "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "pg": "^8.3.0",
-    "reflect-metadata": "^0.1.10",
+    "reflect-metadata": "^0.1.13",
+    "swagger-ui-express": "^4.1.6",
+    "tsoa": "^3.8.0",
     "tsyringe": "^4.2.0",
     "typeorm": "0.2.24",
     "utf8": "^3.0.0"
@@ -43,11 +47,13 @@
     "@types/multer": "^1.4.5",
     "@types/node": "^8.0.29",
     "@types/supertest": "^2.0.9",
+    "@types/swagger-ui-express": "^4.1.2",
     "@types/utf8": "^2.1.6",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "concurrently": "^6.2.0",
     "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -58,9 +64,9 @@
     "prettier": "^2.0.5",
     "supertest": "^4.0.2",
     "ts-jest": "^25.5.1",
-    "ts-node": "3.3.0",
-    "ts-node-dev": "^1.0.0-pre.44",
+    "ts-node": "9.1.1",
+    "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.8.3"
+    "typescript": "^4.3.2"
   }
 }

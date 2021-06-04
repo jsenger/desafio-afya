@@ -1,4 +1,6 @@
 import CreateUserService from '@modules/users/services/CreateUserService';
+import { Tags } from '@tsoa/runtime';
+import { Post, Route } from '@tsoa/runtime';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 

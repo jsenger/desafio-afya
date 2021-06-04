@@ -1,5 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
+import { Route, Post, Body } from 'tsoa';
+
 import AppError from "@shared/errors/AppError";
 
 import IUsersRepository from "../repositories/IUsersRepository";
@@ -8,6 +10,7 @@ import ICreateUserDTO from "../dtos/ICreateUserDTO";
 import User from "../infra/typeorm/entities/User";
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 
+@Route('/users')
 @injectable()
 class CreateUserService {
     constructor(
@@ -18,7 +21,8 @@ class CreateUserService {
         private hashProvider: IHashProvider
     ){}
 
-    public async execute({ name, login, password }: ICreateUserDTO): Promise<User> {
+    @Post('/')
+    public async execute(@Body() { name, login, password }: ICreateUserDTO): Promise<User> {
         const checkUserExists = await this.usersRepository.findByLogin(login);
 
         if (checkUserExists) {

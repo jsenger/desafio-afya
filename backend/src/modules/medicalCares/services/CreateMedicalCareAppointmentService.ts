@@ -1,3 +1,7 @@
+import { isBefore, startOfHour } from 'date-fns';
+
+import { Route, Post, Body } from 'tsoa';
+
 import AppError from '@shared/errors/AppError';
 import ISpecialistsRepository from '@modules/specialists/repositories/ISpecialistsRepository';
 import IClientsRepository from '@modules/clients/repositories/IClientsRepository';
@@ -6,6 +10,7 @@ import ICreateMedicalCareDTO from "../dtos/ICreateMedicalCareDTO";
 import MedicalCare from "../infra/typeorm/entities/MedicalCare";
 import IMedicalCaresRepository from "../repositories/IMedicalCaresRepository";
 
+@Route('medicalCares')
 @injectable()
 class CreateMedicalCareAppointmentService {
     constructor (
@@ -19,7 +24,14 @@ class CreateMedicalCareAppointmentService {
         private specialistsRepository: ISpecialistsRepository
     ) {}
     
-    public async execute({ appointment_date, date, amount, status, client_id, specialist_id }: ICreateMedicalCareDTO): Promise<MedicalCare> {
+    @Post('/')
+    public async execute(@Body() { appointment_date, date, amount, status, client_id, specialist_id }: ICreateMedicalCareDTO): Promise<MedicalCare> {
+        const appointmentDate = startOfHour(appointment_date);
+
+        if (isBefore(appointmentDate, Date.now())) {
+            throw new AppError("You can't create an appointment on a past date");
+        }
+
         const checkClientExists = await this.clientsRepository.findById(client_id);
 
         if (!checkClientExists) {

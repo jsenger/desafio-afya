@@ -3,11 +3,12 @@ import AppError from "@shared/errors/AppError";
 import Client from "../infra/typeorm/entities/Client";
 import IClientsRepository from "../repositories/IClientsRepository";
 import IAddressesRepository from "@modules/addresses/repositories/IAddressesRepository";
-import Address from "@modules/addresses/infra/typeorm/entities/Address";
 import IMedicalRecordsRepository from "@modules/medicalRecords/repositories/IMedicalRecordsRepository";
+import { Body, Post, Route } from "tsoa";
+import Address from "@modules/addresses/infra/typeorm/entities/Address";
 import MedicalRecords from "@modules/medicalRecords/infra/typeorm/entities/MedicalRecords";
 
-interface IRequest {
+interface ICreateClientRequest {
     name: string;
     cpf: string;
     phone: string;
@@ -22,12 +23,13 @@ interface IRequest {
     state: string;
 }
 
-interface IResponse {
+interface ICreateClientResponse {
     client: Client,
     address: Address,
     medicalRecords: MedicalRecords
 }
 
+@Route('/clients')
 @injectable()
 class CreateClientService {
     constructor(
@@ -41,7 +43,9 @@ class CreateClientService {
         private medicalRecordsRepository: IMedicalRecordsRepository
     ){}
 
-    public async execute({ 
+    @Post('/')
+    public async execute(
+        @Body() { 
         name, 
         cpf, 
         phone, 
@@ -54,7 +58,7 @@ class CreateClientService {
         neighborhood,
         city,
         state  
-    }: IRequest): Promise<IResponse> {
+    }: ICreateClientRequest): Promise<ICreateClientResponse> {
         const checkClientExists = await this.clientsRepository.findByCpf(cpf);
 
         if (checkClientExists) {

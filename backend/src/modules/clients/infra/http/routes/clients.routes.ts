@@ -9,6 +9,6 @@ const clientsController = new ClientsController();
 clientsRouter.use(ensureAuthenticated);
 
 clientsRouter.post('/', clientsController.create);
-clientsRouter.get('/', clientsController.listAll);
+clientsRouter.get('/', clientsController.list);
 
 export default clientsRouter;

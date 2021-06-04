@@ -1,6 +1,7 @@
 import ICreateClientDTO from "@modules/clients/dtos/ICreateClientDTO";
+import IListClientWithFilterDTO from "@modules/clients/dtos/IListClientWithFilterDTO";
 import IClientsRepository from "@modules/clients/repositories/IClientsRepository";
-import { Repository, getRepository } from "typeorm";
+import { Repository, getRepository, Like } from "typeorm";
 import Client from "../entities/Client";
 
 class ClientsRepository implements IClientsRepository {
@@ -9,7 +10,6 @@ class ClientsRepository implements IClientsRepository {
     constructor() {
         this.ormRepository = getRepository(Client);
     }
-
     
     async create(data: ICreateClientDTO): Promise<Client> {
         const client = this.ormRepository.create(data);
@@ -29,18 +29,44 @@ class ClientsRepository implements IClientsRepository {
         return findClient;
     }
     
-    async listAllClients(): Promise<Client[] | undefined> {
-        const findClients = await this.ormRepository.find();
-        
-        return findClients;
-    }
-    
-    async findById(id: string): Promise<Client> {
-        const findClient = await this.ormRepository.findOne(id);
+    async listClients({ name, cpf, email, blood_type, created_at }: IListClientWithFilterDTO): Promise<Client[] | undefined> {
+        if (
+            !name &&
+            !cpf &&
+            !email &&
+            !blood_type &&
+            !created_at
+            ) {
+                var findClient = await this.ormRepository.find();
+            } else {
+                var findClient = await this.ormRepository.find({
+                    where: [
+                        {name},
+                        {name: Like(`%${name}%`)},
+                        {name: Like(`${name}%`)},
+                        {name: Like(`%${name}`)},
+                        {cpf},
+                        {cpf: Like(`%${cpf}%`)},
+                        {cpf: Like(`${cpf}%`)},
+                        {cpf: Like(`%${cpf}`)},
+                        {email},
+                        {email: Like(`%${email}%`)},
+                        {email: Like(`${email}%`)},
+                        {email: Like(`%${email}`)},
+                        {blood_type},
+                        {created_at},
+                    ],
+                });
+            }
 
         return findClient;
     }
     
+    async findById(id: string): Promise<Client> {
+        const findClient = await this.ormRepository.findOne(id);
+        
+        return findClient;
+    }
 }
 
 export default ClientsRepository;

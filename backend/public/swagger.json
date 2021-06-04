@@ -1,0 +1,539 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IAddressModel": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"cep": {
+						"type": "string"
+					},
+					"street": {
+						"type": "string"
+					},
+					"number": {
+						"type": "number",
+						"format": "double"
+					},
+					"neighborhood": {
+						"type": "string"
+					},
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"cep",
+					"street",
+					"number",
+					"neighborhood",
+					"city",
+					"state",
+					"created_at",
+					"updated_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Client": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"cpf": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"cellphone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"blood_type": {
+						"type": "string"
+					},
+					"address_id": {
+						"type": "string"
+					},
+					"address": {
+						"$ref": "#/components/schemas/IAddressModel"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"cpf",
+					"name",
+					"phone",
+					"cellphone",
+					"email",
+					"blood_type",
+					"address_id",
+					"address",
+					"created_at",
+					"updated_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAddress": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"cep": {
+						"type": "string"
+					},
+					"street": {
+						"type": "string"
+					},
+					"number": {
+						"type": "number",
+						"format": "double"
+					},
+					"neighborhood": {
+						"type": "string"
+					},
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"cep",
+					"street",
+					"number",
+					"neighborhood",
+					"city",
+					"state",
+					"created_at",
+					"updated_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IMedicalRecords": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"opening_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"client_id": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"opening_date",
+					"client_id",
+					"created_at",
+					"updated_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ICreateClientResponse": {
+				"properties": {
+					"client": {
+						"$ref": "#/components/schemas/Client"
+					},
+					"address": {
+						"$ref": "#/components/schemas/IAddress"
+					},
+					"medicalRecords": {
+						"$ref": "#/components/schemas/IMedicalRecords"
+					}
+				},
+				"required": [
+					"client",
+					"address",
+					"medicalRecords"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ICreateClientRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"cpf": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"cellphone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"blood_type": {
+						"type": "string"
+					},
+					"cep": {
+						"type": "string"
+					},
+					"street": {
+						"type": "string"
+					},
+					"number": {
+						"type": "number",
+						"format": "double"
+					},
+					"neighborhood": {
+						"type": "string"
+					},
+					"city": {
+						"type": "string"
+					},
+					"state": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"cpf",
+					"phone",
+					"cellphone",
+					"email",
+					"blood_type",
+					"cep",
+					"street",
+					"number",
+					"neighborhood",
+					"city",
+					"state"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MedicalCare": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"appointment_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"AGENDADO",
+							"REALIZADO",
+							"CANCELADO"
+						]
+					},
+					"client_id": {
+						"type": "string"
+					},
+					"specialist_id": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"appointment_date",
+					"date",
+					"amount",
+					"status",
+					"client_id",
+					"specialist_id",
+					"created_at",
+					"updated_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ICreateMedicalCareDTO": {
+				"properties": {
+					"appointment_date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"AGENDADO",
+							"REALIZADO",
+							"CANCELADO"
+						]
+					},
+					"client_id": {
+						"type": "string"
+					},
+					"specialist_id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"appointment_date",
+					"date",
+					"amount",
+					"status",
+					"client_id",
+					"specialist_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"User": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"login": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"login",
+					"password",
+					"created_at",
+					"updated_at"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ICreateUserDTO": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"login": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"login",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "desafio-afya",
+		"version": "1.0.0",
+		"license": {
+			"name": "MIT"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/clients": {
+			"post": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ICreateClientResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ICreateClientRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Client"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/medicalCares": {
+			"post": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MedicalCare"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ICreateMedicalCareDTO"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users": {
+			"post": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ICreateUserDTO"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

@@ -42,10 +42,18 @@ export default class ClientsController {
         return response.json(client);
     }
 
-    public async listAll(request: Request, response: Response): Promise<Response> {
+    public async list(request: Request, response: Response): Promise<Response> {
+        const { name, cpf, email, blood_type, created_at } = request.query;
+
         const listClients = container.resolve(ListClientsService);
 
-        const clients = await listClients.execute();
+        const clients = await listClients.execute({
+            name,
+            cpf,
+            email,
+            blood_type,
+            created_at
+        });
 
         return response.json(clients);
     }
