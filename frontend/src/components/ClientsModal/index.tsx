@@ -32,12 +32,21 @@ interface ClientData {
   address: Address;
 }
 
+interface Client {
+  name: string;
+  email: string;
+  cellphone: string;
+  phone: string;
+}
+
 interface ClientsModalProps {
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
+  clients: Client[];
+  setClients: Dispatch<SetStateAction<Client[]>>;
 }
 
-const ClientsModal = ({ state, setState }: ClientsModalProps) => {
+const ClientsModal = ({ state, setState, clients, setClients }: ClientsModalProps) => {
   const [formDataContent, setFormDataContent] = useState<ClientData>(
     {} as ClientData
   );
@@ -66,6 +75,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
             },
           })
           .then(response => {
+            setClients([formDataContent, ...clients])
             Swal.fire({
               title: 'Sucesso!',
               text: 'Cliente cadastrado com sucesso.',
@@ -91,7 +101,7 @@ const ClientsModal = ({ state, setState }: ClientsModalProps) => {
         });
       }
     },
-    [formDataContent]
+    [formDataContent, clients, setClients]
   );
 
   return (
