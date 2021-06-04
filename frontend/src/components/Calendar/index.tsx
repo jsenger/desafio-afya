@@ -7,42 +7,21 @@ import { locale, loadMessages } from "devextreme/localization";
 
 const currentDate = new Date(2021, 2, 28);
 
-class Calendar extends React.Component  {
-  constructor(props: any) {
-    super(props);
-    loadMessages(ptMessages);
-    locale(navigator.language);
-}
-  render() {
+const Calendar: React.FC = () => {
+  loadMessages(ptMessages);
+  locale(navigator.language);
     return (
-        <CalendarContainer>
-           <Scheduler
-         timeZone="South_America/Sao_Paulo"
-         defaultCurrentView="week"
-         defaultCurrentDate={currentDate}
-         startDayHour={8}
+          <CalendarContainer>
+            <Scheduler
+            timeZone="South_America/Sao_Paulo"
+            defaultCurrentView="week"
+            defaultCurrentDate={currentDate}
+            startDayHour={8}
 
-         />
-        </CalendarContainer>
-       );
-  }
+            />
+          </CalendarContainer>
+          );
 }
-
-
-// const Calendar: React.FC = () => {
-//   return (
-//         <CalendarContainer loadMessages={ptMessages}
-//         locale={navigator.language}>
-//           <Scheduler
-//           timeZone="South_America/Sao_Paulo"
-//           defaultCurrentView="week"
-//           defaultCurrentDate={currentDate}
-//           startDayHour={8}
-
-//           />
-//         </CalendarContainer>
-//         );
-// }
 
 
 export default Calendar;
