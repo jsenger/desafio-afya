@@ -149,7 +149,7 @@ export default function Sidebar(props: SideBarProps) {
             { title: "Clientes", url: "/clients" },
             { title: "Especialistas", url: "/specialists" },
             { title: "Atendimentos", url: "/appointments" },
-            { title: "Prontuários", url: "/records" },
+            { title: "Prontuários", url: "/charts" },
           ].map((item, index) => (
             <Link to={item.url} key={item.title}>
               <ListItem button>
