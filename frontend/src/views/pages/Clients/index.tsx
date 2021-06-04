@@ -7,8 +7,16 @@ import Search from '../../../components/Search';
 
 import { ClientsContainer } from './styles';
 
+interface Client {
+  name: string;
+  email: string;
+  cellphone: string;
+  phone: string;
+}
+
 const Clients: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [clients, setClients] = useState<Array<Client>>([{} as Client]);
 
   const handleModalOpen = () => {
     setModalIsOpen(true);
@@ -24,9 +32,9 @@ const Clients: React.FC = () => {
           </button>
         </main>
         <Search title="Pesquisar Clientes:"/>
-        <ClientsTable />
+        <ClientsTable clients={clients} setClients={setClients} />
       </ClientsContainer>
-      <ClientsModal state={modalIsOpen} setState={setModalIsOpen} />
+      <ClientsModal state={modalIsOpen} setState={setModalIsOpen} clients={clients} setClients={setClients} />
     </>
   );
 };

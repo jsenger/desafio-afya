@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { api } from '../../../services/api';
@@ -11,8 +11,12 @@ interface Client {
   phone: string;
 }
 
-const ClientsTable: React.FC = () => {
-  const [clients, setClients] = useState<Array<Client>>([{} as Client]);
+interface ClientsTableProps {
+  clients: Client[];
+  setClients: Dispatch<SetStateAction<Client[]>>;
+}
+
+const ClientsTable = ({clients, setClients}: ClientsTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -34,7 +38,7 @@ const ClientsTable: React.FC = () => {
         }).then(response => window.location.reload());
       })
       .finally(() => setIsLoading(false));
-  },[]);
+  }, []);
 
   return (
     <TableContainer>
