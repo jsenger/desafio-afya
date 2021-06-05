@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://desafioafya.herokuapp.com/',
+  baseURL: 'https://desafioafya.herokuapp.com/',
 });
 
 export const viaCepApi = axios.create({
