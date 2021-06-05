@@ -160,6 +160,7 @@ const ClientsModal = ({
                 type="text"
                 name="cpf"
                 id="cpf"
+                pattern="^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$"
                 disabled={isLoading}
                 required
                 onChange={e =>
@@ -178,6 +179,7 @@ const ClientsModal = ({
                 type="text"
                 name="phone"
                 id="phone"
+                pattern="^\([0-9]{2}\) [0-9]{4}-[0-9]{4}$"
                 disabled={isLoading}
                 required
                 onChange={e =>
@@ -196,6 +198,7 @@ const ClientsModal = ({
                 type="text"
                 name="cellphone"
                 id="cellphone"
+                pattern="^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$"
                 disabled={isLoading}
                 required
                 onChange={e =>
