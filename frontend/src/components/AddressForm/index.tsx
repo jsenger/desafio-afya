@@ -10,43 +10,42 @@ interface AddressFormProps {
   isLoading: boolean;
 }
 
-
 const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
-
-  const [ cep, setCep ] = useState<string>('');
-  const [ isLoadingCep, setIsLoadingCep ] = useState<boolean>(false);
- useEffect(() => {
-  if(cep.length === 8) {
-    setIsLoadingCep(true)
-    viaCepApi.get(`${cep}/json`)
-  .then(response => {
-    setAddress({
-      ...address,
-      street: response.data.logradouro,
-      neighborhood: response.data.bairro,
-      city: response.data.localidade,
-      state: response.data.uf
-    })
-  })
-  .catch(err => {
-    setAddress({
-      ...address,
-      street: "",
-      neighborhood: "",
-      city: "",
-      state: ""
-    })
-    Swal.fire({
-      title: 'Ops!',
-              text: 'Verifique se o Cep digitado está correto!',
-              icon: 'error',
-              confirmButtonText: 'Fechar',
-              confirmButtonColor: '#ff312e'
-    }).finally(() => setIsLoadingCep(false))
-  }
-  )}
- }, [cep])
-
+  const [cep, setCep] = useState<string>('');
+  const [isLoadingCep, setIsLoadingCep] = useState<boolean>(false);
+  
+  useEffect(() => {
+    if (cep.length === 8) {
+      setIsLoadingCep(true);
+      viaCepApi
+        .get(`${cep}/json`)
+        .then(response => {
+          setAddress({
+            ...address,
+            street: response.data.logradouro,
+            neighborhood: response.data.bairro,
+            city: response.data.localidade,
+            state: response.data.uf,
+          });
+        })
+        .catch(err => {
+          setAddress({
+            ...address,
+            street: '',
+            neighborhood: '',
+            city: '',
+            state: '',
+          });
+          Swal.fire({
+            title: 'Ops!',
+            text: 'Verifique se o Cep digitado está correto!',
+            icon: 'error',
+            confirmButtonText: 'Fechar',
+            confirmButtonColor: '#ff312e',
+          }).finally(() => setIsLoadingCep(false));
+        });
+    }
+  }, [cep]);
 
   return (
     <>
@@ -62,15 +61,15 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             required
             pattern="^[0-9]{5}-[0-9]{3}$"
             disabled={isLoading}
-            onChange={e =>
-              {
-                setCep(e.target.value.replace(/-|_/g, ""))
-                console.log(cep)
-                setAddress({
+            value={address.cep}
+            onChange={e => {
+              setCep(e.target.value.replace(/-|_/g, ''));
+              console.log(cep);
+              setAddress({
                 ...address,
                 cep: e.target.value,
-              })}
-            }
+              });
+            }}
           />
         </div>
 

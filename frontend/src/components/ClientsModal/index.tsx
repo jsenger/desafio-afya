@@ -19,6 +19,8 @@ interface ClientsModalProps {
   setState: Dispatch<SetStateAction<boolean>>;
   clients: Client[];
   setClients: Dispatch<SetStateAction<Client[]>>;
+  currentClient: Client;
+  setCurrentClient: Dispatch<SetStateAction<Client>>;
 }
 
 const ClientsModal = ({
@@ -26,16 +28,17 @@ const ClientsModal = ({
   setState,
   clients,
   setClients,
+  currentClient,
+  setCurrentClient,
 }: ClientsModalProps) => {
-  const [formDataContent, setFormDataContent] = useState<Client>({} as Client);
-  const [address, setAddress] = useState<Address>({} as Address);
+  const [address, setAddress] = useState<Address>({ ...currentClient.address });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleModalClose = () => {
     setState(false);
   };
 
-  formDataContent.address = { ...address };
+  currentClient.address = { ...address };
 
   const clientSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -47,13 +50,13 @@ const ClientsModal = ({
         setIsLoading(true);
 
         api
-          .post('clients', formDataContent, {
+          .post('clients', currentClient, {
             headers: {
               authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
             },
           })
           .then(response => {
-            setClients([formDataContent, ...clients]);
+            setClients([currentClient, ...clients]);
             Swal.fire({
               title: 'Sucesso!',
               text: 'Cliente cadastrado com sucesso.',
@@ -93,7 +96,7 @@ const ClientsModal = ({
         });
       }
     },
-    [formDataContent, clients, setClients]
+    [currentClient, clients, setClients, address]
   );
 
   return (
@@ -115,10 +118,11 @@ const ClientsModal = ({
               name="name"
               id="name"
               disabled={isLoading}
+              value={currentClient.name || ''}
               required
               onChange={e =>
-                setFormDataContent({
-                  ...formDataContent,
+                setCurrentClient({
+                  ...currentClient,
                   name: e.target.value,
                 })
               }
@@ -133,12 +137,13 @@ const ClientsModal = ({
                 type="text"
                 name="cpf"
                 id="cpf"
+                value={currentClient.cpf || ''}
                 pattern="^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$"
                 disabled={isLoading}
                 required
                 onChange={e =>
-                  setFormDataContent({
-                    ...formDataContent,
+                  setCurrentClient({
+                    ...currentClient,
                     cpf: e.target.value,
                   })
                 }
@@ -152,12 +157,13 @@ const ClientsModal = ({
                 type="text"
                 name="phone"
                 id="phone"
+                value={currentClient.phone || ''}
                 pattern="^\([0-9]{2}\) [0-9]{4}-[0-9]{4}$"
                 disabled={isLoading}
                 required
                 onChange={e =>
-                  setFormDataContent({
-                    ...formDataContent,
+                  setCurrentClient({
+                    ...currentClient,
                     phone: e.target.value,
                   })
                 }
@@ -171,12 +177,13 @@ const ClientsModal = ({
                 type="text"
                 name="cellphone"
                 id="cellphone"
+                value={currentClient.cellphone || ''}
                 pattern="^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$"
                 disabled={isLoading}
                 required
                 onChange={e =>
-                  setFormDataContent({
-                    ...formDataContent,
+                  setCurrentClient({
+                    ...currentClient,
                     cellphone: e.target.value,
                   })
                 }
@@ -191,11 +198,12 @@ const ClientsModal = ({
                 type="email"
                 name="email"
                 id="email"
+                value={currentClient.email || ''}
                 disabled={isLoading}
                 required
                 onChange={e =>
-                  setFormDataContent({
-                    ...formDataContent,
+                  setCurrentClient({
+                    ...currentClient,
                     email: e.target.value,
                   })
                 }
@@ -209,10 +217,11 @@ const ClientsModal = ({
                 id="bloodType"
                 disabled={isLoading}
                 defaultValue={''}
+                value={currentClient.blood_type || ''}
                 required
                 onChange={e =>
-                  setFormDataContent({
-                    ...formDataContent,
+                  setCurrentClient({
+                    ...currentClient,
                     blood_type: e.target.value,
                   })
                 }

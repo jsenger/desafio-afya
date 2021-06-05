@@ -10,6 +10,7 @@ import { ClientsContainer } from './styles';
 import { Client } from '../../../types';
 
 const Clients: React.FC = () => {
+  const [currentClient, setCurrentClient] = useState<Client>({} as Client);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [clients, setClients] = useState<Client[]>([{} as Client]);
 
@@ -22,14 +23,37 @@ const Clients: React.FC = () => {
       <ClientsContainer>
         <Sidebar title="Clientes" />
         <main>
-          <button className="register-button" type="button" onClick={handleModalOpen}>
+          <button
+            className="register-button"
+            type="button"
+            onClick={() => {
+              handleModalOpen();
+              setCurrentClient({} as Client);
+            }}
+          >
             Cadastrar cliente
           </button>
         </main>
-        <Search title="Pesquisar Clientes:" endpoint="clients" setResult={setClients} />
-        <ClientsTable clients={clients} setClients={setClients} handleModalOpen={handleModalOpen} />
+        <Search
+          title="Pesquisar Clientes:"
+          endpoint="clients"
+          setResult={setClients}
+        />
+        <ClientsTable
+          clients={clients}
+          setClients={setClients}
+          handleModalOpen={handleModalOpen}
+          setCurrentClient={setCurrentClient}
+        />
       </ClientsContainer>
-      <ClientsModal state={modalIsOpen} setState={setModalIsOpen} clients={clients} setClients={setClients} />
+      <ClientsModal
+        state={modalIsOpen}
+        setState={setModalIsOpen}
+        clients={clients}
+        setClients={setClients}
+        currentClient={currentClient}
+        setCurrentClient={setCurrentClient}
+      />
     </>
   );
 };

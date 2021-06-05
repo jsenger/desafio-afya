@@ -9,12 +9,14 @@ interface ClientsTableProps {
   clients: Client[];
   setClients: Dispatch<SetStateAction<Client[]>>;
   handleModalOpen: () => void;
+  setCurrentClient: Dispatch<SetStateAction<Client>>;
 }
 
 const ClientsTable = ({
   clients,
   setClients,
   handleModalOpen,
+  setCurrentClient
 }: ClientsTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -29,7 +31,6 @@ const ClientsTable = ({
         setClients(response.data);
       })
       .catch(err => {
-        console.log(err);
         Swal.fire({
           title: 'Ops!',
           text: 'Houve um erro ao carregar seus dados.',
@@ -62,6 +63,7 @@ const ClientsTable = ({
                   key={index}
                   onClick={() => {
                     handleModalOpen();
+                    setCurrentClient(client);
                   }}
                 >
                   <td>{client.name}</td>
