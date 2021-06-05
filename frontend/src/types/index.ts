@@ -23,7 +23,7 @@ export interface Profession {
   phone: string;
   cellphone: string;
   email: string;
-  specialtie: string;
+  specialty: string;
 }
 
 export interface Specialist {
@@ -32,5 +32,5 @@ export interface Specialist {
   phone: string;
   cellphone: string;
   email: string;
-  specialtie: string;
+  specialty: string;
 }

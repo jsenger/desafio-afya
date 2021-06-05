@@ -123,14 +123,14 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                 <label htmlFor="email">Especialidade</label>
                 <input
                   className="form-control"
-                  type="specialtie"
-                  name="specialtie"
-                  id="specialtie"
+                  type="specialty"
+                  name="specialty"
+                  id="specialty"
                   disabled={isLoading}
                   onChange={e =>
                     setFormDataContent({
                       ...formDataContent,
-                      specialtie: e.target.value,
+                      specialty: e.target.value,
                     })
                   }
                 />
