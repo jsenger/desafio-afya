@@ -63,7 +63,7 @@ const ClientsModal = ({
               icon: 'success',
               confirmButtonText: 'Fechar',
               confirmButtonColor: '#004AAD',
-            });
+            }).then(() => handleModalClose);
           })
           .catch(err => {
             let errorMessage = '';
