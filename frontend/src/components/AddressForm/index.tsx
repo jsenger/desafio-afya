@@ -64,7 +64,6 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             value={address.cep}
             onChange={e => {
               setCep(e.target.value.replace(/-|_/g, ''));
-              console.log(cep);
               setAddress({
                 ...address,
                 cep: e.target.value,
