@@ -1,5 +1,12 @@
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { Form, FormGroup, FormControl, Row, Col, Button } from "react-bootstrap";
+import {
+  Form,
+  FormGroup,
+  FormControl,
+  Row,
+  Col,
+  Button,
+} from "react-bootstrap";
 import { ModalContainer } from "../../assets/ModalStyles";
 import { ChartModalContainer } from "./styles";
 
@@ -16,9 +23,11 @@ const ChartModal = ({ state, setState }: ChartsModalProps) => {
   return (
     <ChartModalContainer className={state ? "show" : ""}>
       <Form className="p-2 rounded">
-       <Button variant="dark" onClick={handleModalClose}>Fechar</Button>{' '}
-         <fieldset disabled>
-         <Row className="m-2">
+        <Button variant="dark" onClick={handleModalClose}>
+          Fechar
+        </Button>{" "}
+        <fieldset disabled>
+          <Row className="m-2">
             <Col>
               <Form.Control placeholder="Nome do paciente" />
             </Col>
@@ -30,14 +39,14 @@ const ChartModal = ({ state, setState }: ChartsModalProps) => {
             <Col>
               <Form.Control placeholder="Último atendimento" />
             </Col>
-            </Row>
-         </fieldset>
-          <Row className="m-2">
-            <Col>
-              <Form.Control as="textarea" placeholder="Queixa" />
-            </Col>
           </Row>
-        </Form>
+        </fieldset>
+        <Row className="m-2">
+          <Col>
+            <Form.Control as="textarea" placeholder="Queixa" />
+          </Col>
+        </Row>
+      </Form>
     </ChartModalContainer>
   );
 };

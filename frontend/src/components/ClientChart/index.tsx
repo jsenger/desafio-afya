@@ -18,7 +18,9 @@ const ClientChart: React.FC = () => {
           <small>Último atendimento: 12/05/2021</small>
         </div>
         <div className="chart-buttons">
-          <button type="button" onClick={handleChartOpen}>Prontuário</button>
+          <button type="button" onClick={handleChartOpen}>
+            Prontuário
+          </button>
           <button>Novo atendimento</button>
         </div>
       </div>
@@ -29,7 +31,9 @@ const ClientChart: React.FC = () => {
           <small>Último atendimento: 12/05/2021</small>
         </div>
         <div className="chart-buttons">
-          <button type="button" onClick={handleChartOpen}>Prontuário</button>
+          <button type="button" onClick={handleChartOpen}>
+            Prontuário
+          </button>
           <button>Novo atendimento</button>
         </div>
       </div>
@@ -40,13 +44,14 @@ const ClientChart: React.FC = () => {
           <small>Último atendimento: 12/05/2021</small>
         </div>
         <div className="chart-buttons">
-          <button type="button" onClick={handleChartOpen}>Prontuário</button>
+          <button type="button" onClick={handleChartOpen}>
+            Prontuário
+          </button>
           <button>Novo atendimento</button>
         </div>
       </div>
-      <ChartModal state={modalIsOpen} setState={setModalIsOpen}/>
+      <ChartModal state={modalIsOpen} setState={setModalIsOpen} />
     </ChartContainer>
-
   );
 };
 

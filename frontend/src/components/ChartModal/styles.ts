@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ChartModalContainer = styled.main`
-display: none;
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -17,12 +17,10 @@ display: none;
     display: block;
   }
 
-form {
-  background-color: var(--background-color);
-  margin: 0 auto;
-  margin-top: 100px;
-  width: 80vw;
-
-}
-
-`
+  form {
+    background-color: var(--background-color);
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 80vw;
+  }
+`;
