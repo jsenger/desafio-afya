@@ -46,7 +46,12 @@ interface ClientsModalProps {
   setClients: Dispatch<SetStateAction<Client[]>>;
 }
 
-const ClientsModal = ({ state, setState, clients, setClients }: ClientsModalProps) => {
+const ClientsModal = ({
+  state,
+  setState,
+  clients,
+  setClients,
+}: ClientsModalProps) => {
   const [formDataContent, setFormDataContent] = useState<ClientData>(
     {} as ClientData
   );
@@ -75,7 +80,7 @@ const ClientsModal = ({ state, setState, clients, setClients }: ClientsModalProp
             },
           })
           .then(response => {
-            setClients([formDataContent, ...clients])
+            setClients([formDataContent, ...clients]);
             Swal.fire({
               title: 'Sucesso!',
               text: 'Cliente cadastrado com sucesso.',
@@ -84,9 +89,20 @@ const ClientsModal = ({ state, setState, clients, setClients }: ClientsModalProp
             });
           })
           .catch(err => {
+            let errorMessage = '';
+
+            if (
+              err.response.data.message ===
+              'Client already booked with this cpf'
+            ) {
+              errorMessage = 'CPF já cadastrado.';
+            } else {
+              errorMessage = 'Dados incorretos.';
+            }
+
             Swal.fire({
               title: 'Ops!',
-              text: 'Dados incorretos.',
+              text: errorMessage,
               icon: 'error',
               confirmButtonText: 'Fechar',
             });
