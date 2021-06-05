@@ -33,4 +33,5 @@ export interface Specialist {
   cellphone: string;
   email: string;
   specialty: string;
+  address: Address;
 }
