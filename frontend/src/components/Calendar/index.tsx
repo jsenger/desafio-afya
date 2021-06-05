@@ -13,11 +13,11 @@ const Calendar: React.FC = () => {
   return (
     <CalendarContainer>
       <Scheduler
+        className="scheduler-table"
         defaultCurrentView="week"
         defaultCurrentDate={currentDate}
         startDayHour={8}
         endDayHour={19}
-        className="scheduler-table"
       />
     </CalendarContainer>
   );

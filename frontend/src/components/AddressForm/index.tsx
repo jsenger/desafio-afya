@@ -1,5 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import InputMask from 'react-input-mask';
+import Swal from 'sweetalert2';
+import { viaCepApi } from '../../services/api';
 import { Address } from '../../types';
 
 interface AddressFormProps {
@@ -8,7 +10,44 @@ interface AddressFormProps {
   isLoading: boolean;
 }
 
+
 const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
+
+  const [ cep, setCep ] = useState<string>('');
+  const [ isLoadingCep, setIsLoadingCep ] = useState<boolean>(false);
+ useEffect(() => {
+  if(cep.length === 8) {
+    setIsLoadingCep(true)
+    viaCepApi.get(`${cep}/json`)
+  .then(response => {
+    setAddress({
+      ...address,
+      street: response.data.logradouro,
+      neighborhood: response.data.bairro,
+      city: response.data.localidade,
+      state: response.data.uf
+    })
+  })
+  .catch(err => {
+    setAddress({
+      ...address,
+      street: "",
+      neighborhood: "",
+      city: "",
+      state: ""
+    })
+    Swal.fire({
+      title: 'Ops!',
+              text: 'Verifique se o Cep digitado está correto!',
+              icon: 'error',
+              confirmButtonText: 'Fechar',
+              confirmButtonColor: '#ff312e'
+    }).finally(() => setIsLoadingCep(false))
+  }
+  )}
+ }, [cep])
+
+
   return (
     <>
       <div className="form-row">
@@ -20,12 +59,17 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             type="text"
             name="cep"
             id="cep"
+            required
+            pattern="^[0-9]{5}-[0-9]{3}$"
             disabled={isLoading}
             onChange={e =>
-              setAddress({
+              {
+                setCep(e.target.value.replace(/-|_/g, ""))
+                console.log(cep)
+                setAddress({
                 ...address,
                 cep: e.target.value,
-              })
+              })}
             }
           />
         </div>
@@ -37,7 +81,9 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             type="text"
             name="street"
             id="street"
-            disabled={isLoading}
+            required
+            value={address.street}
+            disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({
                 ...address,
@@ -56,6 +102,7 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             name="number"
             id="number"
             min="1"
+            required
             disabled={isLoading}
             onChange={e =>
               setAddress({
@@ -72,7 +119,9 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             type="text"
             name="neighborhood"
             id="neighborhood"
-            disabled={isLoading}
+            required
+            value={address.neighborhood}
+            disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({
                 ...address,
@@ -90,7 +139,9 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             type="text"
             name="city"
             id="city"
-            disabled={isLoading}
+            required
+            value={address.city}
+            disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({
                 ...address,
@@ -103,9 +154,11 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
           <label htmlFor="state">Estado:</label>
           <select
             className="form-control"
+            required
             name="state"
             defaultValue={''}
-            disabled={isLoading}
+            value={address.state}
+            disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({
                 ...address,
