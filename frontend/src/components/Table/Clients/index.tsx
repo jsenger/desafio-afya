@@ -36,6 +36,7 @@ const ClientsTable = ({clients, setClients}: ClientsTableProps) => {
           text: 'Houve um erro ao carregar seus dados.',
           icon: 'error',
           confirmButtonText: 'Atualizar',
+          confirmButtonColor: '#ff312e'
         }).then(response => window.location.reload());
       })
       .finally(() => setIsLoading(false));

@@ -86,6 +86,7 @@ const ClientsModal = ({
               text: 'Cliente cadastrado com sucesso.',
               icon: 'success',
               confirmButtonText: 'Fechar',
+              confirmButtonColor: '#004AAD',
             });
           })
           .catch(err => {
@@ -105,6 +106,7 @@ const ClientsModal = ({
               text: errorMessage,
               icon: 'error',
               confirmButtonText: 'Fechar',
+              confirmButtonColor: '#ff312e',
             });
           })
           .finally(() => setIsLoading(false));
@@ -114,6 +116,7 @@ const ClientsModal = ({
           text: 'Verifique se todos os campos estão preenchidos corretamente.',
           icon: 'error',
           confirmButtonText: 'Fechar',
+          confirmButtonColor: '#ff312e',
         });
       }
     },

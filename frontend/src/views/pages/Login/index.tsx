@@ -41,6 +41,7 @@ const Login: React.FC = () => {
               text: 'Dados incorretos.',
               icon: 'error',
               confirmButtonText: 'Fechar',
+              confirmButtonColor: '#ff312e'
             });
           })
           .finally(() => setIsLoading(false));
@@ -50,6 +51,7 @@ const Login: React.FC = () => {
           text: 'Preencha todos os campos.',
           icon: 'error',
           confirmButtonText: 'Fechar',
+          confirmButtonColor: '#ff312e'
         });
       }
     },
