@@ -2,25 +2,8 @@ import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 import { ModalContainer } from '../../assets/ModalStyles';
 import { api } from '../../services/api';
+import { Address, Specialist } from '../../types';
 import AddressForm from '../AddressForm';
-
-interface Address {
-  cep: string;
-  street: string;
-  number: number;
-  neighborhood: string;
-  city: string;
-  state: string;
-}
-
-interface SpecialistData {
-  name: string;
-  register: string;
-  phone: string;
-  cellphone: string;
-  email: string;
-  specialtie: string;
-}
 
 interface SpecialistModalProps {
   state: boolean;
@@ -28,8 +11,8 @@ interface SpecialistModalProps {
 }
 
 const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
-  const [formDataContent, setFormDataContent] = useState<SpecialistData>(
-    {} as SpecialistData
+  const [formDataContent, setFormDataContent] = useState<Specialist>(
+    {} as Specialist
   );
   const [address, setAddress] = useState<Address>({} as Address);
   const [isLoading, setIsLoading] = useState<boolean>(false);

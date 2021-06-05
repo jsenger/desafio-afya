@@ -1,15 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import InputMask from 'react-input-mask';
-
-
-interface Address {
-  cep: string;
-  street: string;
-  number: number;
-  neighborhood: string;
-  city: string;
-  state: string;
-}
+import { Address } from '../../types';
 
 interface AddressFormProps {
   address: Address;

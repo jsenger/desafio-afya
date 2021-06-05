@@ -12,32 +12,7 @@ import { api } from '../../services/api';
 
 import { ModalContainer } from '../../assets/ModalStyles';
 import AddressForm from '../AddressForm';
-
-interface Address {
-  cep: string;
-  street: string;
-  number: number;
-  neighborhood: string;
-  city: string;
-  state: string;
-}
-
-interface ClientData {
-  name: string;
-  cpf: string;
-  phone: string;
-  cellphone: string;
-  blood_type: string;
-  email: string;
-  address: Address;
-}
-
-interface Client {
-  name: string;
-  email: string;
-  cellphone: string;
-  phone: string;
-}
+import { Address, Client } from '../../types';
 
 interface ClientsModalProps {
   state: boolean;
@@ -52,9 +27,7 @@ const ClientsModal = ({
   clients,
   setClients,
 }: ClientsModalProps) => {
-  const [formDataContent, setFormDataContent] = useState<ClientData>(
-    {} as ClientData
-  );
+  const [formDataContent, setFormDataContent] = useState<Client>({} as Client);
   const [address, setAddress] = useState<Address>({} as Address);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -266,7 +239,7 @@ const ClientsModal = ({
 
         <div className="modal-footer">
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Salvando...' : 'Salvar novo cliente'}
+            {isLoading ? 'Salvando...' : 'Salvar cliente'}
           </button>
         </div>
       </form>

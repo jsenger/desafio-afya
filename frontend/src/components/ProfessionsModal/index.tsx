@@ -2,17 +2,7 @@ import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import Swal from "sweetalert2";
 import { ModalContainer } from "../../assets/ModalStyles";
 import { api } from "../../services/api";
-
-
-
-interface ProfessionData {
-  name: string;
-  register: string;
-  phone: string;
-  cellphone: string;
-  email: string;
-  specialtie: string;
-}
+import { Profession } from '../../types';
 
 interface ProfessionModalProps {
   state: boolean;
@@ -20,8 +10,8 @@ interface ProfessionModalProps {
 }
 
 const ProfessionsModal = ({ state, setState }: ProfessionModalProps) => {
-  const [formDataContent, setFormDataContent] = useState<ProfessionData>(
-    {} as ProfessionData
+  const [formDataContent, setFormDataContent] = useState<Profession>(
+    {} as Profession
   );
 
   const handleModalClose = () => {
