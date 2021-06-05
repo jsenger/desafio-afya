@@ -96,7 +96,7 @@ const ClientsModal = ({
         });
       }
     },
-    [currentClient, clients, setClients, address]
+    [currentClient, clients, setClients]
   );
 
   return (
