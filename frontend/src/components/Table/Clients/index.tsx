@@ -30,6 +30,7 @@ const ClientsTable = ({clients, setClients}: ClientsTableProps) => {
         setClients(response.data);
       })
       .catch(err => {
+        console.log(err)
         Swal.fire({
           title: 'Ops!',
           text: 'Houve um erro ao carregar seus dados.',

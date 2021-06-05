@@ -8,6 +8,7 @@ import SpecialistsTable from "../../../components/Table/Specialists";
 import Search from "../../../components/Search";
 
 const Specialists: React.FC = () => {
+  const [specialists, setSpecialists] = useState<any>("");
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [modalTwoIsOpen, setModalTwoIsOpen] = useState<boolean>(false);
 
@@ -31,7 +32,7 @@ const Specialists: React.FC = () => {
           Cadastrar Especialidade
         </button>
       </main>
-      <Search title="Pesquisar especialistas:"/>
+      <Search title="Pesquisar especialistas:" endpoint="specialists" setResult={setSpecialists} />
       <SpecialistsTable />
     </SpecialistsContainer>
     <SpecialistsModal state={modalIsOpen} setState={setModalIsOpen} />

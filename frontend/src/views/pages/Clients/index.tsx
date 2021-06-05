@@ -31,7 +31,7 @@ const Clients: React.FC = () => {
             Cadastrar cliente
           </button>
         </main>
-        <Search title="Pesquisar Clientes:"/>
+        <Search title="Pesquisar Clientes:" endpoint="clients" setResult={setClients} />
         <ClientsTable clients={clients} setClients={setClients} />
       </ClientsContainer>
       <ClientsModal state={modalIsOpen} setState={setModalIsOpen} clients={clients} setClients={setClients} />
