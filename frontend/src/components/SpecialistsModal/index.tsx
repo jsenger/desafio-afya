@@ -1,4 +1,11 @@
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useCallback,
+  useState,
+} from 'react';
+import InputMask from 'react-input-mask';
 import Swal from 'sweetalert2';
 import { ModalContainer } from '../../assets/ModalStyles';
 import { api } from '../../services/api';
@@ -8,12 +15,20 @@ import AddressForm from '../AddressForm';
 interface SpecialistModalProps {
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
+  specialists: Specialist[];
+  setSpecialists: Dispatch<SetStateAction<Specialist[]>>;
+  currentSpecialist: Specialist;
+  setCurrentSpecialist: Dispatch<SetStateAction<Specialist>>;
 }
 
-const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
-  const [formDataContent, setFormDataContent] = useState<Specialist>(
-    {} as Specialist
-  );
+const SpecialistsModal = ({
+  state,
+  setState,
+  specialists,
+  setSpecialists,
+  currentSpecialist,
+  setCurrentSpecialist,
+}: SpecialistModalProps) => {
   const [address, setAddress] = useState<Address>({} as Address);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -21,9 +36,71 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
     setState(false);
   };
 
+  currentSpecialist.address = { ...address };
+
+  const specialistSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      const form = e.currentTarget;
+
+      e.preventDefault();
+      if (form.checkValidity()) {
+        setIsLoading(true);
+        console.log(currentSpecialist)
+        api
+          .post('specialists', currentSpecialist, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+            },
+          })
+          .then(response => {
+            console.log(response)
+            setSpecialists([currentSpecialist, ...specialists]);
+            Swal.fire({
+              title: 'Sucesso!',
+              text: 'Especialista cadastrado com sucesso.',
+              icon: 'success',
+              confirmButtonText: 'Fechar',
+              confirmButtonColor: '#004AAD',
+            });
+          })
+          .catch(err => {
+            console.log(err)
+            let errorMessage = '';
+
+            if (
+              err.response.data.message ===
+              'Client already booked with this cpf'
+            ) {
+              errorMessage = 'Registro já cadastrado.';
+            } else {
+              errorMessage = 'Dados incorretos.';
+            }
+
+            Swal.fire({
+              title: 'Ops!',
+              text: errorMessage,
+              icon: 'error',
+              confirmButtonText: 'Fechar',
+              confirmButtonColor: '#ff312e',
+            });
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        Swal.fire({
+          title: 'Ops!',
+          text: 'Verifique se todos os campos estão preenchidos corretamente.',
+          icon: 'error',
+          confirmButtonText: 'Fechar',
+          confirmButtonColor: '#ff312e',
+        });
+      }
+    },
+    [currentSpecialist, specialists, setSpecialists]
+  );
+
   return (
     <ModalContainer className={state ? 'show' : ''}>
-      <div className="modal-content">
+      <form className="modal-content" onSubmit={specialistSubmit} noValidate>
         <div className="modal-header">
           <h4>Cadastro de Especialista</h4>
           <span className="close" onClick={handleModalClose}>
@@ -41,9 +118,11 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                 name="name"
                 id="name"
                 disabled={isLoading}
+                value={currentSpecialist.name || ''}
+                required
                 onChange={e =>
-                  setFormDataContent({
-                    ...formDataContent,
+                  setCurrentSpecialist({
+                    ...currentSpecialist,
                     name: e.target.value,
                   })
                 }
@@ -58,9 +137,11 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   name="register"
                   id="register"
                   disabled={isLoading}
+                  value={currentSpecialist.register || ''}
+                  required
                   onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
+                    setCurrentSpecialist({
+                      ...currentSpecialist,
                       register: e.target.value,
                     })
                   }
@@ -69,15 +150,19 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
 
               <div className="form-group col-md-4">
                 <label htmlFor="phone">Telefone:</label>
-                <input
+                <InputMask
+                  mask="(99) 9999-9999"
                   className="form-control"
                   type="text"
                   name="phone"
                   id="phone"
                   disabled={isLoading}
+                  value={currentSpecialist.phone || ''}
+                  pattern="^\([0-9]{2}\) [0-9]{4}-[0-9]{4}$"
+                  required
                   onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
+                    setCurrentSpecialist({
+                      ...currentSpecialist,
                       phone: e.target.value,
                     })
                   }
@@ -86,15 +171,19 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
 
               <div className="form-group col-md-4">
                 <label htmlFor="cellphone">Celular:</label>
-                <input
+                <InputMask
+                  mask="(99) 99999-9999"
                   className="form-control"
                   type="text"
                   name="cellphone"
                   id="cellphone"
                   disabled={isLoading}
+                  value={currentSpecialist.cellphone || ''}
+                  pattern="^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$"
+                  required
                   onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
+                    setCurrentSpecialist({
+                      ...currentSpecialist,
                       cellphone: e.target.value,
                     })
                   }
@@ -110,9 +199,11 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   name="email"
                   id="email"
                   disabled={isLoading}
+                  value={currentSpecialist.email || ''}
+                  required
                   onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
+                    setCurrentSpecialist({
+                      ...currentSpecialist,
                       email: e.target.value,
                     })
                   }
@@ -127,10 +218,12 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
                   name="specialty"
                   id="specialty"
                   disabled={isLoading}
+                  value={currentSpecialist.profession_name || ''}
+                  required
                   onChange={e =>
-                    setFormDataContent({
-                      ...formDataContent,
-                      specialty: e.target.value,
+                    setCurrentSpecialist({
+                      ...currentSpecialist,
+                      profession_name: e.target.value,
                     })
                   }
                 />
@@ -145,11 +238,11 @@ const SpecialistsModal = ({ state, setState }: SpecialistModalProps) => {
         </div>
 
         <div className="modal-footer">
-          <button type="button">
+          <button type="submit">
             {isLoading ? 'Salvando...' : 'Salvar novo Especialista'}
           </button>
         </div>
-      </div>
+      </form>
     </ModalContainer>
   );
 };

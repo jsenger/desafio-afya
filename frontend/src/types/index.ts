@@ -32,6 +32,6 @@ export interface Specialist {
   phone: string;
   cellphone: string;
   email: string;
-  specialty: string;
+  profession_name: string;
   address: Address;
 }
