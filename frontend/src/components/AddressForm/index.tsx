@@ -13,7 +13,7 @@ interface AddressFormProps {
 const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
   const [cep, setCep] = useState<string>('');
   const [isLoadingCep, setIsLoadingCep] = useState<boolean>(false);
-  console.log(address)
+
   useEffect(() => {
     if (cep.length === 8) {
       setIsLoadingCep(true);

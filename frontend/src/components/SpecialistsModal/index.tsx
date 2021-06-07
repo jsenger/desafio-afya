@@ -46,7 +46,7 @@ const SpecialistsModal = ({
       e.preventDefault();
       if (form.checkValidity()) {
         setIsLoading(true);
-        console.log(currentSpecialist)
+
         api
           .post('specialists', currentSpecialist, {
             headers: {
