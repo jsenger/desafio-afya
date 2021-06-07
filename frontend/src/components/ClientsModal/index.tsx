@@ -14,6 +14,7 @@ import { api } from '../../services/api';
 import { ModalContainer } from '../../assets/ModalStyles';
 import AddressForm from '../AddressForm';
 import { Address, Client } from '../../types';
+import { logout } from '../../services/logout';
 
 interface ClientsModalProps {
   state: boolean;
@@ -70,7 +71,9 @@ const ClientsModal = ({
           .catch(err => {
             let errorMessage = '';
 
-            if (
+            if (err.response.data.message === 'Invalid JWT token') {
+              logout();
+            } else if (
               err.response.data.message ===
               'Client already booked with this cpf'
             ) {

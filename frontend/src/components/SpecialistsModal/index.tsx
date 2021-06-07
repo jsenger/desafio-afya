@@ -9,6 +9,7 @@ import InputMask from 'react-input-mask';
 import Swal from 'sweetalert2';
 import { ModalContainer } from '../../assets/ModalStyles';
 import { api } from '../../services/api';
+import { logout } from '../../services/logout';
 import { Address, Specialist } from '../../types';
 import AddressForm from '../AddressForm';
 
@@ -53,7 +54,6 @@ const SpecialistsModal = ({
             },
           })
           .then(response => {
-            console.log(response)
             setSpecialists([currentSpecialist, ...specialists]);
             Swal.fire({
               title: 'Sucesso!',
@@ -64,10 +64,11 @@ const SpecialistsModal = ({
             });
           })
           .catch(err => {
-            console.log(err)
             let errorMessage = '';
 
-            if (
+            if (err.response.data.message === 'Invalid JWT token') {
+              logout();
+            } else if (
               err.response.data.message ===
               'Client already booked with this cpf'
             ) {

@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { api } from '../../../services/api';
+import { logout } from '../../../services/logout';
 import { Client } from '../../../types';
 import { TableContainer } from './styles';
 
@@ -16,7 +17,7 @@ const ClientsTable = ({
   clients,
   setClients,
   handleModalOpen,
-  setCurrentClient
+  setCurrentClient,
 }: ClientsTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -31,13 +32,17 @@ const ClientsTable = ({
         setClients(response.data);
       })
       .catch(err => {
-        Swal.fire({
-          title: 'Ops!',
-          text: 'Houve um erro ao carregar seus dados.',
-          icon: 'error',
-          confirmButtonText: 'Atualizar',
-          confirmButtonColor: '#ff312e',
-        }).then(response => window.location.reload());
+        if (err.response.data.message === 'Invalid JWT token') {
+          logout();
+        } else {
+          Swal.fire({
+            title: 'Ops!',
+            text: 'Houve um erro ao carregar seus dados.',
+            icon: 'error',
+            confirmButtonText: 'Atualizar',
+            confirmButtonColor: '#ff312e',
+          }).then(response => window.location.reload());
+        }
       })
       .finally(() => setIsLoading(false));
   }, [setClients]);
