@@ -20,6 +20,7 @@ import { IoClose } from "react-icons/io5";
 import { IconContext } from "react-icons";
 
 import { SideBarContainer } from "./styles";
+import { logout } from "../../services/logout";
 
 const drawerWidth = 300;
 
@@ -91,13 +92,6 @@ interface SideBarProps {
 export default function Sidebar(props: SideBarProps) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-
-  const history = useHistory();
-
-  const logout = () => {
-    localStorage.clear();
-    history.push("/login");
-  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
