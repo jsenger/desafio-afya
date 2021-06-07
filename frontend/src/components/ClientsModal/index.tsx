@@ -3,6 +3,7 @@ import {
   FormEvent,
   SetStateAction,
   useCallback,
+  useEffect,
   useState,
 } from 'react';
 import Swal from 'sweetalert2';
@@ -31,14 +32,15 @@ const ClientsModal = ({
   currentClient,
   setCurrentClient,
 }: ClientsModalProps) => {
-  const [address, setAddress] = useState<Address>({ ...currentClient.address });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  
   const handleModalClose = () => {
     setState(false);
   };
 
-  currentClient.address = { ...address };
+  const setAddress = (address: Address) => {
+    setCurrentClient({...currentClient, address})
+  }
 
   const clientSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -240,7 +242,7 @@ const ClientsModal = ({
           </div>
 
           <AddressForm
-            address={address}
+            address={currentClient.address}
             setAddress={setAddress}
             isLoading={isLoading}
           />
