@@ -18,9 +18,15 @@ export const ChartModalContainer = styled.main`
   }
 
   form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     background-color: var(--background-color);
     margin: 0 auto;
     margin-top: 100px;
     width: 80vw;
+  }
+  .list {
+    background-color: transparent;
   }
 `;

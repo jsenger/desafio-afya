@@ -6,8 +6,10 @@ import {
   Row,
   Col,
   Button,
+  FormLabel,
+  ListGroupItem,
+  ListGroup,
 } from "react-bootstrap";
-import { ModalContainer } from "../../assets/ModalStyles";
 import { ChartModalContainer } from "./styles";
 
 interface ChartsModalProps {
@@ -41,6 +43,18 @@ const ChartModal = ({ state, setState }: ChartsModalProps) => {
             </Col>
           </Row>
         </fieldset>
+        <Row className="m-2">
+          <Col className="col-md-6">
+            <FormLabel>Atendimentos agendados</FormLabel>
+            <ListGroup variant="flush" className="rounded">
+              <ListGroupItem className="list">Atendimento</ListGroupItem>
+              <ListGroupItem className="list">Atendimento</ListGroupItem>
+              <ListGroupItem className="list">Atendimento</ListGroupItem>
+              <ListGroupItem className="list">Atendimento</ListGroupItem>
+              <ListGroupItem className="list">Atendimento</ListGroupItem>
+            </ListGroup>
+          </Col>
+        </Row>
         <Row className="m-2">
           <Col>
             <Form.Control as="textarea" placeholder="Queixa" />
