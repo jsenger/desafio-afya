@@ -10,5 +10,6 @@ clientsRouter.use(ensureAuthenticated);
 
 clientsRouter.post('/', clientsController.create);
 clientsRouter.get('/', clientsController.list);
+clientsRouter.put('/', clientsController.update);
 
 export default clientsRouter;

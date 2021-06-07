@@ -1,7 +1,7 @@
 import ICreateClientDTO from "@modules/clients/dtos/ICreateClientDTO";
 import IListClientWithFilterDTO from "@modules/clients/dtos/IListClientWithFilterDTO";
 import IClientsRepository from "@modules/clients/repositories/IClientsRepository";
-import { Repository, getRepository, Like } from "typeorm";
+import { Repository, getRepository, ILike } from "typeorm";
 import Client from "../entities/Client";
 
 class ClientsRepository implements IClientsRepository {
@@ -37,25 +37,19 @@ class ClientsRepository implements IClientsRepository {
             !blood_type &&
             !created_at
             ) {
-                var findClient = await this.ormRepository.find();
+                var findClient = await this.ormRepository.find({
+                    relations: ['address']
+                });
             } else {
                 var findClient = await this.ormRepository.find({
                     where: [
-                        {name},
-                        {name: Like(`%${name}%`)},
-                        {name: Like(`${name}%`)},
-                        {name: Like(`%${name}`)},
-                        {cpf},
-                        {cpf: Like(`%${cpf}%`)},
-                        {cpf: Like(`${cpf}%`)},
-                        {cpf: Like(`%${cpf}`)},
-                        {email},
-                        {email: Like(`%${email}%`)},
-                        {email: Like(`${email}%`)},
-                        {email: Like(`%${email}`)},
+                        {name: ILike(`%${name}%`)},
+                        {cpf: ILike(`%${cpf}%`)},
+                        {email: ILike(`%${email}%`)},
                         {blood_type},
                         {created_at},
                     ],
+                    relations: ['address']
                 });
             }
 
@@ -66,6 +60,10 @@ class ClientsRepository implements IClientsRepository {
         const findClient = await this.ormRepository.findOne(id);
         
         return findClient;
+    }
+
+    async save(client: Client): Promise<Client> {
+        return this.ormRepository.save(client);
     }
 }
 

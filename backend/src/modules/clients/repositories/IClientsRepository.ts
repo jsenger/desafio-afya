@@ -7,4 +7,5 @@ export default interface IClientsRepository {
     findByCpf(cpf: string): Promise<Client | undefined>;
     listClients(data?: IListClientWithFilterDTO): Promise<Client[] | undefined>;
     findById(id: string): Promise<Client | undefined>;
+    save(client: Client): Promise<Client>;
 }

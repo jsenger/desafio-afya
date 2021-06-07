@@ -18,6 +18,15 @@ class AddressesRepository implements IAddressesRepository {
         return address;
     }
 
+    async save(data: Address): Promise<Address> {
+        return this.ormRepository.save(data);
+    }
+
+    async findById(address_id: string): Promise<Address | undefined> {
+        const findAddress = await this.ormRepository.findOne(address_id);
+
+        return findAddress;
+    }
 }
 
 export default AddressesRepository;

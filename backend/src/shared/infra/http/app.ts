@@ -5,6 +5,7 @@ import 'express-async-errors';
 import cors from 'cors';
 
 import swaggerUi from 'swagger-ui-express';
+import swaggerJson from './swagger.json';
 
 import AppError from '@shared/errors/AppError';
 import createConnection from '@shared/infra/typeorm';
@@ -18,16 +19,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
 
 app.use(
   "/docs",
   swaggerUi.serve,
-  swaggerUi.setup(undefined, {
-    swaggerOptions: {
-      url: "/swagger.json",
-    },
-  })
+  swaggerUi.setup(swaggerJson)
 );
   
 app.use(routes);
