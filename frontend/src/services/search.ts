@@ -2,14 +2,20 @@ import { api } from './api';
 
 interface SearchParams {
   endpoint: string;
-  params: string;
+  searchQuery: string;
 }
 
-export const search = ({ endpoint, params }: SearchParams) => {
+export const search = ({ endpoint, searchQuery }: SearchParams) => {
   return api
-    .get(`${endpoint}?name=${params}`, {
+    .get(endpoint, {
       headers: {
         authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+      },
+      params: {
+        name: searchQuery,
+        email: searchQuery,
+        cpf: searchQuery,
+        register: searchQuery,
       },
     })
     .then(response => response);
