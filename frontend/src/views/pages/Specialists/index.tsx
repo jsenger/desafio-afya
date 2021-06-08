@@ -53,7 +53,12 @@ const Specialists: React.FC = () => {
           endpoint="specialists"
           setResult={setSpecialists}
         />
-        <SpecialistsTable />
+        <SpecialistsTable
+          specialists={specialists}
+          setSpecialists={setSpecialists}
+          handleModalOpen={handleSpecialistModalOpen}
+          setCurrentSpecialist={setCurrentSpecialist}
+        />
       </SpecialistsContainer>
       <SpecialistsModal
         state={specialistModalIsOpen}
