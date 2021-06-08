@@ -82,7 +82,7 @@ const SpecialistsModal = ({
               logout();
             } else if (
               err.response.data.message ===
-              'Client already booked with this cpf'
+              'Specialist already booked with this register'
             ) {
               errorMessage = 'Registro já cadastrado.';
             } else {
