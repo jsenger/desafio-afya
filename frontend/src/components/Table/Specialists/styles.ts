@@ -35,5 +35,9 @@ export const TableContainer = styled.div`
       color: var(--background-color);
       letter-spacing: 1px;
     }
+
+    tbody tr {
+      cursor: pointer;
+    }
   }
 `;
