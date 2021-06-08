@@ -21,6 +21,8 @@ const SpecialistsTable = ({
 }: SpecialistsTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  console.log(specialists);
+
   useEffect(() => {
     api
       .get('specialists', {
@@ -29,7 +31,14 @@ const SpecialistsTable = ({
         },
       })
       .then(response => {
-        setSpecialists(response.data);
+        setSpecialists(
+          response.data.map((specialist: any) => {
+            return {
+              ...specialist,
+              profession_name: specialist.profession.name,
+            };
+          })
+        );
       })
       .catch(err => {
         if (err.response.data.message === 'Invalid JWT token') {
