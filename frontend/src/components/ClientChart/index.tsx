@@ -16,7 +16,7 @@ const ClientChart: React.FC = () => {
         <div className="chart-content">
           <h1>Luciana Oliveira da Cunha</h1>
           <h2>Idade: 25 anos, 2 meses, 3 dias</h2>
-          <small>Último atendimento: 12/05/2021</small>
+          <small>Data de entrada: 12/05/2021</small>
         </div>
         <div className="chart-buttons">
           <button type="button" onClick={handleChartOpen}>

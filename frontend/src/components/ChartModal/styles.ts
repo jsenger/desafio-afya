@@ -25,6 +25,12 @@ export const ChartModalContainer = styled.main`
     margin-top: 100px;
     width: 80vw;
 
+    label {
+      color: var(--main-color);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
     .chart-header {
       flex: 1;
       display: flex;
@@ -75,8 +81,18 @@ export const ChartModalContainer = styled.main`
     }
 
     button {
-      color: var(--secondary-color);
+      color: var(--background-color);
       font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+
+      width: 100%;
+    }
+
+    .card-body {
+      h4 {
+        font-weight: 600;
+      }
     }
   }
 `;
