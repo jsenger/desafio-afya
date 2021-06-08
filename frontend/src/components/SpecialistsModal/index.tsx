@@ -258,7 +258,12 @@ const SpecialistsModal = ({
                       profession_name: e?.value || '',
                     });
                   }}
-                  formatCreateLabel={(label: string) => `Criar ${label}`}
+                  formatCreateLabel={(label: string) => `Criar ${label}`}styles={{
+                    option: base => ({
+                      ...base,
+                      color: '#333',
+                    }),
+                  }}
                 />
               </div>
             </div>
