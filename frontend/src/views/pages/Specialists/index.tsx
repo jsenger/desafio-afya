@@ -18,14 +18,15 @@ const Specialists: React.FC = () => {
   const [specialistModalIsOpen, setSpecialistModalIsOpen] =
     useState<boolean>(false);
 
-  const [modalTwoIsOpen, setModalTwoIsOpen] = useState<boolean>(false);
+  const [professionModalIsOpen, setProfessionModalIsOpen] =
+    useState<boolean>(false);
 
   const handleSpecialistModalOpen = () => {
     setSpecialistModalIsOpen(true);
   };
 
-  const handleModalTwoOpen = () => {
-    setModalTwoIsOpen(true);
+  const handleProfessionModalOpen = () => {
+    setProfessionModalIsOpen(true);
   };
 
   return (
@@ -46,7 +47,7 @@ const Specialists: React.FC = () => {
           <button
             className="special-button"
             type="button"
-            onClick={handleModalTwoOpen}
+            onClick={handleProfessionModalOpen}
           >
             Cadastrar Especialidade
           </button>
@@ -71,7 +72,10 @@ const Specialists: React.FC = () => {
         currentSpecialist={currentSpecialist}
         setCurrentSpecialist={setCurrentSpecialist}
       />
-      <ProfessionsModal state={modalTwoIsOpen} setState={setModalTwoIsOpen} />
+      <ProfessionsModal
+        state={professionModalIsOpen}
+        setState={setProfessionModalIsOpen}
+      />
     </>
   );
 };

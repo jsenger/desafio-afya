@@ -18,7 +18,7 @@ export interface Client {
 }
 
 export interface Profession {
-  id: string;
+  id?: string;
   name: string;
 }
 
