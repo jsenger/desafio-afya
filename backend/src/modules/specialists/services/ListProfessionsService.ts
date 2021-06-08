@@ -9,7 +9,7 @@ class ListProfessionsService {
         private professionsRepository: IProfessionsRepository
     ) {}
 
-    public async execute(): Promise<Profession[]> {
+    public async execute(): Promise<Profession[] | undefined> {
         const professions = await this.professionsRepository.list();
 
         return professions;

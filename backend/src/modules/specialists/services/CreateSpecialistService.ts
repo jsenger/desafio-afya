@@ -19,7 +19,7 @@ interface IRequest {
     neighborhood: string;
     city: string;
     state: string;
-    profession_name;
+    profession_name: string;
 }
 
 interface IResponse {

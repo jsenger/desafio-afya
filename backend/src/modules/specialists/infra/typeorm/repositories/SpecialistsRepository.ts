@@ -1,6 +1,7 @@
 import ICreateSpecialistDTO from "@modules/specialists/dtos/ICreateSpecialistDTO";
+import IListSpecialistWithFilterDTO from "@modules/specialists/dtos/IListSpecialistWithFilterDTO";
 import ISpecialistsRepository from "@modules/specialists/repositories/ISpecialistsRepository";
-import { Repository, getRepository } from "typeorm";
+import { Repository, getRepository, ILike } from "typeorm";
 import Specialist from "../entities/Specialist";
 
 class SpecialistsRepository implements ISpecialistsRepository {
@@ -30,6 +31,31 @@ class SpecialistsRepository implements ISpecialistsRepository {
     
     async findById(id: string): Promise<Specialist | undefined> {
         const findSpecialist = await this.ormRepository.findOne(id);
+        
+        return findSpecialist;
+    }
+    
+    async list({ name, register, email, created_at }: IListSpecialistWithFilterDTO): Promise<Specialist[] | undefined> {
+        if (
+            !name &&
+            !register &&
+            !email &&
+            !created_at
+            ) {
+                var findSpecialist = await this.ormRepository.find({
+                    relations: ['address']
+                });
+            } else {
+                var findSpecialist = await this.ormRepository.find({
+                    where: [
+                        {name: ILike(`%${name}%`)},
+                        {register: ILike(`%${register}%`)},
+                        {email: ILike(`%${email}%`)},
+                        {created_at},
+                    ],
+                    relations: ['address']
+                });
+            }
 
         return findSpecialist;
     }

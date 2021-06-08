@@ -3,7 +3,6 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "strictPropertyInitialization": false,
     "allowJs": true,
@@ -20,8 +19,9 @@
       ]
     },
     "esModuleInterop": true,
-    "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }

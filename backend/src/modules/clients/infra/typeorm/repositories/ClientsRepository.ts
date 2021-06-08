@@ -56,7 +56,7 @@ class ClientsRepository implements IClientsRepository {
         return findClient;
     }
     
-    async findById(id: string): Promise<Client> {
+    async findById(id: string): Promise<Client | undefined> {
         const findClient = await this.ormRepository.findOne(id);
         
         return findClient;

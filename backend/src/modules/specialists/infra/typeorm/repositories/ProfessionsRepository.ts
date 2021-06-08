@@ -17,7 +17,7 @@ class ProfessionsRepository implements IProfessionsRepository {
         return profession;
     }
     
-    async findByName(name: string): Promise<Profession> {
+    async findByName(name: string): Promise<Profession | undefined> {
         const profession = await this.ormRepository.findOne({
             where: {
                 name

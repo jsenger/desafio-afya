@@ -9,5 +9,6 @@ const specialistsController = new SpecialistsController();
 specialistsRouter.use(ensureAuthenticated);
 
 specialistsRouter.post('/', specialistsController.create);
+specialistsRouter.get('/', specialistsController.list);
 
 export default specialistsRouter;
