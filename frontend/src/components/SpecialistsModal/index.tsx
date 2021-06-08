@@ -3,14 +3,17 @@ import {
   FormEvent,
   SetStateAction,
   useCallback,
+  useEffect,
   useState,
 } from 'react';
 import InputMask from 'react-input-mask';
 import Swal from 'sweetalert2';
 import { ModalContainer } from '../../assets/ModalStyles';
 import { api } from '../../services/api';
-import { Address, Specialist } from '../../types';
+import { logout } from '../../services/logout';
+import { Address, Specialist, Profession } from '../../types';
 import AddressForm from '../AddressForm';
+import Creatable from 'react-select/creatable';
 
 interface SpecialistModalProps {
   state: boolean;
@@ -19,6 +22,11 @@ interface SpecialistModalProps {
   setSpecialists: Dispatch<SetStateAction<Specialist[]>>;
   currentSpecialist: Specialist;
   setCurrentSpecialist: Dispatch<SetStateAction<Specialist>>;
+}
+
+interface ProfessionOption {
+  value: string;
+  label: string;
 }
 
 const SpecialistsModal = ({
@@ -31,6 +39,9 @@ const SpecialistsModal = ({
 }: SpecialistModalProps) => {
   const [address, setAddress] = useState<Address>({} as Address);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [professions, setProfessions] = useState<ProfessionOption[]>([
+    {} as ProfessionOption,
+  ]);
 
   const handleModalClose = () => {
     setState(false);
@@ -45,7 +56,7 @@ const SpecialistsModal = ({
       e.preventDefault();
       if (form.checkValidity()) {
         setIsLoading(true);
-        console.log(currentSpecialist)
+
         api
           .post('specialists', currentSpecialist, {
             headers: {
@@ -53,7 +64,6 @@ const SpecialistsModal = ({
             },
           })
           .then(response => {
-            console.log(response)
             setSpecialists([currentSpecialist, ...specialists]);
             Swal.fire({
               title: 'Sucesso!',
@@ -64,10 +74,11 @@ const SpecialistsModal = ({
             });
           })
           .catch(err => {
-            console.log(err)
             let errorMessage = '';
 
-            if (
+            if (err.response.data.message === 'Invalid JWT token') {
+              logout();
+            } else if (
               err.response.data.message ===
               'Client already booked with this cpf'
             ) {
@@ -97,6 +108,22 @@ const SpecialistsModal = ({
     },
     [currentSpecialist, specialists, setSpecialists]
   );
+
+  useEffect(() => {
+    api
+      .get('professions', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+        },
+      })
+      .then(response => {
+        setProfessions(
+          response.data.map((profession: Profession) => {
+            return { value: profession.name, label: profession.name };
+          })
+        );
+      });
+  }, []);
 
   return (
     <ModalContainer className={state ? 'show' : ''}>
@@ -211,21 +238,27 @@ const SpecialistsModal = ({
               </div>
 
               <div className="form-group col-md-4">
-                <label htmlFor="email">Especialidade</label>
-                <input
-                  className="form-control"
+                <label htmlFor="specialty">Especialidade</label>
+                <Creatable
+                  options={professions}
                   type="specialty"
                   name="specialty"
                   id="specialty"
                   disabled={isLoading}
-                  value={currentSpecialist.profession_name || ''}
+                  value={
+                    {
+                      value: currentSpecialist.profession_name,
+                      label: currentSpecialist.profession_name,
+                    } || ''
+                  }
                   required
-                  onChange={e =>
+                  onChange={(e: any) => {
                     setCurrentSpecialist({
                       ...currentSpecialist,
-                      profession_name: e.target.value,
-                    })
-                  }
+                      profession_name: e?.value || '',
+                    });
+                  }}
+                  formatCreateLabel={(label: string) => `Criar ${label}`}
                 />
               </div>
             </div>

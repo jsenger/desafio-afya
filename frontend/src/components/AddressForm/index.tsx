@@ -6,14 +6,14 @@ import { Address } from '../../types';
 
 interface AddressFormProps {
   address: Address;
-  setAddress: Dispatch<SetStateAction<Address>>;
+  setAddress: (address: Address) => void;
   isLoading: boolean;
 }
 
 const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
   const [cep, setCep] = useState<string>('');
   const [isLoadingCep, setIsLoadingCep] = useState<boolean>(false);
-  
+
   useEffect(() => {
     if (cep.length === 8) {
       setIsLoadingCep(true);
@@ -61,7 +61,7 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             required
             pattern="^[0-9]{5}-[0-9]{3}$"
             disabled={isLoading}
-            value={address.cep}
+            value={address?.cep || ''}
             onChange={e => {
               setCep(e.target.value.replace(/-|_/g, ''));
               setAddress({
@@ -80,7 +80,7 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             name="street"
             id="street"
             required
-            value={address.street}
+            value={address?.street || ''}
             disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({
@@ -101,6 +101,7 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             id="number"
             min="1"
             required
+            value={address?.number || ''}
             disabled={isLoading}
             onChange={e =>
               setAddress({
@@ -118,7 +119,7 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             name="neighborhood"
             id="neighborhood"
             required
-            value={address.neighborhood}
+            value={address?.neighborhood || ''}
             disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({
@@ -138,7 +139,7 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             name="city"
             id="city"
             required
-            value={address.city}
+            value={address?.city || ''}
             disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({
@@ -155,7 +156,7 @@ const AddressForm = ({ address, setAddress, isLoading }: AddressFormProps) => {
             required
             name="state"
             defaultValue={''}
-            value={address.state}
+            value={address?.state || ''}
             disabled={isLoading && isLoadingCep}
             onChange={e =>
               setAddress({

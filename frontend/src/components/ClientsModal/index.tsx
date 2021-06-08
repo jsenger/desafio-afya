@@ -3,6 +3,7 @@ import {
   FormEvent,
   SetStateAction,
   useCallback,
+  useEffect,
   useState,
 } from 'react';
 import Swal from 'sweetalert2';
@@ -13,6 +14,7 @@ import { api } from '../../services/api';
 import { ModalContainer } from '../../assets/ModalStyles';
 import AddressForm from '../AddressForm';
 import { Address, Client } from '../../types';
+import { logout } from '../../services/logout';
 
 interface ClientsModalProps {
   state: boolean;
@@ -31,14 +33,15 @@ const ClientsModal = ({
   currentClient,
   setCurrentClient,
 }: ClientsModalProps) => {
-  const [address, setAddress] = useState<Address>({ ...currentClient.address });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  
   const handleModalClose = () => {
     setState(false);
   };
 
-  currentClient.address = { ...address };
+  const setAddress = (address: Address) => {
+    setCurrentClient({...currentClient, address})
+  }
 
   const clientSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -63,12 +66,14 @@ const ClientsModal = ({
               icon: 'success',
               confirmButtonText: 'Fechar',
               confirmButtonColor: '#004AAD',
-            });
+            }).then(() => handleModalClose);
           })
           .catch(err => {
             let errorMessage = '';
 
-            if (
+            if (err.response.data.message === 'Invalid JWT token') {
+              logout();
+            } else if (
               err.response.data.message ===
               'Client already booked with this cpf'
             ) {
@@ -240,7 +245,7 @@ const ClientsModal = ({
           </div>
 
           <AddressForm
-            address={address}
+            address={currentClient.address}
             setAddress={setAddress}
             isLoading={isLoading}
           />

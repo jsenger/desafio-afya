@@ -18,12 +18,8 @@ export interface Client {
 }
 
 export interface Profession {
+  id: string;
   name: string;
-  register: string;
-  phone: string;
-  cellphone: string;
-  email: string;
-  specialty: string;
 }
 
 export interface Specialist {
