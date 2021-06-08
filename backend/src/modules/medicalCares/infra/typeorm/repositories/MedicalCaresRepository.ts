@@ -10,12 +10,23 @@ class MedicalCaresRepository implements IMedicalCaresRepository {
         this.ormRepository = getRepository(MedicalCare);
     }
 
-    async create(data: ICreateMedicalCareDTO): Promise<MedicalCare> {
+    public async create(data: ICreateMedicalCareDTO): Promise<MedicalCare> {
         const medicalCare = this.ormRepository.create(data);
 
         await this.ormRepository.save(medicalCare);
 
         return medicalCare;
+    }
+
+    public async findByDate(date: Date, specialist_id: string): Promise<MedicalCare | undefined> {
+        const findMedicalCare = await this.ormRepository.findOne({
+            where: {
+                date,
+                specialist_id
+            },
+        });
+
+        return findMedicalCare;
     }
 }
 

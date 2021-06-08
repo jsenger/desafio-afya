@@ -1,7 +1,5 @@
 import { isBefore, startOfHour } from 'date-fns';
 
-import { Route, Post, Body } from 'tsoa';
-
 import AppError from '@shared/errors/AppError';
 import ISpecialistsRepository from '@modules/specialists/repositories/ISpecialistsRepository';
 import IClientsRepository from '@modules/clients/repositories/IClientsRepository';
@@ -10,7 +8,14 @@ import ICreateMedicalCareDTO from "../dtos/ICreateMedicalCareDTO";
 import MedicalCare from "../infra/typeorm/entities/MedicalCare";
 import IMedicalCaresRepository from "../repositories/IMedicalCaresRepository";
 
-@Route('medicalCares')
+interface IRequest {
+    date: Date;
+    amount: number;
+    status: 'AGENDADO' | 'REALIZADO' | 'CANCELADO';
+    client_id: string;
+    specialist_id: string; 
+}
+
 @injectable()
 class CreateMedicalCareAppointmentService {
     constructor (
@@ -24,9 +29,8 @@ class CreateMedicalCareAppointmentService {
         private specialistsRepository: ISpecialistsRepository
     ) {}
     
-    @Post('/')
-    public async execute(@Body() { appointment_date, date, amount, status, client_id, specialist_id }: ICreateMedicalCareDTO): Promise<MedicalCare> {
-        const appointmentDate = startOfHour(appointment_date);
+    public async execute({ date, amount, status, client_id, specialist_id }: IRequest): Promise<MedicalCare> {
+        const appointmentDate = startOfHour(date);
 
         if (isBefore(appointmentDate, Date.now())) {
             throw new AppError("You can't create an appointment on a past date");
@@ -43,6 +47,14 @@ class CreateMedicalCareAppointmentService {
         if (!checkSpecialistExists) {
             throw new AppError('Specialist not found');
         }
+
+        const findMedicalCareAppointmentInSameDate = await this.medicalCaresRepository.findByDate(appointmentDate, specialist_id);
+
+        if (findMedicalCareAppointmentInSameDate) {
+            throw new AppError('This appointment is already booked');
+        }
+
+        const appointment_date = new Date();
         
         const medicalCareAppointment = await this.medicalCaresRepository.create({
             appointment_date,

@@ -896,6 +896,132 @@
                         }
                     }
                 }
+            },
+            "get": {
+                "tags": ["Specialist"],
+                "sumary": "List Specialists",
+                "description": "List the specialists with or without filter",
+                "responses": {
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "status": "error",
+                                        "message": ["JWT token is missing", "Invalid JWT token"]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "specialist": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "register": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "phone": {
+                                                        "type": "string"
+                                                    },
+                                                    "cellphone": {
+                                                        "type": "string"
+                                                    },
+                                                    "email": {
+                                                        "type": "string"
+                                                    },
+                                                    "professions_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "address_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "timestamp"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "timestamp"
+                                                    }
+                                                }
+                                            },
+                                            "address": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "cep": {
+                                                        "type": "string"
+                                                    },
+                                                    "street": {
+                                                        "type": "string"
+                                                    },
+                                                    "number": {
+                                                        "type": "number"
+                                                    },
+                                                    "neighborhood": {
+                                                        "type": "string"
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "state": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "timestamp"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "timestamp"
+                                                    }
+                                                }
+                                            },
+                                            "profession": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "timestamp"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "timestamp"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/professions": {
@@ -995,7 +1121,7 @@
             },
             "get": {
                 "tags": ["Profession"],
-                "sumary": "List Professions",
+                "summary": "List Professions",
                 "description": "List the professions",
                 "responses": {
                     "401": {
@@ -1040,6 +1166,133 @@
                                                 "type": "timestamp"
                                             }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/medical-cares": {
+            "post": {
+                "tags": ["Medical Cares"],
+                "summary": "Create a medical care appointment",
+                "description": "Create a new medical care appointment",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "Date"
+                                    },
+                                    "amount": {
+                                        "type": "number"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "client_id": {
+                                        "type": "string"
+                                    },
+                                    "specialist_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "date": "2021-06-10T15:00:00.000",
+                                    "amount": 500,
+                                    "status": "AGENDADO",
+                                    "client_id": "9a85bb70-5a51-4dd0-938d-ff1074e5b6b4",
+                                    "specialist_id": "56cf2f1e-d731-4b34-8c1f-b90a11a1aeae"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "client": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "date": {
+                                                    "type": "Date"
+                                                },
+                                                "appointment_date": {
+                                                    "type": "Date"
+                                                },
+                                                "amount": {
+                                                    "type": "number"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "client_id": {
+                                                    "type": "string"
+                                                },
+                                                "specialist_id": {
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "type": "timestamp"
+                                                },
+                                                "updated_at": {
+                                                    "type": "timestamp"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "status": "error",
+                                        "message": ["This appointment is already booked","You can't create an appointment on a past date", "Client not found", "Specialist not found"]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "status": "error",
+                                        "message": ["JWT token is missing", "Invalid JWT token"]
                                     }
                                 }
                             }

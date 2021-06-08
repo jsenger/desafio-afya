@@ -5,7 +5,6 @@ import { container } from 'tsyringe';
 class MedicalCaresController {
     public async create(request: Request, response: Response): Promise<Response> {
         const {
-            appointment_date,
             date,
             amount,
             status,
@@ -16,7 +15,6 @@ class MedicalCaresController {
         const createMedicalCareAppointment = container.resolve(CreateMedicalCareAppointmentService);
 
         const medicalCareAppointment = await createMedicalCareAppointment.execute({
-            appointment_date,
             date,
             amount,
             status,

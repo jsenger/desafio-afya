@@ -43,7 +43,7 @@ class SpecialistsRepository implements ISpecialistsRepository {
             !created_at
             ) {
                 var findSpecialist = await this.ormRepository.find({
-                    relations: ['address']
+                    relations: ['address', 'profession']
                 });
             } else {
                 var findSpecialist = await this.ormRepository.find({
@@ -53,7 +53,7 @@ class SpecialistsRepository implements ISpecialistsRepository {
                         {email: ILike(`%${email}%`)},
                         {created_at},
                     ],
-                    relations: ['address']
+                    relations: ['address', 'profession']
                 });
             }
 
