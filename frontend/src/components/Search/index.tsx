@@ -16,17 +16,32 @@ interface SearchProps {
 }
 
 export default function Search({ title, endpoint, setResult }: SearchProps) {
-  const [searchParams, setSearchParams] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const searchSubmit = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const response = await search({ endpoint, params: searchParams });
+      setIsLoading(true);
+
+      const response = await search({ endpoint, searchQuery });
 
       if (response.data.length) {
-        setResult(response.data);
+        setIsLoading(false);
+
+        setResult(
+          response.data.map((result: any) =>
+            result.hasOwnProperty('profession')
+              ? {
+                  ...result,
+                  profession_name: result.profession.name,
+                }
+              : result
+          )
+        );
       } else {
+        setIsLoading(false);
         Swal.fire({
           title: 'Ops!',
           text: 'Nenhum resultado encontrado.',
@@ -36,7 +51,7 @@ export default function Search({ title, endpoint, setResult }: SearchProps) {
         });
       }
     },
-    [endpoint, searchParams, setResult]
+    [endpoint, searchQuery, setResult]
   );
 
   return (
@@ -47,9 +62,11 @@ export default function Search({ title, endpoint, setResult }: SearchProps) {
         id="header-search"
         placeholder="Digite aqui..."
         name="search"
-        onChange={e => setSearchParams(e.target.value)}
+        onChange={e => setSearchQuery(e.target.value)}
       />
-      <button type="submit">Pesquisar</button>
+      <button type="submit">
+        {isLoading ? 'Pesquisando...' : 'Pesquisar'}
+      </button>
     </SearchField>
   );
 }

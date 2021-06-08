@@ -21,6 +21,8 @@ const SpecialistsTable = ({
 }: SpecialistsTableProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  console.log(specialists)
+
   useEffect(() => {
     api
       .get('specialists', {
