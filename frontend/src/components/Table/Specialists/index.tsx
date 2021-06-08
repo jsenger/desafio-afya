@@ -32,7 +32,6 @@ const SpecialistsTable = ({
         setSpecialists(response.data);
       })
       .catch(err => {
-        console.log(err)
         if (err.response.data.message === 'Invalid JWT token') {
           logout();
         } else {
@@ -62,7 +61,7 @@ const SpecialistsTable = ({
           </tr>
         </thead>
         <tbody>
-        {isLoading
+          {isLoading
             ? 'Carregando...'
             : !Object.keys(specialists[0]).length
             ? 'Nenhum especialista cadastrado.'
