@@ -37,7 +37,6 @@ const SpecialistsModal = ({
   currentSpecialist,
   setCurrentSpecialist,
 }: SpecialistModalProps) => {
-  const [address, setAddress] = useState<Address>({} as Address);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [professions, setProfessions] = useState<ProfessionOption[]>([
     {} as ProfessionOption,
@@ -47,13 +46,16 @@ const SpecialistsModal = ({
     setState(false);
   };
 
-  currentSpecialist.address = { ...address };
+  const setAddress = (address: Address) => {
+    setCurrentSpecialist({...currentSpecialist, address})
+  }
 
   const specialistSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       const form = e.currentTarget;
 
       e.preventDefault();
+
       if (form.checkValidity()) {
         setIsLoading(true);
 
@@ -71,7 +73,7 @@ const SpecialistsModal = ({
               icon: 'success',
               confirmButtonText: 'Fechar',
               confirmButtonColor: '#004AAD',
-            });
+            }).then(() => handleModalClose);
           })
           .catch(err => {
             let errorMessage = '';
@@ -268,7 +270,7 @@ const SpecialistsModal = ({
               </div>
             </div>
             <AddressForm
-              address={address}
+              address={currentSpecialist.address}
               setAddress={setAddress}
               isLoading={isLoading}
             />

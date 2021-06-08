@@ -36,7 +36,10 @@ const Specialists: React.FC = () => {
           <button
             className="register-button"
             type="button"
-            onClick={handleSpecialistModalOpen}
+            onClick={() => {
+              handleSpecialistModalOpen();
+              setCurrentSpecialist({} as Specialist);
+            }}
           >
             Cadastrar Especialista
           </button>
