@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ChartContainer = styled.main`
-  margin-top: 100px;
+  margin-top: 20px;
 
   display: flex;
   flex-direction: column;
@@ -59,6 +59,11 @@ export const ChartContainer = styled.main`
       button:last-of-type {
         background-color: var(--main-color);
         color: var(--main-button-color);
+
+        a {
+          text-decoration: none;
+          color: var(--main-button-color);
+        }
       }
 
       button {

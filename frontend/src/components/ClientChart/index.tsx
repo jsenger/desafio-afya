@@ -1,6 +1,7 @@
 import { ChartContainer } from "./styles";
 import ChartModal from "../ChartModal";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ClientChart: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -21,7 +22,9 @@ const ClientChart: React.FC = () => {
           <button type="button" onClick={handleChartOpen}>
             Prontuário
           </button>
-          <button>Novo atendimento</button>
+          <button>
+            <Link to="/appointments">Novo atendimento</Link>
+          </button>
         </div>
       </div>
       <div className="chart-container">
@@ -34,7 +37,9 @@ const ClientChart: React.FC = () => {
           <button type="button" onClick={handleChartOpen}>
             Prontuário
           </button>
-          <button>Novo atendimento</button>
+          <button>
+            <Link to="/appointments">Novo atendimento</Link>
+          </button>
         </div>
       </div>
       <div className="chart-container">
@@ -47,7 +52,9 @@ const ClientChart: React.FC = () => {
           <button type="button" onClick={handleChartOpen}>
             Prontuário
           </button>
-          <button>Novo atendimento</button>
+          <button>
+            <Link to="/appointments">Novo atendimento</Link>
+          </button>
         </div>
       </div>
       <ChartModal state={modalIsOpen} setState={setModalIsOpen} />

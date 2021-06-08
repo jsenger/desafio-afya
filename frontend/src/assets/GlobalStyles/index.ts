@@ -1,11 +1,13 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   :root {
     --main-color: #004aad;
-    --background-color: #ecebe4;
-    --main-button-color: #fcbf49;
-    --main-text-color: #212529;
+    --secondary-color: #26b0baff;
+    --background-color: #f3eff5ff;
+    --secondary-bg-color: #c5ced3ff;
+    --main-button-color: #fcbf49 ;
+    --main-text-color: #191919ff;
     --danger-color: #ff312e;
     --warning-color: #ff8600;
 
