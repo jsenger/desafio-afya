@@ -5,11 +5,10 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts && concurrently \"ts-node-dev\" \"ts-node-dev -x tsoa spec\"",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev  -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "jest",
-    "start": "node dist/shared/infra/http/server.js",
-    "swagger": "tsoa spec"
+    "start": "node dist/shared/infra/http/server.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -17,7 +16,6 @@
     "class-transformer": "^0.4.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
-    "csv-parse": "^4.15.4",
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -27,11 +25,9 @@
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.1.6",
-    "tsoa": "^3.8.0",
     "tsyringe": "^4.2.0",
     "typeorm": "^0.2.34",
-    "utf8": "^3.0.0",
-    "uuidv4": "^6.2.8"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",

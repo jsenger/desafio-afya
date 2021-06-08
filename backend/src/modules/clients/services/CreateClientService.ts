@@ -4,7 +4,6 @@ import Client from "../infra/typeorm/entities/Client";
 import IClientsRepository from "../repositories/IClientsRepository";
 import IAddressesRepository from "@modules/addresses/repositories/IAddressesRepository";
 import IMedicalRecordsRepository from "@modules/medicalRecords/repositories/IMedicalRecordsRepository";
-import { Body, Post, Route } from "tsoa";
 import Address from "@modules/addresses/infra/typeorm/entities/Address";
 import MedicalRecords from "@modules/medicalRecords/infra/typeorm/entities/MedicalRecords";
 
@@ -29,7 +28,6 @@ interface ICreateClientResponse {
     medicalRecords: MedicalRecords
 }
 
-@Route('/clients')
 @injectable()
 class CreateClientService {
     constructor(
@@ -43,9 +41,7 @@ class CreateClientService {
         private medicalRecordsRepository: IMedicalRecordsRepository
     ){}
 
-    @Post('/')
-    public async execute(
-        @Body() { 
+    public async execute({ 
         name, 
         cpf, 
         phone, 
