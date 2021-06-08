@@ -259,9 +259,9 @@ const SpecialistsModal = ({
                     });
                   }}
                   formatCreateLabel={(label: string) => `Criar ${label}`}styles={{
-                    option: base => ({
-                      ...base,
-                      color: '#333',
+                    option: (styles, { isSelected }) => ({
+                      ...styles,
+                      color: isSelected ? '#fff' : '#495057',
                     }),
                   }}
                 />
