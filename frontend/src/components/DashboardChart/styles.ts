@@ -22,7 +22,7 @@ export const DashboardChartContainer = styled.main`
       justify-content: center;
 
       h1 {
-        font-size: 4rem;
+        font-size: 3rem;
         font-weight: 500;
         margin: 0 auto;
       }
@@ -39,7 +39,7 @@ export const DashboardChartContainer = styled.main`
       justify-content: center;
 
       h1 {
-        font-size: 4rem;
+        font-size: 3rem;
         font-weight: 500;
         margin: 0 auto;
       }
@@ -56,7 +56,7 @@ export const DashboardChartContainer = styled.main`
       justify-content: center;
 
       h1 {
-        font-size: 4rem;
+        font-size: 3rem;
         font-weight: 500;
         margin: 0 auto;
       }
@@ -73,7 +73,7 @@ export const DashboardChartContainer = styled.main`
       justify-content: center;
 
       h1 {
-        font-size: 4rem;
+        font-size: 3rem;
         font-weight: 500;
         margin: 0 auto;
       }
