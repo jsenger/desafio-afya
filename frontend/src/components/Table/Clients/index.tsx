@@ -68,7 +68,7 @@ const ClientsTable = ({
                   key={index}
                   onClick={() => {
                     handleModalOpen();
-                    setCurrentClient(client);
+                    setCurrentClient({ ...client, new: false });
                   }}
                 >
                   <td>{client.name}</td>

@@ -8,6 +8,7 @@ export interface Address {
 }
 
 export interface Client {
+  id?: string;
   name: string;
   cpf: string;
   phone: string;
@@ -15,6 +16,7 @@ export interface Client {
   blood_type: string;
   email: string;
   address: Address;
+  new: boolean;
 }
 
 export interface Profession {

@@ -34,14 +34,14 @@ const ClientsModal = ({
   setCurrentClient,
 }: ClientsModalProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+
   const handleModalClose = () => {
     setState(false);
   };
 
   const setAddress = (address: Address) => {
-    setCurrentClient({...currentClient, address})
-  }
+    setCurrentClient({ ...currentClient, address });
+  };
 
   const clientSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -52,45 +52,96 @@ const ClientsModal = ({
       if (form.checkValidity()) {
         setIsLoading(true);
 
-        api
-          .post('clients', currentClient, {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
-            },
-          })
-          .then(response => {
-            setClients([currentClient, ...clients]);
-            Swal.fire({
-              title: 'Sucesso!',
-              text: 'Cliente cadastrado com sucesso.',
-              icon: 'success',
-              confirmButtonText: 'Fechar',
-              confirmButtonColor: '#004AAD',
-            }).then(() => handleModalClose);
-          })
-          .catch(err => {
-            let errorMessage = '';
+        if (currentClient.new) {
+          api
+            .post('clients', currentClient, {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem(
+                  '@tokenVitality'
+                )}`,
+              },
+            })
+            .then(response => {
+              setClients([currentClient, ...clients]);
+              Swal.fire({
+                title: 'Sucesso!',
+                text: 'Cliente cadastrado com sucesso.',
+                icon: 'success',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#004AAD',
+              }).then(() => handleModalClose);
+            })
+            .catch(err => {
+              let errorMessage = '';
 
-            if (err.response.data.message === 'Invalid JWT token') {
-              logout();
-            } else if (
-              err.response.data.message ===
-              'Client already booked with this cpf'
-            ) {
-              errorMessage = 'CPF já cadastrado.';
-            } else {
-              errorMessage = 'Dados incorretos.';
-            }
+              if (err.response.data.message === 'Invalid JWT token') {
+                logout();
+              } else if (
+                err.response.data.message ===
+                'Client already booked with this cpf'
+              ) {
+                errorMessage = 'CPF já cadastrado.';
+              } else {
+                errorMessage = 'Dados incorretos.';
+              }
 
-            Swal.fire({
-              title: 'Ops!',
-              text: errorMessage,
-              icon: 'error',
-              confirmButtonText: 'Fechar',
-              confirmButtonColor: '#ff312e',
-            });
-          })
-          .finally(() => setIsLoading(false));
+              Swal.fire({
+                title: 'Ops!',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#ff312e',
+              });
+            })
+            .finally(() => setIsLoading(false));
+        } else {
+          api
+            .put('clients', currentClient, {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem(
+                  '@tokenVitality'
+                )}`,
+              },
+            })
+            .then(response => {
+              setClients(
+                clients.map(client =>
+                  client.id === currentClient.id ? currentClient : client
+                )
+              );
+
+              Swal.fire({
+                title: 'Sucesso!',
+                text: 'Cliente atualizado com sucesso.',
+                icon: 'success',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#004AAD',
+              }).then(() => handleModalClose);
+            })
+            .catch(err => {
+              let errorMessage = '';
+
+              if (err.response.data.message === 'Invalid JWT token') {
+                logout();
+              } else if (
+                err.response.data.message ===
+                'Client already booked with this cpf'
+              ) {
+                errorMessage = 'CPF já cadastrado.';
+              } else {
+                errorMessage = 'Dados incorretos.';
+              }
+
+              Swal.fire({
+                title: 'Ops!',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#ff312e',
+              });
+            })
+            .finally(() => setIsLoading(false));
+        }
       } else {
         Swal.fire({
           title: 'Ops!',

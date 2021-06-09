@@ -29,6 +29,7 @@ const Clients: React.FC = () => {
             onClick={() => {
               handleModalOpen();
               setCurrentClient({} as Client);
+              setCurrentClient({ ...currentClient, new: true });
             }}
           >
             Cadastrar cliente
