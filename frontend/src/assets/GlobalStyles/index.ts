@@ -5,7 +5,7 @@ export default createGlobalStyle`
     --main-color: #004aad;
     --secondary-color: #26b0baff;
     --background-color: #f3eff5ff;
-    --secondary-bg-color: #c5ced3ff;
+    --secondary-bg-color: #e9ecef;
     --main-button-color: #fcbf49 ;
     --main-text-color: #191919ff;
     --danger-color: #ff312e;
