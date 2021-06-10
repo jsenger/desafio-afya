@@ -12,16 +12,16 @@ import { logout } from '../../services/logout';
 
 import Select from 'react-select';
 import Swal from 'sweetalert2';
-import InputMask from 'react-input-mask';
 
 import { ScheduleContainer } from './styles';
+import { Appointment, Client } from '../../types';
 
 interface ScheduleModalProps {
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
 }
 
-interface SpecialistOption {
+interface SelectOption {
   value: string;
   label: string;
 }
@@ -29,12 +29,51 @@ interface SpecialistOption {
 const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
   const [isLoadingAppointment, setIsLoadingAppointment] =
     useState<boolean>(false);
-  const [specialists, setSpecialists] = useState<SpecialistOption[]>([
-    {} as SpecialistOption,
+
+  const [clients, setClients] = useState<SelectOption[]>([{} as SelectOption]);
+
+  const [specialists, setSpecialists] = useState<SelectOption[]>([
+    {} as SelectOption,
   ]);
+
+  const [currentAppointment, setCurrentAppointment] = useState<Appointment>(
+    {} as Appointment
+  );
 
   const handleModalClose = () => {
     setState(false);
+  };
+
+  const getClients = () => {
+    api
+      .get('clients', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+        },
+      })
+      .then(response => {
+        setClients(
+          response.data.map((client: any) => {
+            return {
+              value: client.id,
+              label: `${client.name} - CPF: ${client.cpf}`,
+            };
+          })
+        );
+      })
+      .catch(err => {
+        if (err.response.data.message === 'Invalid JWT token') {
+          logout();
+        } else {
+          Swal.fire({
+            title: 'Ops!',
+            text: 'Houve um erro ao carregar seus dados.',
+            icon: 'error',
+            confirmButtonText: 'Atualizar',
+            confirmButtonColor: '#ff312e',
+          }).then(response => window.location.reload());
+        }
+      });
   };
 
   const getSpecialists = () => {
@@ -69,9 +108,8 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
       });
   };
 
-  console.log(specialists);
-
   useEffect(() => {
+    getClients();
     getSpecialists();
   }, []);
 
@@ -88,14 +126,13 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
         <div className="modal-body">
           <div className="form-group">
             <label htmlFor="name">Paciente:</label>
-            <input
-              className="form-control"
-              type="text"
+            <Select
               name="name"
               id="name"
               disabled={isLoadingAppointment}
+              options={clients}
               required
-            />
+            ></Select>
           </div>
           <div className="form-row">
             <div className="form-group col-sm-4">
