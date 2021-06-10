@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
     },
+    parentElement: {
+      position: "relative",
+    },
     appBar: {
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
@@ -75,7 +78,8 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#F4E04D",
     },
     backdrop: {
-      position: "absolute",
+      position: "fixed",
+      zIndex: 2,
       top: 0,
       left: 0,
       width: "100vw",
@@ -102,7 +106,7 @@ export default function Sidebar(props: SideBarProps) {
   };
 
   return (
-    <div>
+    <div className={classes.parentElement}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
