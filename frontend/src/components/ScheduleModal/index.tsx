@@ -5,27 +5,78 @@ import {
   useCallback,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 
-import Swal from "sweetalert2";
-import InputMask from "react-input-mask";
+import { api } from '../../services/api';
+import { logout } from '../../services/logout';
 
-import { ScheduleContainer } from "./styles";
+import Select from 'react-select';
+import Swal from 'sweetalert2';
+import InputMask from 'react-input-mask';
+
+import { ScheduleContainer } from './styles';
 
 interface ScheduleModalProps {
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
 }
 
+interface SpecialistOption {
+  value: string;
+  label: string;
+}
+
 const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingAppointment, setIsLoadingAppointment] =
+    useState<boolean>(false);
+  const [specialists, setSpecialists] = useState<SpecialistOption[]>([
+    {} as SpecialistOption,
+  ]);
 
   const handleModalClose = () => {
     setState(false);
   };
 
+  const getSpecialists = () => {
+    api
+      .get('specialists', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+        },
+      })
+      .then(response => {
+        setSpecialists(
+          response.data.map((specialist: any) => {
+            return {
+              value: specialist.id,
+              label: `${specialist.name} - ${specialist.profession.name}`,
+            };
+          })
+        );
+      })
+      .catch(err => {
+        if (err.response.data.message === 'Invalid JWT token') {
+          logout();
+        } else {
+          Swal.fire({
+            title: 'Ops!',
+            text: 'Houve um erro ao carregar seus dados.',
+            icon: 'error',
+            confirmButtonText: 'Atualizar',
+            confirmButtonColor: '#ff312e',
+          }).then(response => window.location.reload());
+        }
+      });
+  };
+
+  console.log(specialists);
+
+  useEffect(() => {
+    getSpecialists();
+  }, []);
+
   return (
-    <ScheduleContainer className={state ? "show" : ""}>
+    <ScheduleContainer className={state ? 'show' : ''}>
       <form className="modal-content" noValidate>
         <div className="modal-header">
           <h4>Agendamento</h4>
@@ -42,7 +93,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
               type="text"
               name="name"
               id="name"
-              disabled={isLoading}
+              disabled={isLoadingAppointment}
               required
             />
           </div>
@@ -54,7 +105,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 type="date"
                 name="date"
                 id="date"
-                disabled={isLoading}
+                disabled={isLoadingAppointment}
                 required
               />
             </div>
@@ -65,7 +116,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 type="time"
                 name="time"
                 id="time"
-                disabled={isLoading}
+                disabled={isLoadingAppointment}
                 required
               />
             </div>
@@ -76,7 +127,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 type="number"
                 name="amount"
                 id="amount"
-                disabled={isLoading}
+                disabled={isLoadingAppointment}
                 required
               />
             </div>
@@ -88,7 +139,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 className="form-control"
                 name="status"
                 id="status"
-                disabled={isLoading}
+                disabled={isLoadingAppointment}
                 required
               >
                 <option value="Agendado">Agendado</option>
@@ -99,17 +150,13 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
 
             <div className="form-group col-sm-6">
               <label htmlFor="specialists">Especialista:</label>
-              <select
-                className="form-control"
+              <Select
                 name="specialists"
                 id="specialists"
-                disabled={isLoading}
+                disabled={isLoadingAppointment}
+                options={specialists}
                 required
-              >
-                <option value="cardiologista">Cardiologista</option>
-                <option value="Neurologista">Neurologista</option>
-                <option value="oftalmologista">Oftalmologista</option>
-              </select>
+              ></Select>
             </div>
           </div>
         </div>
@@ -119,13 +166,13 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
             className="form-control"
             name="description"
             id="description"
-            disabled={isLoading}
+            disabled={isLoadingAppointment}
             required
           />
         </div>
         <div className="modal-footer">
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Salvando..." : "Salvar atendimento"}
+          <button type="submit" disabled={isLoadingAppointment}>
+            {isLoadingAppointment ? 'Salvando...' : 'Salvar atendimento'}
           </button>
         </div>
       </form>
