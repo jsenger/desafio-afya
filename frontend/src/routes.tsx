@@ -2,7 +2,6 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import isAuthenticated from "./auth";
 
 import Home from "./views/pages/Home";
-import LandingPage from "./views/pages/LandingPage";
 import Login from "./views/pages/Login";
 import Register from "./views/pages/Register";
 
@@ -19,7 +18,6 @@ const Routes: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/landing" exact component={LandingPage} />
         <Route path="/register" component={Register} />
         <Route path="/login">
           {isAuthenticated() ? <Redirect to="/dashboard" /> : <Login />}

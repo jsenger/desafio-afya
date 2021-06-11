@@ -5,7 +5,7 @@ export const Navigation = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
 
   .nav-links-container {
     .nav-links {

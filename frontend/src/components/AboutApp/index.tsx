@@ -3,13 +3,6 @@ import { AboutAppContainer } from "./styles";
 const AboutApp: React.FC = () => {
   return (
     <AboutAppContainer id="app">
-      <h2>Como funciona?</h2>
-      <p className="how-it-works">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus,
-        distinctio doloremque est blanditiis dolore sapiente ex, necessitatibus
-        fuga amet consequuntur aperiam! Quis praesentium dolorem, quod magni
-        neque sequi excepturi eveniet!
-      </p>
       <section className="content-container">
         <div>
           <img src="./img/customer.png" width="80px" />

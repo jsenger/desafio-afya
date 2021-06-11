@@ -2,26 +2,6 @@ import styled from "styled-components";
 
 export const AboutAppContainer = styled.main`
   background-color: var(--background-color);
-  width: 100vw;
-  height: calc(100vh - 118px);
-
-  h2 {
-    color: (--main-text-color);
-    font-weight: 700;
-    text-align: center;
-    padding: 2rem;
-    height: 10vh;
-    margin-bottom: 1rem;
-  }
-
-  .how-it-works {
-    color: (--main-text-color);
-    font-size: 1rem;
-    text-align: center;
-    padding: 2rem;
-    height: 10vh;
-    margin-bottom: 5rem;
-  }
 
   .content-container {
     display: flex;
@@ -30,10 +10,14 @@ export const AboutAppContainer = styled.main`
 
     width: 90vw;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     gap: 3rem;
 
     margin: 0 auto;
+
+    height: 100vh;
+
+    padding: 4rem 1rem;
 
     div {
       display: flex;
@@ -54,6 +38,14 @@ export const AboutAppContainer = styled.main`
         text-align: center;
         margin-bottom: 1rem;
       }
+    }
+  }
+
+  @media (max-width: 720px) {
+    height: auto;
+
+    .content-container {
+      height: fit-content;
     }
   }
 `;

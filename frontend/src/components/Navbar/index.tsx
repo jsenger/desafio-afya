@@ -25,8 +25,12 @@ const NavigationBar: React.FC = () => {
             <Nav.Link href="#contact">Contato</Nav.Link>
           </Nav>
           <Form inline>
-            <Button className="nav-btns">Login</Button>
-            <Button className="nav-btns">Cadastro</Button>
+            <Nav.Link href="/login">
+              <Button className="nav-btns">Login</Button>
+            </Nav.Link>
+            <Nav.Link href="/register">
+              <Button className="nav-btns">Cadastro</Button>
+            </Nav.Link>
           </Form>
         </Navbar.Collapse>
       </Navbar>

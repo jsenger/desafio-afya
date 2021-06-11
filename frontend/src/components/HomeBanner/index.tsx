@@ -13,7 +13,7 @@ const HomeBanner: React.FC = () => {
           Tenha as funcionalidades mais importantes reunidas em uma só
           ferramenta!
         </p>
-        <button>Experimente!</button>
+        <a href="/register">Experimente!</a>
       </div>
       <div className="intro-img">
         <img src="./img/print_vit.png" alt="" />
