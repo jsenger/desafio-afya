@@ -33,3 +33,11 @@ export interface Specialist {
   profession_name: string;
   address: Address;
 }
+
+export interface Appointment {
+  date: string;
+  amount: number;
+  status: string;
+  specialist_id: string; 
+  client_id: string;
+}

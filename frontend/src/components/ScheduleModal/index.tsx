@@ -113,9 +113,80 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
     getSpecialists();
   }, []);
 
+  const appointmentSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      const form = e.currentTarget;
+
+      e.preventDefault();
+
+      if (form.checkValidity()) {
+        setIsLoadingAppointment(true);
+
+        api
+          .post('medical-cares', currentAppointment, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+            },
+          })
+          .then(response => {
+            Swal.fire({
+              title: 'Sucesso!',
+              text: 'Atendimento criado com sucesso.',
+              icon: 'success',
+              confirmButtonText: 'Fechar',
+              confirmButtonColor: '#004AAD',
+            }).then(() => handleModalClose);
+          })
+          .catch(err => {
+            let errorMessage = '';
+
+            switch (err.response.data.message) {
+              case 'Invalid JWT token':
+                logout();
+                break;
+              case "You can't create an appointment on a past date":
+                errorMessage =
+                  'Não é possível criar atendimentos em datas anteriores.';
+                break;
+              case 'This appointment is already booked':
+                errorMessage =
+                  'Já existe um atendimento com o especialista escolhido neste horário.';
+                break;
+              case 'Specialist not found':
+                errorMessage = 'Especialista não encontrado.';
+                break;
+              case 'Client not found':
+                errorMessage = 'Cliente não encontrado.';
+                break;
+              default:
+                errorMessage = 'Dados incorretos.';
+            }
+
+            Swal.fire({
+              title: 'Ops!',
+              text: errorMessage,
+              icon: 'error',
+              confirmButtonText: 'Fechar',
+              confirmButtonColor: '#ff312e',
+            });
+          })
+          .finally(() => setIsLoadingAppointment(false));
+      } else {
+        Swal.fire({
+          title: 'Ops!',
+          text: 'Verifique se todos os campos estão preenchidos corretamente.',
+          icon: 'error',
+          confirmButtonText: 'Fechar',
+          confirmButtonColor: '#ff312e',
+        });
+      }
+    },
+    [currentAppointment]
+  );
+
   return (
     <ScheduleContainer className={state ? 'show' : ''}>
-      <form className="modal-content" noValidate>
+      <form className="modal-content" onSubmit={appointmentSubmit} noValidate>
         <div className="modal-header">
           <h4>Agendamento</h4>
           <span className="close" onClick={handleModalClose}>
@@ -132,6 +203,12 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
               disabled={isLoadingAppointment}
               options={clients}
               required
+              onChange={e =>
+                setCurrentAppointment({
+                  ...currentAppointment,
+                  client_id: e?.value || '',
+                })
+              }
             ></Select>
           </div>
           <div className="form-row">
@@ -144,6 +221,22 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 id="date"
                 disabled={isLoadingAppointment}
                 required
+                onChange={e => {
+                  const [year, month, day] = e.target.value.split('-');
+
+                  setCurrentAppointment({
+                    ...currentAppointment,
+                    date: new Date(
+                      new Date(
+                        new Date(
+                          new Date(currentAppointment.date).setFullYear(
+                            Number(year)
+                          )
+                        ).setMonth(Number(month) - 1)
+                      ).setDate(Number(day))
+                    ).toISOString(),
+                  });
+                }}
               />
             </div>
             <div className="form-group col-sm-4">
@@ -155,17 +248,35 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 id="time"
                 disabled={isLoadingAppointment}
                 required
+                onChange={e => {
+                  const [hour, minute] = e.target.value.split(':');
+
+                  setCurrentAppointment({
+                    ...currentAppointment,
+                    date: new Date(
+                      new Date(
+                        new Date(currentAppointment.date).setHours(Number(hour))
+                      ).setMinutes(Number(minute))
+                    ).toISOString(),
+                  });
+                }}
               />
             </div>
             <div className="form-group col-sm-4">
               <label htmlFor="amount">Valor:</label>
               <input
                 className="form-control"
-                type="number"
+                type="text"
                 name="amount"
                 id="amount"
                 disabled={isLoadingAppointment}
                 required
+                onChange={e =>
+                  setCurrentAppointment({
+                    ...currentAppointment,
+                    amount: Number(e.target.value.replace(',', '.')),
+                  })
+                }
               />
             </div>
           </div>
@@ -178,10 +289,16 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 id="status"
                 disabled={isLoadingAppointment}
                 required
+                onChange={e =>
+                  setCurrentAppointment({
+                    ...currentAppointment,
+                    status: e.target.value,
+                  })
+                }
               >
-                <option value="Agendado">Agendado</option>
-                <option value="Realizado">Realizado</option>
-                <option value="Cancelado">Cancelado</option>
+                <option value="AGENDADO">Agendado</option>
+                <option value="REALIZADO">Realizado</option>
+                <option value="CANCELADO">Cancelado</option>
               </select>
             </div>
 
@@ -193,6 +310,12 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 disabled={isLoadingAppointment}
                 options={specialists}
                 required
+                onChange={e =>
+                  setCurrentAppointment({
+                    ...currentAppointment,
+                    specialist_id: e?.value || '',
+                  })
+                }
               ></Select>
             </div>
           </div>
@@ -204,7 +327,13 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
             name="description"
             id="description"
             disabled={isLoadingAppointment}
-            required
+            required={currentAppointment.status === 'REALIZADO'}
+            onChange={e =>
+              setCurrentAppointment({
+                ...currentAppointment,
+                specialist_id: e.target.value,
+              })
+            }
           />
         </div>
         <div className="modal-footer">
