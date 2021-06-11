@@ -14,7 +14,7 @@ import Select from 'react-select';
 import Swal from 'sweetalert2';
 
 import { ScheduleContainer } from './styles';
-import { Appointment, Client } from '../../types';
+import { Appointment } from '../../types';
 
 interface ScheduleModalProps {
   state: boolean;

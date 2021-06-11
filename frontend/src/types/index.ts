@@ -38,6 +38,10 @@ export interface Appointment {
   date: string;
   amount: number;
   status: string;
-  specialist_id: string; 
+  specialist_id: string;
   client_id: string;
+  client?: {
+    name: string;
+    cpf: string;
+  };
 }
