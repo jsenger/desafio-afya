@@ -22,6 +22,7 @@ interface ScheduleModalProps {
   setState: Dispatch<SetStateAction<boolean>>;
   currentAppointment: Appointment;
   setCurrentAppointment: Dispatch<SetStateAction<Appointment>>;
+  getAppointments: () => void;
 }
 
 interface SelectOption {
@@ -34,6 +35,7 @@ const ScheduleModal = ({
   setState,
   currentAppointment,
   setCurrentAppointment,
+  getAppointments,
 }: ScheduleModalProps) => {
   const [isLoadingAppointment, setIsLoadingAppointment] =
     useState<boolean>(false);
@@ -121,60 +123,137 @@ const ScheduleModal = ({
     (e: FormEvent<HTMLFormElement>) => {
       const form = e.currentTarget;
 
+      const appointment: Appointment = {
+        date: currentAppointment.date,
+        amount: currentAppointment.amount,
+        status: currentAppointment.status,
+        client_id: currentAppointment.client_id,
+        specialist_id: currentAppointment.specialist_id,
+        description: currentAppointment.description || ''
+      };
+
       e.preventDefault();
 
       if (form.checkValidity()) {
         setIsLoadingAppointment(true);
 
-        api
-          .post('medical-cares', currentAppointment, {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
-            },
-          })
-          .then(response => {
-            Swal.fire({
-              title: 'Sucesso!',
-              text: 'Atendimento criado com sucesso.',
-              icon: 'success',
-              confirmButtonText: 'Fechar',
-              confirmButtonColor: '#004AAD',
-            }).then(() => handleModalClose);
-          })
-          .catch(err => {
-            let errorMessage = '';
+        if (currentAppointment.new) {
+          console.log('post');
+          api
+            .post('medical-cares', appointment, {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem(
+                  '@tokenVitality'
+                )}`,
+              },
+            })
+            .then(response => {
+              getAppointments();
 
-            switch (err.response.data.message) {
-              case 'Invalid JWT token':
-                logout();
-                break;
-              case "You can't create an appointment on a past date":
-                errorMessage =
-                  'Não é possível criar atendimentos em datas anteriores.';
-                break;
-              case 'This appointment is already booked':
-                errorMessage =
-                  'Já existe um atendimento com o especialista escolhido neste horário.';
-                break;
-              case 'Specialist not found':
-                errorMessage = 'Especialista não encontrado.';
-                break;
-              case 'Client not found':
-                errorMessage = 'Cliente não encontrado.';
-                break;
-              default:
-                errorMessage = 'Dados incorretos.';
-            }
+              Swal.fire({
+                title: 'Sucesso!',
+                text: 'Atendimento criado com sucesso.',
+                icon: 'success',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#004AAD',
+              }).then(() => handleModalClose);
+            })
+            .catch(err => {
+              let errorMessage = '';
 
-            Swal.fire({
-              title: 'Ops!',
-              text: errorMessage,
-              icon: 'error',
-              confirmButtonText: 'Fechar',
-              confirmButtonColor: '#ff312e',
-            });
-          })
-          .finally(() => setIsLoadingAppointment(false));
+              switch (err.response.data.message) {
+                case 'Invalid JWT token':
+                  logout();
+                  break;
+                case "You can't create an appointment on a past date":
+                  errorMessage =
+                    'Não é possível criar atendimentos em datas anteriores.';
+                  break;
+                case 'This appointment is already booked':
+                  errorMessage =
+                    'Já existe um atendimento com o especialista escolhido neste horário.';
+                  break;
+                case 'Specialist not found':
+                  errorMessage = 'Especialista não encontrado.';
+                  break;
+                case 'Client not found':
+                  errorMessage = 'Cliente não encontrado.';
+                  break;
+                default:
+                  errorMessage = 'Dados incorretos.';
+              }
+
+              Swal.fire({
+                title: 'Ops!',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#ff312e',
+              });
+            })
+            .finally(() => setIsLoadingAppointment(false));
+        } else {
+          console.log('put');
+          appointment.id = currentAppointment.id;
+          console.log(appointment);
+
+          api
+            .put('medical-cares', appointment, {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem(
+                  '@tokenVitality'
+                )}`,
+              },
+            })
+            .then(response => {
+              getAppointments();
+
+              Swal.fire({
+                title: 'Sucesso!',
+                text: 'Atendimento atualizado com sucesso.',
+                icon: 'success',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#004AAD',
+              }).then(() => handleModalClose);
+            })
+            .catch(err => {
+              let errorMessage = '';
+
+              switch (err.response.data.message) {
+                case 'Invalid JWT token':
+                  logout();
+                  break;
+                case "You can't create an appointment on a past date":
+                  errorMessage =
+                    'Não é possível criar atendimentos em datas anteriores.';
+                  break;
+                case 'This appointment is already booked':
+                  errorMessage =
+                    'Já existe um atendimento com o especialista escolhido neste horário.';
+                  break;
+                case 'Specialist not found':
+                  errorMessage = 'Especialista não encontrado.';
+                  break;
+                case 'Client not found':
+                  errorMessage = 'Cliente não encontrado.';
+                  break;
+                case 'This medical care already canceled':
+                  errorMessage = 'Esse atendimento já foi cancelado.';
+                  break;
+                default:
+                  errorMessage = 'Dados incorretos.';
+              }
+
+              Swal.fire({
+                title: 'Ops!',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'Fechar',
+                confirmButtonColor: '#ff312e',
+              });
+            })
+            .finally(() => setIsLoadingAppointment(false));
+        }
       } else {
         Swal.fire({
           title: 'Ops!',
@@ -220,8 +299,8 @@ const ScheduleModal = ({
                   client_id: e?.value || '',
                   client: {
                     name: e?.label.split(' - ')[0] || '',
-                    cpf: e?.label.split(' CPF: ')[1] || ''
-                  }
+                    cpf: e?.label.split(' CPF: ')[1] || '',
+                  },
                 })
               }
             ></Select>
@@ -363,6 +442,9 @@ const ScheduleModal = ({
                   setCurrentAppointment({
                     ...currentAppointment,
                     specialist_id: e?.value || '',
+                    specialist: {
+                      name: e?.label || '',
+                    },
                   })
                 }
               ></Select>
@@ -381,7 +463,7 @@ const ScheduleModal = ({
             onChange={e =>
               setCurrentAppointment({
                 ...currentAppointment,
-                specialist_id: e.target.value,
+                description: e.target.value,
               })
             }
           />

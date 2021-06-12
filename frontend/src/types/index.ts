@@ -35,6 +35,8 @@ export interface Specialist {
 }
 
 export interface Appointment {
+  new?: boolean;
+  id?: string;
   date: string;
   amount: number;
   status: string;
@@ -46,6 +48,9 @@ export interface Appointment {
   };
   specialist?: {
     name: string;
+    profession?: {
+      name: string;
+    }
   }
   description?: string;
 }

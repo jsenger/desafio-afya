@@ -83,13 +83,15 @@ const Calendar: React.FC = () => {
         endDayHour={19}
         onCellClick={e => {
           setCurrentAppointment({
+            new: true,
+            status: 'AGENDADO',
             date: e.cellData.startDate.toISOString(),
           } as Appointment);
           handleModalOpen();
         }}
         onAppointmentClick={e => {
           e.cancel = true;
-          setCurrentAppointment(e.appointmentData);
+          setCurrentAppointment({ ...e.appointmentData, new: false });
           handleModalOpen();
         }}
       />
@@ -98,6 +100,7 @@ const Calendar: React.FC = () => {
         state={isModalOpen}
         currentAppointment={currentAppointment}
         setCurrentAppointment={setCurrentAppointment}
+        getAppointments={getAppointments}
       />
     </CalendarContainer>
   );
