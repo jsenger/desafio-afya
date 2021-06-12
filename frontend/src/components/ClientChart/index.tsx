@@ -10,19 +10,18 @@ import Swal from "sweetalert2";
 interface PacientChartProps {
   clients: Client[];
   setClients: Dispatch<SetStateAction<Client[]>>;
-  handleChartOpen: () => void;
-  setCurrentClient: Dispatch<SetStateAction<Client>>;
 }
 
-const ClientChart = ({
-  clients,
-  setClients,
-  handleChartOpen,
-  setCurrentClient,
-}: PacientChartProps) => {
+const ClientChart = ({ clients, setClients }: PacientChartProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [currentClient, setCurrentClient] = useState<Client>({} as Client);
+
+  const [isChartOpen, setIsChartOpen] = useState<boolean>(false);
+
+  const handleChartOpen = () => {
+    setIsChartOpen(true);
+  };
 
   useEffect(() => {
     api
@@ -62,13 +61,8 @@ const ClientChart = ({
         ? "Nenhum cliente cadastrado."
         : clients.map((client, index) => (
             <div className="chart-container" key={index}>
-              <tbody className="chart-content">
-                <div
-                  onClick={() => {
-                    handleChartOpen();
-                    setCurrentClient({ ...client, new: false });
-                  }}
-                >
+              <div className="chart-content">
+                <div>
                   <h1>{client.name}</h1>
                   <p>
                     {client.created_at &&
@@ -78,9 +72,15 @@ const ClientChart = ({
                   </p>
                   <p>{client.blood_type}</p>
                 </div>
-              </tbody>
+              </div>
               <div className="chart-buttons">
-                <button type="button" onClick={handleChartOpen}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleChartOpen();
+                    setCurrentClient(client);
+                  }}
+                >
                   Prontuário
                 </button>
                 <button>
@@ -90,7 +90,11 @@ const ClientChart = ({
             </div>
           ))}
 
-      <ChartModal state={modalIsOpen} setState={setModalIsOpen} />
+      <ChartModal
+        state={isChartOpen}
+        setState={setIsChartOpen}
+        currentClient={currentClient}
+      />
     </ChartContainer>
   );
 };

@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import {
   Accordion,
   Card,
@@ -10,18 +16,34 @@ import {
   FormLabel,
 } from "react-bootstrap";
 import { CgMoreO } from "react-icons/cg";
+import { Client } from "../../types";
+import { api } from "../../services/api";
 import { ChartModalContainer } from "./styles";
 
 interface ChartsModalProps {
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
+  currentClient: Client;
 }
 
-const ChartModal = ({ state, setState }: ChartsModalProps) => {
+const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
   const handleModalClose = () => {
     setState(false);
   };
 
+  useEffect(() => {
+    if (currentClient.id) {
+      // api
+      //   .get(`medical-records?client_id${currentClient.id}`, {
+      //     headers: {
+      //       authorization: `Bearer ${localStorage.getItem("@tokenVitality")}`,
+      //     },
+      //   })
+      //   .then((response) => {
+      //     console.log(response.data);
+      //   });
+    }
+  }, [currentClient]);
   return (
     <ChartModalContainer className={state ? "show" : ""}>
       <Form className="p-4 rounded">
@@ -36,17 +58,30 @@ const ChartModal = ({ state, setState }: ChartsModalProps) => {
             <Row className="m-2">
               <Col className="">
                 <FormLabel>Paciente</FormLabel>
-                <Form.Control placeholder="Nome do paciente" />
+                <Form.Control
+                  placeholder="Nome do paciente"
+                  value={currentClient.name}
+                />
               </Col>
               <Col md="4">
-                <FormLabel>Idade</FormLabel>
-                <Form.Control placeholder="Idade" />
+                <FormLabel>Tipo sanguíneo</FormLabel>
+                <Form.Control
+                  placeholder="tipo sanguíneo"
+                  value={currentClient.blood_type}
+                />
               </Col>
             </Row>
             <Row className="m-2">
               <Col>
                 <FormLabel>Data de abertura</FormLabel>
-                <Form.Control type="date" />
+                <Form.Control
+                  type="date"
+                  value={
+                    currentClient.created_at
+                      ? currentClient.created_at.split("T")[0]
+                      : ""
+                  }
+                />
               </Col>
               <Col>
                 <FormLabel>Último atendimento</FormLabel>
