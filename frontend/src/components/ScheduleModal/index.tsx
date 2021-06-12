@@ -129,7 +129,7 @@ const ScheduleModal = ({
         status: currentAppointment.status,
         client_id: currentAppointment.client_id,
         specialist_id: currentAppointment.specialist_id,
-        description: currentAppointment.description || ''
+        description: currentAppointment.description || '',
       };
 
       e.preventDefault();
@@ -138,7 +138,6 @@ const ScheduleModal = ({
         setIsLoadingAppointment(true);
 
         if (currentAppointment.new) {
-          console.log('post');
           api
             .post('medical-cares', appointment, {
               headers: {
@@ -193,9 +192,7 @@ const ScheduleModal = ({
             })
             .finally(() => setIsLoadingAppointment(false));
         } else {
-          console.log('put');
           appointment.id = currentAppointment.id;
-          console.log(appointment);
 
           api
             .put('medical-cares', appointment, {
@@ -348,13 +345,7 @@ const ScheduleModal = ({
                 disabled={isLoadingAppointment}
                 required
                 value={
-                  currentAppointment.client_id
-                    ? currentAppointment.date
-                        .split('T')[1]
-                        .split(':')
-                        .slice(0, 2)
-                        .join(':')
-                    : currentAppointment.date
+                  currentAppointment.date
                     ? new Intl.DateTimeFormat('default', {
                         hour: '2-digit',
                         minute: '2-digit',
