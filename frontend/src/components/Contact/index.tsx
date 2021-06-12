@@ -3,9 +3,6 @@ import { ContactContainer } from "./styles";
 const Contact: React.FC = () => {
   return (
     <ContactContainer id="contact">
-      <div className="contact-img">
-        <img src="./img/contact-us.svg" alt="" />
-      </div>
       <form>
         <h3>Fale conosco</h3>
         <label htmlFor="name">Nome:</label>
@@ -16,6 +13,9 @@ const Contact: React.FC = () => {
         <textarea name="message" id="message" required />
         <button type="submit">Enviar</button>
       </form>
+      <div className="contact-img">
+        <img src="./img/contact-us.svg" alt="" />
+      </div>
     </ContactContainer>
   );
 };
