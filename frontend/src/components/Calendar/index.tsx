@@ -42,7 +42,6 @@ const Calendar: React.FC = () => {
       .then(response =>
         setAppointments(
           response.data.map((appointment: Appointment) => {
-            console.log(appointment);
             return {
               ...appointment,
               startDate: new Date(appointment.date),

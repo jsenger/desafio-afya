@@ -218,6 +218,10 @@ const ScheduleModal = ({
                 setCurrentAppointment({
                   ...currentAppointment,
                   client_id: e?.value || '',
+                  client: {
+                    name: e?.label.split(' - ')[0] || '',
+                    cpf: e?.label.split(' CPF: ')[1] || ''
+                  }
                 })
               }
             ></Select>
