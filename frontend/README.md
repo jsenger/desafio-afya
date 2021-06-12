@@ -29,32 +29,41 @@ Vitality is an application built for medical clinics to use. Its goal is to prov
 .
 ├── public
 │   ├── index.html
-│   │
-│   ├── img
+│   └── img
 │
 ├── src
 │    ├── App.tsx
 │    ├── index.tsx
-│    ├── react-app-env.d.ts
 │    ├── routes.tsx
 │    ├── private.routes.tsx
 │    │
 │    ├── assets
-│    │   ├── GlobalStyles
-│    │       ├── index.ts
+│    │    ├── GlobalStyles
+│    │    │    └── index.ts
+│    │    ...
 │    │
-│    ├───components
+│    ├─── components
+│    │     ├── Navbar
+│    │     │    ├── index.tsx
+│    │     │    └── styles.ts
+│    │    ...
 │    │
-│    ├───services
-│    │       api.ts
+│    ├─── services
+│    │     ├── api.ts
+│    │     ...
 │    │
-│    └───views
-│        └───pages
+│    ├─── types
+│    │     └── index.ts
+│    │
+│    └─── views
+│          └───pages
+│               ├── Home
+│               │     ├── index.tsx
+│               │     └── styles.ts.tsx
+│               ...
 │
-├── .gitignore
 ├── tsconfig.json
-├── package.json
-└── README.md
+└── package.json
 ```
 
 ## Dependencies
