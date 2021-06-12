@@ -210,9 +210,9 @@ const ScheduleModal = ({
               required
               value={
                 {
-                  value: currentAppointment.client_id,
-                  label: `${currentAppointment.client?.name} - CPF: ${currentAppointment.client?.cpf}`,
-                } || ''
+                  value: currentAppointment.client_id || '',
+                  label: currentAppointment.client_id ? `${currentAppointment.client?.name} - CPF: ${currentAppointment.client?.cpf}` : '',
+                }
               }
               onChange={e =>
                 setCurrentAppointment({
@@ -343,9 +343,9 @@ const ScheduleModal = ({
                 required
                 value={
                   {
-                    value: currentAppointment.specialist_id,
-                    label: `${currentAppointment.specialist?.name}`,
-                  } || ''
+                    value: currentAppointment.specialist_id || '',
+                    label: currentAppointment.specialist_id ? `${currentAppointment.specialist?.name}` : '',
+                  }
                 }
                 onChange={e =>
                   setCurrentAppointment({
