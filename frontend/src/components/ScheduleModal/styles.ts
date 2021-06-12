@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ModalContainer = styled.div`
+export const ScheduleContainer = styled.div`
   display: none;
   position: fixed;
   z-index: 1;
@@ -12,6 +12,16 @@ export const ModalContainer = styled.div`
 
   background-color: var(--background-color);
   background-color: rgba(0, 0, 0, 0.4);
+
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+
+    .select {
+      width: 100%;
+    }
+  }
 
   &.show {
     display: block;
@@ -35,13 +45,17 @@ export const ModalContainer = styled.div`
   }
 
   .modal-content {
-    background-color: var(--main-color);
-    color: var(--main-button-color);
+    background-color: var(--secondary-bg-color);
+    color: var(--main-color);
     margin: 15% auto;
-    padding: 20px;
+    padding: 1rem;
     border: 0;
     box-shadow: 5px 6px 5px 0px rgba(0, 0, 0, 0.49);
-    width: 80%;
+    width: 50vw;
+
+    label {
+      font-weight: 500;
+    }
 
     .modal-header {
       display: flex;
@@ -49,12 +63,11 @@ export const ModalContainer = styled.div`
       justify-content: space-between;
 
       h4 {
-        font-weight: 700;
-        letter-spacing: 1px;
+        font-weight: 600;
       }
 
       .close {
-        color: var(--background-color);
+        color: var(--main-text-color);
         float: right;
         font-size: 3rem;
         font-weight: bold;
@@ -66,11 +79,6 @@ export const ModalContainer = styled.div`
           cursor: pointer;
         }
       }
-    }
-
-    label {
-      font-weight: 600;
-      letter-spacing: 0.5px;
     }
   }
 `;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SearchField = styled.form`
   align-items: center;
@@ -13,22 +13,22 @@ export const SearchField = styled.form`
   border-radius: 8px;
   min-width: 300px;
   padding: 1rem;
-  width: 70vw;
+  width: 85vw;
 
   label {
     color: var(--background-color);
     font-size: 1.2rem;
+    font-weight: 500;
     letter-spacing: 1px;
-    margin-right: 1px;
+    //margin-right: 1px;
     flex: 1;
   }
 
   input[type="text"] {
     border: 0;
     border-radius: 4px;
-    padding: 5px;
+    padding: 8px;
     flex: 2;
-
   }
 
   button {
@@ -37,13 +37,14 @@ export const SearchField = styled.form`
     border-radius: 1.5rem;
 
     color: var(--main-color);
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 700;
     letter-spacing: 1px;
 
     margin-left: -12px;
 
     transition: ease-in-out 0.4s;
-    padding: 8px;
+    padding: 10px;
     flex: 1;
 
     &:hover {
@@ -77,4 +78,4 @@ export const SearchField = styled.form`
       flex: 1;
     }
   }
-`
+`;

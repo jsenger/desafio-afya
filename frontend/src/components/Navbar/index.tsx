@@ -1,11 +1,41 @@
-import { Navigation } from './styles';
+import { Link } from "react-router-dom";
+import { Navigation } from "./styles";
 
-const Navbar: React.FC = () => {
+import { Navbar, Nav, Button, Form } from "react-bootstrap";
+
+const NavigationBar: React.FC = () => {
   return (
     <Navigation>
-      <img src="/img/afya-logo-white.svg" height="60" alt="Logo Afya" />
+      <Navbar expand="lg">
+        <Navbar.Brand href="#home">
+          <img
+            src="./img/vit_logo.svg"
+            width="80"
+            height="80"
+            className="d-inline-block align-center"
+            alt="Vitality logo"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="nav-links-container">
+          <Nav className="mr-auto nav-links">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#app">Aplicação</Nav.Link>
+            <Nav.Link href="#about">Sobre nós</Nav.Link>
+            <Nav.Link href="#contact">Contato</Nav.Link>
+          </Nav>
+          <Form inline>
+            <Nav.Link href="/login">
+              <Button className="nav-btns">Login</Button>
+            </Nav.Link>
+            <Nav.Link href="/register">
+              <Button className="nav-btns">Cadastro</Button>
+            </Nav.Link>
+          </Form>
+        </Navbar.Collapse>
+      </Navbar>
     </Navigation>
   );
 };
 
-export default Navbar;
+export default NavigationBar;

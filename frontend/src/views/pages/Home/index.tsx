@@ -1,14 +1,22 @@
-import { Link } from "react-router-dom";
-import { HomeContainer } from "./styles";
+import React from "react";
+import NavigationBar from "../../../components/Navbar";
+import HomeBanner from "../../../components/HomeBanner";
+import AboutApp from "../../../components/AboutApp";
+import AboutUs from "../../../components/AboutUs";
+import Contact from "../../../components/Contact";
+import Footer from "../../../components/Footer";
 
 const Home: React.FC = () => {
   return (
-    <HomeContainer>
-      <img src="/img/vit_logo.svg" alt="Logo Afya" />
-      <Link to="/register">Cadastro</Link>
-      <Link to="/login">Login</Link>
-    </HomeContainer>
+    <>
+      <NavigationBar />
+      <HomeBanner />
+      <AboutApp />
+      <AboutUs />
+      <Contact />
+      <Footer />
+    </>
   );
-}
+};
 
 export default Home;
