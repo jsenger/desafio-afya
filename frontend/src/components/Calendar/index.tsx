@@ -82,13 +82,11 @@ const Calendar: React.FC = () => {
         defaultCurrentDate={new Date()}
         startDayHour={8}
         endDayHour={19}
-        onCellClick={() => {
-          setCurrentAppointment({} as Appointment);
+        onCellClick={(e) => {
+          setCurrentAppointment({date: e.cellData.startDate.toISOString()} as Appointment);
           handleModalOpen();
         }}
         onAppointmentClick={e => {
-          //e.event.preventDefault();
-          console.log(e)
           setCurrentAppointment(e.appointmentData);
           handleModalOpen();
         }}

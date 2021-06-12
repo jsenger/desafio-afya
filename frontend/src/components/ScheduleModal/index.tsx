@@ -208,12 +208,12 @@ const ScheduleModal = ({
               disabled={isLoadingAppointment}
               options={clients}
               required
-              value={
-                {
-                  value: currentAppointment.client_id || '',
-                  label: currentAppointment.client_id ? `${currentAppointment.client?.name} - CPF: ${currentAppointment.client?.cpf}` : '',
-                }
-              }
+              value={{
+                value: currentAppointment.client_id || '',
+                label: currentAppointment.client_id
+                  ? `${currentAppointment.client?.name} - CPF: ${currentAppointment.client?.cpf}`
+                  : '',
+              }}
               onChange={e =>
                 setCurrentAppointment({
                   ...currentAppointment,
@@ -265,12 +265,18 @@ const ScheduleModal = ({
                 disabled={isLoadingAppointment}
                 required
                 value={
-                  currentAppointment.date
+                  currentAppointment.client_id
                     ? currentAppointment.date
                         .split('T')[1]
                         .split(':')
                         .slice(0, 2)
                         .join(':')
+                    : currentAppointment.date
+                    ? new Intl.DateTimeFormat('default', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                      }).format(new Date(currentAppointment.date))
                     : ''
                 }
                 onChange={e => {
@@ -303,7 +309,9 @@ const ScheduleModal = ({
                 onChange={e =>
                   setCurrentAppointment({
                     ...currentAppointment,
-                    amount: Number(e.target.value.replace('.', '').replace(',', '.')),
+                    amount: Number(
+                      e.target.value.replace('.', '').replace(',', '.')
+                    ),
                   })
                 }
               />
@@ -341,12 +349,12 @@ const ScheduleModal = ({
                 disabled={isLoadingAppointment}
                 options={specialists}
                 required
-                value={
-                  {
-                    value: currentAppointment.specialist_id || '',
-                    label: currentAppointment.specialist_id ? `${currentAppointment.specialist?.name}` : '',
-                  }
-                }
+                value={{
+                  value: currentAppointment.specialist_id || '',
+                  label: currentAppointment.specialist_id
+                    ? `${currentAppointment.specialist?.name}`
+                    : '',
+                }}
                 onChange={e =>
                   setCurrentAppointment({
                     ...currentAppointment,
