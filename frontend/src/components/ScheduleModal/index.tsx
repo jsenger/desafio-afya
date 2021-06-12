@@ -19,6 +19,8 @@ import { Appointment } from '../../types';
 interface ScheduleModalProps {
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
+  currentAppointment: Appointment;
+  setCurrentAppointment: Dispatch<SetStateAction<Appointment>>;
 }
 
 interface SelectOption {
@@ -26,7 +28,12 @@ interface SelectOption {
   label: string;
 }
 
-const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
+const ScheduleModal = ({
+  state,
+  setState,
+  currentAppointment,
+  setCurrentAppointment,
+}: ScheduleModalProps) => {
   const [isLoadingAppointment, setIsLoadingAppointment] =
     useState<boolean>(false);
 
@@ -35,10 +42,6 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
   const [specialists, setSpecialists] = useState<SelectOption[]>([
     {} as SelectOption,
   ]);
-
-  const [currentAppointment, setCurrentAppointment] = useState<Appointment>(
-    {} as Appointment
-  );
 
   const handleModalClose = () => {
     setState(false);
@@ -183,7 +186,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
     },
     [currentAppointment]
   );
-
+console.log(currentAppointment)
   return (
     <ScheduleContainer className={state ? 'show' : ''}>
       <form className="modal-content" onSubmit={appointmentSubmit} noValidate>
@@ -203,6 +206,12 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
               disabled={isLoadingAppointment}
               options={clients}
               required
+              value={
+                {
+                  value: currentAppointment.client_id,
+                  label: `${currentAppointment.client?.name} - CPF: ${currentAppointment.client?.cpf}`,
+                } || ''
+              }
               onChange={e =>
                 setCurrentAppointment({
                   ...currentAppointment,
@@ -221,6 +230,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 id="date"
                 disabled={isLoadingAppointment}
                 required
+                value={currentAppointment.date ? currentAppointment.date.split('T')[0] : ''}
                 onChange={e => {
                   const [year, month, day] = e.target.value.split('-');
 
@@ -248,6 +258,13 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 id="time"
                 disabled={isLoadingAppointment}
                 required
+                value={currentAppointment.date
+                  ? currentAppointment.date
+                      .split('T')[1]
+                      .split(':')
+                      .slice(0, 2)
+                      .join(':')
+                  : ''}
                 onChange={e => {
                   const [hour, minute] = e.target.value.split(':');
 
@@ -271,6 +288,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 id="amount"
                 disabled={isLoadingAppointment}
                 required
+                value={currentAppointment.amount || ''}
                 onChange={e =>
                   setCurrentAppointment({
                     ...currentAppointment,
@@ -289,6 +307,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 id="status"
                 disabled={isLoadingAppointment}
                 required
+                value={currentAppointment.status || ''}
                 onChange={e =>
                   setCurrentAppointment({
                     ...currentAppointment,
@@ -310,6 +329,12 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
                 disabled={isLoadingAppointment}
                 options={specialists}
                 required
+                value={
+                  {
+                    value: currentAppointment.specialist_id,
+                    label: `${currentAppointment.specialist?.name}`,
+                  } || ''
+                }
                 onChange={e =>
                   setCurrentAppointment({
                     ...currentAppointment,
@@ -326,6 +351,7 @@ const ScheduleModal = ({ state, setState }: ScheduleModalProps) => {
             className="form-control"
             name="description"
             id="description"
+            value={currentAppointment.description || ''}
             disabled={isLoadingAppointment}
             required={currentAppointment.status === 'REALIZADO'}
             onChange={e =>

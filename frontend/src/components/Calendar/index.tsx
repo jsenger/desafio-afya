@@ -22,6 +22,10 @@ const Calendar: React.FC = () => {
     {} as CalendarAppointment,
   ]);
 
+  const [currentAppointment, setCurrentAppointment] = useState<Appointment>(
+    {} as Appointment
+  );
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleModalOpen = () => {
@@ -35,14 +39,18 @@ const Calendar: React.FC = () => {
           authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
         },
       })
-      .then(response => setAppointments(response.data.map((appointment: Appointment) => {
-        console.log(appointment)
-        return {
-          ...appointment,
-          startDate: new Date(appointment.date),
-          text: `${appointment.client?.name} - CPF: ${appointment.client?.cpf}`
-        }
-      })))
+      .then(response =>
+        setAppointments(
+          response.data.map((appointment: Appointment) => {
+            console.log(appointment);
+            return {
+              ...appointment,
+              startDate: new Date(appointment.date),
+              text: `${appointment.client?.name} - CPF: ${appointment.client?.cpf}`,
+            };
+          })
+        )
+      )
       .catch(err => {
         if (err.response.data.message === 'Invalid JWT token') {
           logout();
@@ -69,14 +77,23 @@ const Calendar: React.FC = () => {
     <CalendarContainer>
       <Scheduler
         className="scheduler-table"
-        defaultCurrentView="week"
+        defaultCurrentView="day"
         dataSource={appointments}
         defaultCurrentDate={new Date()}
         startDayHour={8}
         endDayHour={19}
-        onCellClick={handleModalOpen}
+        onCellClick={() => {
+          setCurrentAppointment({} as Appointment);
+          handleModalOpen();
+        }}
+        onAppointmentClick={e => {
+          //e.event.preventDefault();
+          console.log(e)
+          setCurrentAppointment(e.appointmentData);
+          handleModalOpen();
+        }}
       />
-      <ScheduleModal setState={setIsModalOpen} state={isModalOpen} />
+      <ScheduleModal setState={setIsModalOpen} state={isModalOpen} currentAppointment={currentAppointment} setCurrentAppointment={setCurrentAppointment} />
     </CalendarContainer>
   );
 };

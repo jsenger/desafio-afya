@@ -44,4 +44,8 @@ export interface Appointment {
     name: string;
     cpf: string;
   };
+  specialist?: {
+    name: string;
+  }
+  description?: string;
 }
