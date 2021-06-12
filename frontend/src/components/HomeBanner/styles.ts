@@ -39,13 +39,20 @@ export const HomeBannerContainer = styled.section`
     }
   }
 
-  .intro-img {
-    flex: 1;
+  .intro-carousel {
+    flex: 3;
     margin: 2rem;
-    img {
-      width: 60vw;
+    box-shadow: 1px 2px 4px #000;
+    border-radius: 8px;
+
+    .carousel-inner {
       border-radius: 8px;
-      box-shadow: 1px 2px 4px #000;
+      padding: 10px;
+
+      img {
+        border-radius: 8px;
+        min-width: 300px;
+      }
     }
   }
 
@@ -59,8 +66,10 @@ export const HomeBannerContainer = styled.section`
       margin: 0 auto;
       width: 80vw;
     }
-    .intro-img {
+    .intro-carousel {
       margin: 0 auto;
+      margin-top: 2rem;
+      width: 80vw;
 
       img {
         margin-top: 1rem;
@@ -73,7 +82,7 @@ export const HomeBannerContainer = styled.section`
     margin-top: 100px;
     height: auto;
 
-    .intro-img {
+    .intro-carousel {
       display: none;
     }
   }

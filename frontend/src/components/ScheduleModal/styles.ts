@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ScheduleContainer = styled.main`
+export const ScheduleContainer = styled.div`
   display: none;
   position: fixed;
   z-index: 1;

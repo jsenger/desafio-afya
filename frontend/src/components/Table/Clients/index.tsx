@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
-import Swal from 'sweetalert2';
-import { api } from '../../../services/api';
-import { logout } from '../../../services/logout';
-import { Client } from '../../../types';
-import { TableContainer } from './styles';
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
+import Swal from "sweetalert2";
+import { api } from "../../../services/api";
+import { logout } from "../../../services/logout";
+import { Client } from "../../../types";
+import { TableContainer } from "./styles";
 
 interface ClientsTableProps {
   clients: Client[];
@@ -23,25 +23,25 @@ const ClientsTable = ({
 
   useEffect(() => {
     api
-      .get('clients', {
+      .get("clients", {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+          authorization: `Bearer ${localStorage.getItem("@tokenVitality")}`,
         },
       })
-      .then(response => {
+      .then((response) => {
         setClients(response.data);
       })
-      .catch(err => {
-        if (err.response.data.message === 'Invalid JWT token') {
+      .catch((err) => {
+        if (err.response.data.message === "Invalid JWT token") {
           logout();
         } else {
           Swal.fire({
-            title: 'Ops!',
-            text: 'Houve um erro ao carregar seus dados.',
-            icon: 'error',
-            confirmButtonText: 'Atualizar',
-            confirmButtonColor: '#ff312e',
-          }).then(response => window.location.reload());
+            title: "Ops!",
+            text: "Houve um erro ao carregar seus dados.",
+            icon: "error",
+            confirmButtonText: "Atualizar",
+            confirmButtonColor: "#ff312e",
+          }).then((response) => window.location.reload());
         }
       })
       .finally(() => setIsLoading(false));
@@ -60,9 +60,9 @@ const ClientsTable = ({
         </thead>
         <tbody>
           {isLoading
-            ? 'Carregando...'
+            ? "Carregando..."
             : !Object.keys(clients[0]).length
-            ? 'Nenhum cliente cadastrado.'
+            ? "Nenhum cliente cadastrado."
             : clients.map((client, index) => (
                 <tr
                   key={index}

@@ -26,7 +26,7 @@ export const TableContainer = styled.div`
   }
 
   table {
-    height: 300px;
+    height: auto;
     margin: 0 auto;
 
     thead {

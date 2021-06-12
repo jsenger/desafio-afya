@@ -4,12 +4,12 @@ import {
   SetStateAction,
   useCallback,
   useState,
-} from 'react';
-import Swal from 'sweetalert2';
-import { ModalContainer } from '../../assets/ModalStyles';
-import { api } from '../../services/api';
-import { logout } from '../../services/logout';
-import { Profession } from '../../types';
+} from "react";
+import Swal from "sweetalert2";
+import { ProfessionsModalContainer } from "./styles";
+import { api } from "../../services/api";
+import { logout } from "../../services/logout";
+import { Profession } from "../../types";
 
 interface ProfessionModalProps {
   state: boolean;
@@ -34,43 +34,43 @@ const ProfessionsModal = ({ state, setState }: ProfessionModalProps) => {
         setIsLoading(true);
 
         api
-          .post('professions', profession, {
+          .post("professions", profession, {
             headers: {
-              authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
+              authorization: `Bearer ${localStorage.getItem("@tokenVitality")}`,
             },
           })
-          .then(response => {
+          .then((response) => {
             Swal.fire({
-              title: 'Sucesso!',
-              text: 'Especialidade cadastrada com sucesso.',
-              icon: 'success',
-              confirmButtonText: 'Fechar',
-              confirmButtonColor: '#004AAD',
+              title: "Sucesso!",
+              text: "Especialidade cadastrada com sucesso.",
+              icon: "success",
+              confirmButtonText: "Fechar",
+              confirmButtonColor: "#004AAD",
             }).then(() => {
               handleModalClose();
               form.reset();
             });
           })
-          .catch(err => {
-            let errorMessage = '';
+          .catch((err) => {
+            let errorMessage = "";
 
-            if (err.response.data.message === 'Invalid JWT token') {
+            if (err.response.data.message === "Invalid JWT token") {
               logout();
             } else if (
               err.response.data.message ===
-              'Profession already booked with this name'
+              "Profession already booked with this name"
             ) {
-              errorMessage = 'Especialidade já cadastrada.';
+              errorMessage = "Especialidade já cadastrada.";
             } else {
-              errorMessage = 'Dados incorretos.';
+              errorMessage = "Dados incorretos.";
             }
 
             Swal.fire({
-              title: 'Ops!',
+              title: "Ops!",
               text: errorMessage,
-              icon: 'error',
-              confirmButtonText: 'Fechar',
-              confirmButtonColor: '#ff312e',
+              icon: "error",
+              confirmButtonText: "Fechar",
+              confirmButtonColor: "#ff312e",
             });
           })
           .finally(() => {
@@ -78,11 +78,11 @@ const ProfessionsModal = ({ state, setState }: ProfessionModalProps) => {
           });
       } else {
         Swal.fire({
-          title: 'Ops!',
-          text: 'Verifique se todos os campos estão preenchidos corretamente.',
-          icon: 'error',
-          confirmButtonText: 'Fechar',
-          confirmButtonColor: '#ff312e',
+          title: "Ops!",
+          text: "Verifique se todos os campos estão preenchidos corretamente.",
+          icon: "error",
+          confirmButtonText: "Fechar",
+          confirmButtonColor: "#ff312e",
         });
       }
     },
@@ -90,7 +90,7 @@ const ProfessionsModal = ({ state, setState }: ProfessionModalProps) => {
   );
 
   return (
-    <ModalContainer className={state ? 'show' : ''}>
+    <ProfessionsModalContainer className={state ? "show" : ""}>
       <form className="modal-content" onSubmit={professionSubmit}>
         <div className="modal-header">
           <h4>Cadastro de Especialidade</h4>
@@ -109,7 +109,7 @@ const ProfessionsModal = ({ state, setState }: ProfessionModalProps) => {
               id="name"
               disabled={isLoading}
               required
-              onChange={e =>
+              onChange={(e) =>
                 setProfession({
                   name: e.target.value,
                 })
@@ -120,11 +120,11 @@ const ProfessionsModal = ({ state, setState }: ProfessionModalProps) => {
 
         <div className="modal-footer">
           <button type="submit">
-            {isLoading ? 'Salvando...' : 'Salvar nova Especialidade'}
+            {isLoading ? "Salvando..." : "Salvar nova Especialidade"}
           </button>
         </div>
       </form>
-    </ModalContainer>
+    </ProfessionsModalContainer>
   );
 };
 

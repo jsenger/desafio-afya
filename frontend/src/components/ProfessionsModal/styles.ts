@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ModalContainer = styled.div`
+export const ProfessionsModalContainer = styled.div`
   display: none;
   position: fixed;
   z-index: 1;
@@ -10,7 +10,7 @@ export const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: var(--background-color);
+  background-color: var(--main-text-color);
   background-color: rgba(0, 0, 0, 0.4);
 
   &.show {
@@ -22,10 +22,11 @@ export const ModalContainer = styled.div`
     border: 0;
     border-radius: 8px;
     color: var(--main-color);
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     letter-spacing: 1px;
-    padding: 1rem;
+    width: 100%;
+    padding: 10px;
 
     transition: 0.2s ease-in-out;
 
@@ -35,18 +36,20 @@ export const ModalContainer = styled.div`
   }
 
   .modal-content {
-    background-color: var(--main-color);
-    color: var(--main-button-color);
+    background-color: var(--background-color);
+    color: var(--main-color);
     margin: 15% auto;
     padding: 20px;
     border: 0;
     box-shadow: 5px 6px 5px 0px rgba(0, 0, 0, 0.49);
-    width: 80%;
+    width: 50%;
 
     .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      border-bottom: 1px solid var(--main-button-color);
 
       h4 {
         font-weight: 700;
@@ -54,7 +57,7 @@ export const ModalContainer = styled.div`
       }
 
       .close {
-        color: var(--background-color);
+        color: var(--main-text-color);
         float: right;
         font-size: 3rem;
         font-weight: bold;
@@ -71,6 +74,9 @@ export const ModalContainer = styled.div`
     label {
       font-weight: 600;
       letter-spacing: 0.5px;
+    }
+    input {
+      background-color: #d3d3d3;
     }
   }
 `;
