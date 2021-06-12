@@ -17,6 +17,11 @@ interface CalendarAppointment extends Appointment {
   startDate: Date;
 }
 
+interface StatusColors {
+  id: string;
+  color: string;
+}
+
 const Calendar: React.FC = () => {
   const [appointments, setAppointments] = useState<CalendarAppointment[]>([
     {} as CalendarAppointment,
@@ -27,6 +32,12 @@ const Calendar: React.FC = () => {
   );
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const [statusColors] = useState<StatusColors[]>([
+    { id: 'AGENDADO', color: 'var(--main-color)' },
+    { id: 'REALIZADO', color: 'var(--secondary-color)' },
+    { id: 'CANCELADO', color: 'var(--danger-color)' },
+  ]);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -94,7 +105,9 @@ const Calendar: React.FC = () => {
           setCurrentAppointment({ ...e.appointmentData, new: false });
           handleModalOpen();
         }}
-      />
+      >
+        <Resource fieldExpr="status" dataSource={statusColors} />
+      </Scheduler>
       <ScheduleModal
         setState={setIsModalOpen}
         state={isModalOpen}
