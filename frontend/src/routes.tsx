@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import isAuthenticated from "./auth";
+import isAuthenticated from "./services/auth";
 
 import Home from "./views/pages/Home";
 import Login from "./views/pages/Login";
