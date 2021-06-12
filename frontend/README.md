@@ -1,4 +1,4 @@
-# Vitality
+# Vitality - Front-end
 
 <div align="center">
   
@@ -73,9 +73,12 @@ Vitality is an application built for medical clinics to use. Its goal is to prov
 - [styled-components](https://styled-components.com/)
 - [SweetAlert2](https://sweetalert2.github.io/)
 - [React Icons](https://react-icons.github.io/react-icons/)
-- [ReactDOM](https://reactjs.org/docs/react-dom.html)
 - [react-router-dom](https://www.npmjs.com/package/react-router-dom)
 - [React-Bootstrap](https://react-bootstrap.github.io/)
+- [DevExtreme](https://js.devexpress.com/Overview/React/)
+- [react-input-mask](https://openbase.com/js/react-input-mask/documentation)
+- [react-number-format](https://www.npmjs.com/package/react-number-format)
+- [React Select](https://react-select.com/home)
 
 ## Project setup
 
@@ -115,5 +118,4 @@ yarn build
 
 <a href="https://github.com/jsenger"><img src="https://avatars.githubusercontent.com/u/34224710?v=4" width="50" height="50" alt=""/></a>
 <a href="https://github.com/luc0liv"><img src="https://avatars.githubusercontent.com/u/71158905?v=4" width="50" height="50" alt=""/></a>
-<a href="https://github.com/mylycy"><img src="https://avatars.githubusercontent.com/u/83430469?v=4" width="50" height="50" alt=""/></a>
 <a href="https://github.com/sillasvidal"><img src="https://avatars.githubusercontent.com/u/38226117?v=4" width="50" height="50" alt=""/></a>
