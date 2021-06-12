@@ -3,7 +3,6 @@ import {
   FormEvent,
   SetStateAction,
   useCallback,
-  useEffect,
   useState,
 } from 'react';
 import Swal from 'sweetalert2';
