@@ -201,6 +201,7 @@ console.log(currentAppointment)
           <div className="form-group">
             <label htmlFor="name">Paciente:</label>
             <Select
+              className="select"
               name="name"
               id="name"
               disabled={isLoadingAppointment}
@@ -324,6 +325,7 @@ console.log(currentAppointment)
             <div className="form-group col-sm-6">
               <label htmlFor="specialists">Especialista:</label>
               <Select
+                className="select"
                 name="specialists"
                 id="specialists"
                 disabled={isLoadingAppointment}
