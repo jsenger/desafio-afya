@@ -17,6 +17,7 @@ export interface Client {
   email: string;
   address: Address;
   new: boolean;
+  created_at?: string;
 }
 
 export interface Profession {

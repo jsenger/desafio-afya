@@ -8,6 +8,11 @@ import { useState } from "react";
 
 const Charts: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([{} as Client]);
+  const [currentClient, setCurrentClient] = useState<Client>({} as Client);
+  const [isChartOpen, setIsChartOpen] = useState<boolean>(false);
+  const handleChartOpen = () => {
+    setIsChartOpen(true);
+  };
 
   return (
     <ChartPageContainer>
@@ -17,7 +22,12 @@ const Charts: React.FC = () => {
         endpoint="clients"
         setResult={setClients}
       />
-      <ClientChart />
+      <ClientChart
+        clients={clients}
+        setClients={setClients}
+        handleChartOpen={handleChartOpen}
+        setCurrentClient={setCurrentClient}
+      />
     </ChartPageContainer>
   );
 };
