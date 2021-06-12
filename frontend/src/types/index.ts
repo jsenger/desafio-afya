@@ -33,3 +33,24 @@ export interface Specialist {
   profession_name: string;
   address: Address;
 }
+
+export interface Appointment {
+  new?: boolean;
+  id?: string;
+  date: string;
+  amount: number;
+  status: string;
+  specialist_id: string;
+  client_id: string;
+  client?: {
+    name: string;
+    cpf: string;
+  };
+  specialist?: {
+    name: string;
+    profession?: {
+      name: string;
+    }
+  }
+  description?: string;
+}

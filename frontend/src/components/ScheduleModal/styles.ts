@@ -13,6 +13,16 @@ export const ScheduleContainer = styled.div`
   background-color: var(--background-color);
   background-color: rgba(0, 0, 0, 0.4);
 
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+
+    .select {
+      width: 100%;
+    }
+  }
+
   &.show {
     display: block;
   }
