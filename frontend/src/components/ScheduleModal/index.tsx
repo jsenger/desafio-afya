@@ -12,6 +12,7 @@ import { logout } from '../../services/logout';
 
 import Select from 'react-select';
 import Swal from 'sweetalert2';
+import NumberFormat from 'react-number-format';
 
 import { ScheduleContainer } from './styles';
 import { Appointment } from '../../types';
@@ -186,7 +187,7 @@ const ScheduleModal = ({
     },
     [currentAppointment]
   );
-console.log(currentAppointment)
+
   return (
     <ScheduleContainer className={state ? 'show' : ''}>
       <form className="modal-content" onSubmit={appointmentSubmit} noValidate>
@@ -231,7 +232,11 @@ console.log(currentAppointment)
                 id="date"
                 disabled={isLoadingAppointment}
                 required
-                value={currentAppointment.date ? currentAppointment.date.split('T')[0] : ''}
+                value={
+                  currentAppointment.date
+                    ? currentAppointment.date.split('T')[0]
+                    : ''
+                }
                 onChange={e => {
                   const [year, month, day] = e.target.value.split('-');
 
@@ -259,13 +264,15 @@ console.log(currentAppointment)
                 id="time"
                 disabled={isLoadingAppointment}
                 required
-                value={currentAppointment.date
-                  ? currentAppointment.date
-                      .split('T')[1]
-                      .split(':')
-                      .slice(0, 2)
-                      .join(':')
-                  : ''}
+                value={
+                  currentAppointment.date
+                    ? currentAppointment.date
+                        .split('T')[1]
+                        .split(':')
+                        .slice(0, 2)
+                        .join(':')
+                    : ''
+                }
                 onChange={e => {
                   const [hour, minute] = e.target.value.split(':');
 
@@ -282,18 +289,21 @@ console.log(currentAppointment)
             </div>
             <div className="form-group col-sm-4">
               <label htmlFor="amount">Valor:</label>
-              <input
+              <NumberFormat
                 className="form-control"
-                type="text"
                 name="amount"
                 id="amount"
                 disabled={isLoadingAppointment}
                 required
                 value={currentAppointment.amount || ''}
+                thousandSeparator={'.'}
+                decimalSeparator={','}
+                fixedDecimalScale={true}
+                decimalScale={2}
                 onChange={e =>
                   setCurrentAppointment({
                     ...currentAppointment,
-                    amount: Number(e.target.value.replace(',', '.')),
+                    amount: Number(e.target.value.replace('.', '').replace(',', '.')),
                   })
                 }
               />
