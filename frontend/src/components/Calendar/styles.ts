@@ -1,18 +1,16 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const CalendarContainer = styled.main`
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 2rem;
   width: 80vw;
   height: calc(100vh - 100px);
   overflow: auto;
 
- .scheduler-table {
-
- .dx-scheduler-header-panel-cell {
-    background-color: var(--background-color);
-    font-weight: bold;
- }
-
- }
-`
+  .scheduler-table {
+    .dx-scheduler-header-panel-cell {
+      background-color: var(--background-color);
+      font-weight: bold;
+    }
+  }
+`;

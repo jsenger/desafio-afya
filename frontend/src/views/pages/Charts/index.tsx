@@ -17,7 +17,7 @@ const Charts: React.FC = () => {
         endpoint="clients"
         setResult={setClients}
       />
-      <ClientChart />
+      <ClientChart clients={clients} setClients={setClients} />
     </ChartPageContainer>
   );
 };
