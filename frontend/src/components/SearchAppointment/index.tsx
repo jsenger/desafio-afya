@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Accordion,
   Form,
@@ -9,18 +8,22 @@ import {
   Card,
 } from 'react-bootstrap';
 import { BsChevronDoubleDown } from 'react-icons/bs';
-import { SelectOption } from '../../types';
+import Select from 'react-select';
 
 import AppointmentResults from '../AppointmentResults';
 
 import { SearchContainer } from './styles';
+import { SelectOption } from '../../types';
 
 interface SearchAppointmentProps {
   clients: SelectOption[];
   specialists: SelectOption[];
 }
 
-const SearchAppointment = ({ clients, specialists }: SearchAppointmentProps) => {
+const SearchAppointment = ({
+  clients,
+  specialists,
+}: SearchAppointmentProps) => {
   return (
     <SearchContainer>
       <Accordion defaultActiveKey="0">
@@ -35,28 +38,33 @@ const SearchAppointment = ({ clients, specialists }: SearchAppointmentProps) => 
               <Row className="m-2">
                 <Col md="6">
                   <FormLabel>Paciente</FormLabel>
-                  <Form.Control as="select">
-                    <option>Luciana</option>
-                    <option>Jéssica</option>
-                    <option>Sillas</option>
-                  </Form.Control>
+                  <Select
+                    className="select"
+                    name="name"
+                    id="name"
+                    options={[...clients, {value: '', label: 'Nenhum paciente'}]}
+                    required
+                  ></Select>
                 </Col>
                 <Col md="6">
                   <FormLabel>Especialista</FormLabel>
-                  <Form.Control as="select">
-                    <option>João</option>
-                    <option>Anna</option>
-                    <option>Maria</option>
-                  </Form.Control>
+                  <Select
+                    className="select"
+                    name="name"
+                    id="name"
+                    options={[...specialists, {value: '', label: 'Nenhum especialista'}]}
+                    required
+                  ></Select>
                 </Col>
               </Row>
               <Row className="m-2">
                 <Col md="4">
                   <FormLabel>Status</FormLabel>
                   <Form.Control as="select">
-                    <option>Agendado</option>
-                    <option>Realizado</option>
-                    <option>Cancelado</option>
+                    <option value=""></option>
+                    <option value="AGENDADO">Agendado</option>
+                    <option value="REALIZADO">Realizado</option>
+                    <option value="CANCELADO">Cancelado</option>
                   </Form.Control>
                 </Col>
                 <Col>
