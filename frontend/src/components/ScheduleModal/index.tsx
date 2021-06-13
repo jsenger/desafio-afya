@@ -40,6 +40,8 @@ const ScheduleModal = ({
   const [isLoadingAppointment, setIsLoadingAppointment] =
     useState<boolean>(false);
 
+  const [needDescription, setNeedDescription] = useState<boolean>(false);
+
   const [clients, setClients] = useState<SelectOption[]>([{} as SelectOption]);
 
   const [specialists, setSpecialists] = useState<SelectOption[]>([
@@ -131,6 +133,7 @@ const ScheduleModal = ({
         specialist_id: currentAppointment.specialist_id,
         description: currentAppointment.description || '',
       };
+      console.log(appointment);
 
       e.preventDefault();
 
@@ -228,6 +231,10 @@ const ScheduleModal = ({
                   errorMessage =
                     'Já existe um atendimento com o especialista escolhido neste horário.';
                   break;
+                case "You can't modify a medical care appointment status where already finished":
+                  errorMessage =
+                    'Não é possível alterar atendimentos já realizados.';
+                  break;
                 case 'Specialist not found':
                   errorMessage = 'Especialista não encontrado.';
                   break;
@@ -281,7 +288,10 @@ const ScheduleModal = ({
               className="select"
               name="name"
               id="name"
-              disabled={isLoadingAppointment}
+              isDisabled={
+                isLoadingAppointment ||
+                (currentAppointment.status !== 'AGENDADO' && !needDescription)
+              }
               options={clients}
               required
               value={{
@@ -310,7 +320,10 @@ const ScheduleModal = ({
                 type="date"
                 name="date"
                 id="date"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={
                   currentAppointment.date
@@ -342,7 +355,10 @@ const ScheduleModal = ({
                 type="time"
                 name="time"
                 id="time"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={
                   currentAppointment.date
@@ -373,7 +389,10 @@ const ScheduleModal = ({
                 className="form-control"
                 name="amount"
                 id="amount"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={currentAppointment.amount || ''}
                 thousandSeparator={'.'}
@@ -398,15 +417,25 @@ const ScheduleModal = ({
                 className="form-control"
                 name="status"
                 id="status"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={currentAppointment.status || ''}
-                onChange={e =>
+                onChange={e => {
+                  if (
+                    currentAppointment.status === 'AGENDADO' &&
+                    e.target.value === 'REALIZADO'
+                  )
+                    setNeedDescription(true);
+                  else setNeedDescription(false);
+
                   setCurrentAppointment({
                     ...currentAppointment,
                     status: e.target.value,
-                  })
-                }
+                  });
+                }}
               >
                 <option value="AGENDADO">Agendado</option>
                 <option value="REALIZADO">Realizado</option>
@@ -420,7 +449,10 @@ const ScheduleModal = ({
                 className="select"
                 name="specialists"
                 id="specialists"
-                disabled={isLoadingAppointment}
+                isDisabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 options={specialists}
                 required
                 value={{
@@ -449,8 +481,13 @@ const ScheduleModal = ({
             name="description"
             id="description"
             value={currentAppointment.description || ''}
-            disabled={isLoadingAppointment}
+            disabled={isLoadingAppointment || !needDescription}
             required={currentAppointment.status === 'REALIZADO'}
+            placeholder={
+              currentAppointment.status === 'AGENDADO'
+                ? 'Altere o status para realizado para editar a descrição'
+                : ''
+            }
             onChange={e =>
               setCurrentAppointment({
                 ...currentAppointment,
