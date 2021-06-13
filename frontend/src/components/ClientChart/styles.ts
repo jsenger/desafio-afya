@@ -12,9 +12,9 @@ export const ChartContainer = styled.main`
 
   .chart-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    width: 70vw;
+    width: 50vw;
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
@@ -31,6 +31,7 @@ export const ChartContainer = styled.main`
       justify-content: center;
       gap: 1rem;
       padding: 10px;
+      width: 100%;
 
       h1 {
         font-size: 2rem;
@@ -55,17 +56,7 @@ export const ChartContainer = styled.main`
       flex-direction: column;
       gap: 1rem;
       justify-content: center;
-
-      button:last-of-type {
-        background-color: var(--main-color);
-        color: var(--main-button-color);
-
-        a {
-          text-decoration: none;
-          color: var(--main-button-color);
-        }
-      }
-
+      width: 100%;
       button {
         border: 0;
         border-radius: 8px;

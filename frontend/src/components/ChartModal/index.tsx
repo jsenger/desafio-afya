@@ -15,8 +15,10 @@ import {
   Button,
   FormLabel,
 } from "react-bootstrap";
+import { SpinningCircles, LoaderProvider } from "@agney/react-loading";
+
 import { CgMoreO } from "react-icons/cg";
-import { Client } from "../../types";
+import { Client, Record } from "../../types";
 import { api } from "../../services/api";
 import { ChartModalContainer } from "./styles";
 
@@ -26,24 +28,40 @@ interface ChartsModalProps {
   currentClient: Client;
 }
 
+interface RecordHistoric {
+  dateFromLasterMedicalCare: string;
+  medicalRecordHistoric: Record[];
+}
+
 const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
+  const [currentRecordHistoric, setCurrentRecordHistoric] =
+    useState<RecordHistoric>({} as RecordHistoric);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const handleModalClose = () => {
     setState(false);
   };
 
   useEffect(() => {
     if (currentClient.id) {
-      // api
-      //   .get(`medical-records?client_id${currentClient.id}`, {
-      //     headers: {
-      //       authorization: `Bearer ${localStorage.getItem("@tokenVitality")}`,
-      //     },
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
-      //   });
+      setIsLoading(true);
+      api
+        .get(`medical-records?client_id=${currentClient.id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("@tokenVitality")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setCurrentRecordHistoric(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setIsLoading(false));
     }
   }, [currentClient]);
+
   return (
     <ChartModalContainer className={state ? "show" : ""}>
       <Form className="p-4 rounded">
@@ -51,7 +69,7 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
           <h1>Prontuário</h1>
           <span className="close" onClick={handleModalClose}>
             &times;
-          </span>{" "}
+          </span>
         </div>
         <Container>
           <fieldset disabled>
@@ -85,7 +103,26 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
               </Col>
               <Col>
                 <FormLabel>Último atendimento</FormLabel>
-                <Form.Control type="date" />
+                {isLoading ? (
+                  <div>Carregando...</div>
+                ) : !currentRecordHistoric.medicalRecordHistoric.length ? (
+                  <p>Nenhum atendimento cadastrado.</p>
+                ) : (
+                  <Form.Control
+                    type="date"
+                    value={
+                      currentRecordHistoric.dateFromLasterMedicalCare &&
+                      new Intl.DateTimeFormat("default", {
+                        month: "2-digit",
+                        day: "2-digit",
+                      }).format(
+                        new Date(
+                          currentRecordHistoric.dateFromLasterMedicalCare
+                        )
+                      )
+                    }
+                  />
+                )}
               </Col>
             </Row>
           </fieldset>
@@ -96,70 +133,52 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
               <h3>Atendimentos:</h3>
               <Accordion defaultActiveKey="0">
                 <Card>
-                  <Card.Header>
-                    <Accordion.Toggle as={Button} variant="info" eventKey="0">
-                      Atendimento agendado <CgMoreO />
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>
-                      <h4>Especialista:</h4>
-                      <p>--------------</p>
+                  {isLoading ? (
+                    <div>Carregando...</div>
+                  ) : !currentRecordHistoric.medicalRecordHistoric.length ? (
+                    <div>Nenhum atendimento cadastrado.</div>
+                  ) : (
+                    currentRecordHistoric.medicalRecordHistoric.map(
+                      (record) => (
+                        <>
+                          <Card.Header>
+                            <Accordion.Toggle
+                              as={Button}
+                              variant="success"
+                              eventKey="1"
+                            >
+                              {record.date &&
+                                new Intl.DateTimeFormat("pt-BR").format(
+                                  new Date(record.date)
+                                )}
+                              <CgMoreO />
+                            </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="1">
+                            <Card.Body>
+                              <h4>Especialista:</h4>
+                              <p>
+                                {record.specialist && record.specialist.name}
+                              </p>
 
-                      <h4>Hora do atendimento:</h4>
-                      <p>00:00:00</p>
+                              <h4>Hora do atendimento:</h4>
+                              <p>
+                                {record.date &&
+                                  new Intl.DateTimeFormat("default", {
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                    hour12: false,
+                                  }).format(new Date(record.date))}
+                              </p>
 
-                      <h4>Data:</h4>
-                      <p>00/00/0000</p>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-                <Card>
-                  <Card.Header>
-                    <Accordion.Toggle
-                      as={Button}
-                      variant="success"
-                      eventKey="1"
-                    >
-                      Atendimento Realizado <CgMoreO />
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="1">
-                    <Card.Body>
-                      <h4>Especialista:</h4>
-                      <p>--------------</p>
-
-                      <h4>Hora do atendimento:</h4>
-                      <p>00:00:00</p>
-
-                      <h4>Data:</h4>
-                      <p>00/00/0000</p>
-
-                      <h4>Descrição:</h4>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                      </p>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-                <Card>
-                  <Card.Header>
-                    <Accordion.Toggle as={Button} variant="danger" eventKey="2">
-                      Atendimento Cancelado <CgMoreO />
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="2">
-                    <Card.Body>
-                      <h4>Especialista:</h4>
-                      <p>--------------</p>
-
-                      <h4>Hora do atendimento:</h4>
-                      <p>00:00:00</p>
-
-                      <h4>Data:</h4>
-                      <p>00/00/0000</p>
-                    </Card.Body>
-                  </Accordion.Collapse>
+                              <h4>Descrição:</h4>
+                              <p>{record.description}</p>
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </>
+                      )
+                    )
+                  )}
                 </Card>
               </Accordion>
             </Col>

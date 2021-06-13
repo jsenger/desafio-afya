@@ -83,9 +83,6 @@ const ClientChart = ({ clients, setClients }: PacientChartProps) => {
                 >
                   Prontuário
                 </button>
-                <button>
-                  <Link to="/appointments">Novo atendimento</Link>
-                </button>
               </div>
             </div>
           ))}

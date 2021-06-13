@@ -34,3 +34,11 @@ export interface Specialist {
   profession_name: string;
   address: Address;
 }
+
+export interface Record {
+  date: string;
+  description: string;
+  specialist: {
+    name: string;
+  };
+}
