@@ -4,7 +4,7 @@ import {
   useCallback,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 import {
   Accordion,
   Card,
@@ -14,13 +14,14 @@ import {
   Col,
   Button,
   FormLabel,
-} from "react-bootstrap";
-import { SpinningCircles, LoaderProvider } from "@agney/react-loading";
+} from 'react-bootstrap';
 
-import { CgMoreO } from "react-icons/cg";
-import { Client, Record } from "../../types";
-import { api } from "../../services/api";
-import { ChartModalContainer } from "./styles";
+import { CgMoreO } from 'react-icons/cg';
+import { Client, Record } from '../../types';
+import { api } from '../../services/api';
+import { ChartModalContainer } from './styles';
+import { logout } from '../../services/logout';
+import Swal from 'sweetalert2';
 
 interface ChartsModalProps {
   state: boolean;
@@ -48,22 +49,29 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
       api
         .get(`medical-records?client_id=${currentClient.id}`, {
           headers: {
-            authorization: `Bearer ${localStorage.getItem("@tokenVitality")}`,
+            authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
           },
         })
-        .then((response) => {
-          console.log(response.data);
-          setCurrentRecordHistoric(response.data);
-        })
-        .catch((err) => {
-          console.log(err);
+        .then(response => setCurrentRecordHistoric(response.data))
+        .catch(err => {
+          if (err.response.data.message === 'Invalid JWT token') {
+            logout();
+          } else {
+            Swal.fire({
+              title: 'Ops!',
+              text: 'Houve um erro ao carregar seus dados.',
+              icon: 'error',
+              confirmButtonText: 'Atualizar',
+              confirmButtonColor: '#ff312e',
+            }).then(response => window.location.reload());
+          }
         })
         .finally(() => setIsLoading(false));
     }
   }, [currentClient]);
 
   return (
-    <ChartModalContainer className={state ? "show" : ""}>
+    <ChartModalContainer className={state ? 'show' : ''}>
       <Form className="p-4 rounded">
         <div className="chart-header">
           <h1>Prontuário</h1>
@@ -96,8 +104,8 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
                   type="date"
                   value={
                     currentClient.created_at
-                      ? currentClient.created_at.split("T")[0]
-                      : ""
+                      ? currentClient.created_at.split('T')[0]
+                      : ''
                   }
                 />
               </Col>
@@ -112,9 +120,9 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
                     type="date"
                     value={
                       currentRecordHistoric.dateFromLasterMedicalCare &&
-                      new Intl.DateTimeFormat("default", {
-                        month: "2-digit",
-                        day: "2-digit",
+                      new Intl.DateTimeFormat('default', {
+                        month: '2-digit',
+                        day: '2-digit',
                       }).format(
                         new Date(
                           currentRecordHistoric.dateFromLasterMedicalCare
@@ -138,46 +146,42 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
                   ) : !currentRecordHistoric.medicalRecordHistoric.length ? (
                     <div>Nenhum atendimento cadastrado.</div>
                   ) : (
-                    currentRecordHistoric.medicalRecordHistoric.map(
-                      (record) => (
-                        <>
-                          <Card.Header>
-                            <Accordion.Toggle
-                              as={Button}
-                              variant="success"
-                              eventKey="1"
-                            >
+                    currentRecordHistoric.medicalRecordHistoric.map(record => (
+                      <>
+                        <Card.Header>
+                          <Accordion.Toggle
+                            as={Button}
+                            variant="success"
+                            eventKey="1"
+                          >
+                            {record.date &&
+                              new Intl.DateTimeFormat('pt-BR').format(
+                                new Date(record.date)
+                              )}
+                            <CgMoreO />
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                          <Card.Body>
+                            <h4>Especialista:</h4>
+                            <p>{record.specialist && record.specialist.name}</p>
+
+                            <h4>Hora do atendimento:</h4>
+                            <p>
                               {record.date &&
-                                new Intl.DateTimeFormat("pt-BR").format(
-                                  new Date(record.date)
-                                )}
-                              <CgMoreO />
-                            </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="1">
-                            <Card.Body>
-                              <h4>Especialista:</h4>
-                              <p>
-                                {record.specialist && record.specialist.name}
-                              </p>
+                                new Intl.DateTimeFormat('default', {
+                                  hour: 'numeric',
+                                  minute: 'numeric',
+                                  hour12: false,
+                                }).format(new Date(record.date))}
+                            </p>
 
-                              <h4>Hora do atendimento:</h4>
-                              <p>
-                                {record.date &&
-                                  new Intl.DateTimeFormat("default", {
-                                    hour: "numeric",
-                                    minute: "numeric",
-                                    hour12: false,
-                                  }).format(new Date(record.date))}
-                              </p>
-
-                              <h4>Descrição:</h4>
-                              <p>{record.description}</p>
-                            </Card.Body>
-                          </Accordion.Collapse>
-                        </>
-                      )
-                    )
+                            <h4>Descrição:</h4>
+                            <p>{record.description}</p>
+                          </Card.Body>
+                        </Accordion.Collapse>
+                      </>
+                    ))
                   )}
                 </Card>
               </Accordion>
