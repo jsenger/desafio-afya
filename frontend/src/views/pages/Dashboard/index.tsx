@@ -7,6 +7,7 @@ import { api } from '../../../services/api';
 import { logout } from '../../../services/logout';
 import Swal from 'sweetalert2';
 import { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 
 interface DashboardData {
   medicalCaresCanceled: number;
@@ -48,10 +49,12 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <DashboardContainer>
+    <DashboardContainer className={isLoading ? 'text-center' : ''}>
       <Sidebar title="Dashboard" />
       {isLoading ? (
-        'Carregando...'
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Carregando...</span>
+        </Spinner>
       ) : (
         <>
           <h1>Olá, {localStorage.getItem('@userNameVitality')}!</h1>
@@ -61,7 +64,9 @@ const Dashboard: React.FC = () => {
             medicalCaresConfirmed={dashboardData.medicalCaresConfirmed}
             quantityClients={dashboardData.quantityClients}
           />
-          <PieChartComponent quantityProfessions={dashboardData.quantityProfessions} />
+          <PieChartComponent
+            quantityProfessions={dashboardData.quantityProfessions}
+          />
         </>
       )}
     </DashboardContainer>
