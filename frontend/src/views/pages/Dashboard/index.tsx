@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
         'Carregando...'
       ) : (
         <>
-          <h1>Welcome, {localStorage.getItem('@userNameVitality')}!</h1>
+          <h1>Olá, {localStorage.getItem('@userNameVitality')}!</h1>
           <DashboardChart
             medicalCaresCanceled={dashboardData.medicalCaresCanceled}
             medicalCaresCompleted={dashboardData.medicalCaresCompleted}
