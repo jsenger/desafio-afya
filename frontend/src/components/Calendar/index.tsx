@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import { api } from '../../services/api';
 import { logout } from '../../services/logout';
-import { Appointment } from '../../types';
+import { Appointment, SelectOption } from '../../types';
 
 import { CalendarContainer } from './styles';
 import { useEffect, useState } from 'react';
@@ -22,7 +22,12 @@ interface StatusColors {
   color: string;
 }
 
-const Calendar: React.FC = () => {
+interface CalendarProps {
+  clients: SelectOption[];
+  specialists: SelectOption[];
+}
+
+const Calendar = ({ clients, specialists }: CalendarProps) => {
   const [appointments, setAppointments] = useState<CalendarAppointment[]>([
     {} as CalendarAppointment,
   ]);
@@ -114,6 +119,8 @@ const Calendar: React.FC = () => {
         currentAppointment={currentAppointment}
         setCurrentAppointment={setCurrentAppointment}
         getAppointments={getAppointments}
+        clients={clients}
+        specialists={specialists}
       />
     </CalendarContainer>
   );

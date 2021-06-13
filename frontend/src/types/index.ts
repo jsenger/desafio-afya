@@ -63,3 +63,8 @@ export interface Appointment {
   };
   description?: string;
 }
+
+export interface SelectOption {
+  value: string;
+  label: string;
+}

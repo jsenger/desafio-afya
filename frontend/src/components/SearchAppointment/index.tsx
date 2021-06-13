@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Accordion,
   Form,
@@ -7,14 +7,20 @@ import {
   Button,
   FormLabel,
   Card,
-} from "react-bootstrap";
-import { BsChevronDoubleDown } from "react-icons/bs";
+} from 'react-bootstrap';
+import { BsChevronDoubleDown } from 'react-icons/bs';
+import { SelectOption } from '../../types';
 
-import AppointmentResults from "../AppointmentResults";
+import AppointmentResults from '../AppointmentResults';
 
-import { SearchContainer } from "./styles";
+import { SearchContainer } from './styles';
 
-const SearchAppointment: React.FC = () => {
+interface SearchAppointmentProps {
+  clients: SelectOption[];
+  specialists: SelectOption[];
+}
+
+const SearchAppointment = ({ clients, specialists }: SearchAppointmentProps) => {
   return (
     <SearchContainer>
       <Accordion defaultActiveKey="0">
