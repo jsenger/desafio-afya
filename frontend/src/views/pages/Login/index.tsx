@@ -33,6 +33,7 @@ const Login: React.FC = () => {
           .post('sessions', formDataContent)
           .then(response => {
             localStorage.setItem('@tokenVitality', response.data.token);
+            localStorage.setItem('@userNameVitality', response.data.user.name);
             history.push('/dashboard');
           })
           .catch(err => {
