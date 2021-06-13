@@ -5,13 +5,15 @@ import PieChart, {
   Format,
   Label,
   Connector,
-} from "devextreme-react/pie-chart";
+} from 'devextreme-react/pie-chart';
 
-import { specialtiesList } from "./data";
+import { PieChartContainer } from './styles';
 
-import { PieChartContainer } from "./styles";
+interface PieChartComponentProps {
+  quantityProfessions: object;
+}
 
-const PieChartComponent: React.FC = () => {
+const PieChartComponent = ({ quantityProfessions }: PieChartComponentProps) => {
   const customizeTooltip = (arg: any) => {
     return {
       text: `${arg.valueText} - ${(arg.percent * 100).toFixed(2)}%`,
@@ -26,9 +28,16 @@ const PieChartComponent: React.FC = () => {
           type="doughnut"
           title="Especialidades cadastradas"
           palette="Soft Pastel"
-          dataSource={specialtiesList}
+          dataSource={Object.keys(quantityProfessions).map(
+            (profession, index) => {
+              return {
+                profession,
+                val: Object.values(quantityProfessions)[index],
+              };
+            }
+          )}
         >
-          <Series argumentField="specialtie">
+          <Series argumentField="profession">
             <Label visible={true}>
               <Connector visible={true} />
             </Label>
