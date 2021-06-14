@@ -64,6 +64,8 @@ const SearchAppointment = ({
         params: searchParams,
       });
 
+      console.log(response.data)
+
       if (response.data.length) {
         setIsLoading(false);
 
