@@ -1,7 +1,19 @@
-import React from "react";
-import { Table } from "react-bootstrap";
-import { ResultsTable } from "./styles";
-const AppointmentResults: React.FC = () => {
+import { Dispatch, SetStateAction } from 'react';
+import { Table } from 'react-bootstrap';
+import { Appointment } from '../../types';
+import { ResultsTable } from './styles';
+
+interface AppointmentResultsProps {
+  result: Appointment[];
+  handleModalOpen: () => void;
+  setCurrentAppointment: Dispatch<SetStateAction<Appointment>>;
+}
+
+const AppointmentResults = ({
+  result,
+  handleModalOpen,
+  setCurrentAppointment,
+}: AppointmentResultsProps) => {
   return (
     <ResultsTable>
       <Table striped bordered hover responsive="lg">

@@ -6,7 +6,7 @@ import SearchAppointment from '../../../components/SearchAppointment';
 import Sidebar from '../../../components/Sidebar';
 import { api } from '../../../services/api';
 import { logout } from '../../../services/logout';
-import { SelectOption } from '../../../types';
+import { Appointment, SelectOption } from '../../../types';
 
 const Appointments: React.FC = () => {
   const [clients, setClients] = useState<SelectOption[]>([{} as SelectOption]);
@@ -14,6 +14,16 @@ const Appointments: React.FC = () => {
   const [specialists, setSpecialists] = useState<SelectOption[]>([
     {} as SelectOption,
   ]);
+
+  const [currentAppointment, setCurrentAppointment] = useState<Appointment>(
+    {} as Appointment
+  );
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
 
   const getClients = () => {
     api
@@ -87,8 +97,21 @@ const Appointments: React.FC = () => {
   return (
     <>
       <Sidebar title="Atendimentos" />
-      <SearchAppointment clients={clients} specialists={specialists} />
-      <Calendar clients={clients} specialists={specialists} />
+      <SearchAppointment
+        clients={clients}
+        specialists={specialists}
+        handleModalOpen={handleModalOpen}
+        setCurrentAppointment={setCurrentAppointment}
+      />
+      <Calendar
+        clients={clients}
+        specialists={specialists}
+        handleModalOpen={handleModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+        setCurrentAppointment={setCurrentAppointment}
+        currentAppointment={currentAppointment}
+      />
     </>
   );
 };
