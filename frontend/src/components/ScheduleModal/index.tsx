@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 import NumberFormat from 'react-number-format';
 
 import { ScheduleContainer } from './styles';
-import { Appointment } from '../../types';
+import { Appointment, SelectOption } from '../../types';
 
 interface ScheduleModalProps {
   state: boolean;
@@ -23,11 +23,8 @@ interface ScheduleModalProps {
   currentAppointment: Appointment;
   setCurrentAppointment: Dispatch<SetStateAction<Appointment>>;
   getAppointments: () => void;
-}
-
-interface SelectOption {
-  value: string;
-  label: string;
+  clients: SelectOption[];
+  specialists: SelectOption[];
 }
 
 const ScheduleModal = ({
@@ -36,90 +33,17 @@ const ScheduleModal = ({
   currentAppointment,
   setCurrentAppointment,
   getAppointments,
+  clients,
+  specialists,
 }: ScheduleModalProps) => {
   const [isLoadingAppointment, setIsLoadingAppointment] =
     useState<boolean>(false);
 
   const [needDescription, setNeedDescription] = useState<boolean>(false);
 
-  const [clients, setClients] = useState<SelectOption[]>([{} as SelectOption]);
-
-  const [specialists, setSpecialists] = useState<SelectOption[]>([
-    {} as SelectOption,
-  ]);
-
   const handleModalClose = () => {
     setState(false);
   };
-
-  const getClients = () => {
-    api
-      .get('clients', {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
-        },
-      })
-      .then(response => {
-        setClients(
-          response.data.map((client: any) => {
-            return {
-              value: client.id,
-              label: `${client.name} - CPF: ${client.cpf}`,
-            };
-          })
-        );
-      })
-      .catch(err => {
-        if (err.response.data.message === 'Invalid JWT token') {
-          logout();
-        } else {
-          Swal.fire({
-            title: 'Ops!',
-            text: 'Houve um erro ao carregar seus dados.',
-            icon: 'error',
-            confirmButtonText: 'Atualizar',
-            confirmButtonColor: '#ff312e',
-          }).then(response => window.location.reload());
-        }
-      });
-  };
-
-  const getSpecialists = () => {
-    api
-      .get('specialists', {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
-        },
-      })
-      .then(response => {
-        setSpecialists(
-          response.data.map((specialist: any) => {
-            return {
-              value: specialist.id,
-              label: `${specialist.name} - ${specialist.profession.name}`,
-            };
-          })
-        );
-      })
-      .catch(err => {
-        if (err.response.data.message === 'Invalid JWT token') {
-          logout();
-        } else {
-          Swal.fire({
-            title: 'Ops!',
-            text: 'Houve um erro ao carregar seus dados.',
-            icon: 'error',
-            confirmButtonText: 'Atualizar',
-            confirmButtonColor: '#ff312e',
-          }).then(response => window.location.reload());
-        }
-      });
-  };
-
-  useEffect(() => {
-    getClients();
-    getSpecialists();
-  }, []);
 
   const appointmentSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {

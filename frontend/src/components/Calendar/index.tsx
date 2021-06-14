@@ -5,10 +5,10 @@ import Swal from 'sweetalert2';
 
 import { api } from '../../services/api';
 import { logout } from '../../services/logout';
-import { Appointment } from '../../types';
+import { Appointment, SelectOption } from '../../types';
 
 import { CalendarContainer } from './styles';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import ScheduleModal from '../ScheduleModal';
 
@@ -22,26 +22,34 @@ interface StatusColors {
   color: string;
 }
 
-const Calendar: React.FC = () => {
+interface CalendarProps {
+  clients: SelectOption[];
+  specialists: SelectOption[];
+  handleModalOpen: () => void;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  isModalOpen: boolean;
+  setCurrentAppointment: Dispatch<SetStateAction<Appointment>>;
+  currentAppointment: Appointment;
+}
+
+const Calendar = ({
+  clients,
+  specialists,
+  handleModalOpen,
+  setIsModalOpen,
+  isModalOpen,
+  setCurrentAppointment,
+  currentAppointment,
+}: CalendarProps) => {
   const [appointments, setAppointments] = useState<CalendarAppointment[]>([
     {} as CalendarAppointment,
   ]);
-
-  const [currentAppointment, setCurrentAppointment] = useState<Appointment>(
-    {} as Appointment
-  );
-
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [statusColors] = useState<StatusColors[]>([
     { id: 'AGENDADO', color: 'var(--main-color)' },
     { id: 'REALIZADO', color: 'var(--secondary-color)' },
     { id: 'CANCELADO', color: 'var(--danger-color)' },
   ]);
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
 
   const getAppointments = () => {
     api
@@ -114,6 +122,8 @@ const Calendar: React.FC = () => {
         currentAppointment={currentAppointment}
         setCurrentAppointment={setCurrentAppointment}
         getAppointments={getAppointments}
+        clients={clients}
+        specialists={specialists}
       />
     </CalendarContainer>
   );

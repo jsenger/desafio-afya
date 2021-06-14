@@ -49,10 +49,6 @@ const ClientChart = ({ clients, setClients }: PacientChartProps) => {
       .finally(() => setIsLoading(false));
   }, [setClients]);
 
-  // const handleChartOpen = () => {
-  //   setModalIsOpen(true);
-  // };
-
   return (
     <ChartContainer>
       {isLoading

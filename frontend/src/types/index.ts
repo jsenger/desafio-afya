@@ -62,4 +62,10 @@ export interface Appointment {
     };
   };
   description?: string;
+  appointment_date?: string;
+}
+
+export interface SelectOption {
+  value: string;
+  label: string;
 }

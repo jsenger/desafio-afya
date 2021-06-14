@@ -25,7 +25,15 @@ export default function Search({ title, endpoint, setResult }: SearchProps) {
 
       setIsLoading(true);
 
-      const response = await search({ endpoint, searchQuery });
+      const response = await search({
+        endpoint,
+        params: {
+          name: searchQuery,
+          email: searchQuery,
+          cpf: searchQuery,
+          register: searchQuery,
+        },
+      });
 
       if (response.data.length) {
         setIsLoading(false);
