@@ -17,7 +17,6 @@ Vitality is an application built for medical clinics to use. Its goal is to prov
 ## Table of contents
 - [Frontend](#frontend)
 - [Backend](#backend)
-- [Screenshots](#screenshots)
 - [Design](#design)
 - [Project setup](#project-setup)
 - [Deploy](#deploy)
@@ -28,9 +27,6 @@ Vitality is an application built for medical clinics to use. Its goal is to prov
 
 ## Backend
  [Click Here!](https://github.com/jsenger/desafio-afya/tree/backend/backend)
-
-## Screenshots
-
 
 ## Design
 [Figma](https://www.figma.com/file/zEnS4T3pJ8Ctmxe6KlbDQl/Grilados-team-library?node-id=0%3A1)
