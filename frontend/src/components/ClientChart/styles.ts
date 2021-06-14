@@ -41,14 +41,19 @@ export const ChartContainer = styled.main`
         font-size: 1rem;
       }
       @media (max-width: 720px) {
-        h1 {
-          width: 50vw;
+
+        .chart-container {
+          width: 90vw;
+
+          h1 {
+          width: 90vw;
           white-space: nowrap;
           overflow: hidden;
-          text-overflow: ellipsis;
+
         }
       }
     }
+  }
 
     .chart-buttons {
       flex: 1;
@@ -57,6 +62,7 @@ export const ChartContainer = styled.main`
       gap: 1rem;
       justify-content: center;
       width: 100%;
+
       button {
         border: 0;
         border-radius: 8px;
