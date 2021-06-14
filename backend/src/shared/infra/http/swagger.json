@@ -1300,6 +1300,117 @@
                     }
                 }
             }
+        },
+        "/medical-cares/status": {
+            "patch": {
+                "tags": ["Medical Cares"],
+                "summary": "Update a medical care status",
+                "description": "Update a medical care status",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "medical_care_id": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    }   
+                                },
+                                "example": {
+                                    "medical_care_id": "9a85bb70-5a51-4dd0-938d-ff1074e5b6b4",
+                                    "status": "REALIZADO"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "appointment_date": {
+                                            "type": "Date"
+                                        },
+                                        "date": {
+                                            "type": "Date"
+                                        },
+                                        "amount": {
+                                            "type": "number"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "client_id": {
+                                            "type": "string"
+                                        },
+                                        "specialist_id": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "timestamp"
+                                        },
+                                        "updated_at": {
+                                            "type": "timestamp"
+                                        }
+                                    }   
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "status": "error",
+                                        "message": ["Medical Care not found", "You can't modify a medical care appointment status where already finished", "This medical care already canceled"]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "status": "error",
+                                        "message": ["JWT token is missing", "Invalid JWT token"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+        
     }
 }

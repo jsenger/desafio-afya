@@ -45,7 +45,7 @@ Vitality is an application built for medical clinics to use. Its goal is to prov
 ### Clone this repository:
 
 ```
-git clone git@github.com:jsenger/desafio-afya.git
+git clone git@github.com:sillasvidal/apiAtendimentos.git
 ```
 
 ### Enter frontend directory:

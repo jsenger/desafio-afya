@@ -9,12 +9,22 @@ class FakeMedicalRecordsRepository implements IMedicalRecordsRepository {
     
     public async create(data: ICreateMedicalRecordsDTO): Promise<MedicalRecords> {
         const medicalRecords = new MedicalRecords();
-
+        
         Object.assign(medicalRecords, { id: uuid() }, data);
-
+        
         this.medicalRecords.push(medicalRecords);
-
+        
         return medicalRecords;
+    }
+    
+    public async findByClientId(client_id: string): Promise<MedicalRecords | undefined> {
+        const findMedicalRecord = this.medicalRecords.find(medicalRecord => medicalRecord.client_id === client_id);
+        
+        return findMedicalRecord;
+    }
+    
+    listMedicalRecords(client_id: string): Promise<MedicalRecords | undefined> {
+        throw new Error('Method not implemented.');
     }
 }
 

@@ -52,19 +52,25 @@ class ClientsRepository implements IClientsRepository {
                     relations: ['address']
                 });
             }
+            
+            return findClient;
+        }
+        
+        async findById(id: string): Promise<Client | undefined> {
+            const findClient = await this.ormRepository.findOne(id);
+            
+            return findClient;
+        }
+        
+        async save(client: Client): Promise<Client> {
+            return this.ormRepository.save(client);
+        }
+        
+        async count(): Promise<number> {
+            const quantity = await this.ormRepository.count();
 
-        return findClient;
+            return quantity;
+        }
     }
     
-    async findById(id: string): Promise<Client | undefined> {
-        const findClient = await this.ormRepository.findOne(id);
-        
-        return findClient;
-    }
-
-    async save(client: Client): Promise<Client> {
-        return this.ormRepository.save(client);
-    }
-}
-
-export default ClientsRepository;
+    export default ClientsRepository;

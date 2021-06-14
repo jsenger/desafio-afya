@@ -15,10 +15,26 @@ medicalCaresRouter.post(
             date: Joi.date(),
             client_id: Joi.string().uuid().required(),
             specialist_id: Joi.string().uuid().required(),
-            status: Joi.string(),
-            amount: Joi.number(),
+            status: Joi.string().required(),
+            amount: Joi.number().required(),
+            description: Joi.string().allow(null).allow('').optional()
         },
     }),
     medicalCaresController.create);
+
+medicalCaresRouter.patch(
+    '/status',
+    celebrate({
+        [Segments.BODY]: {
+            medical_care_id: Joi.string().uuid().required(),
+            status: Joi.string().required()
+        }
+    }),
+    medicalCaresController.updateStatus
+)
+
+medicalCaresRouter.put('/', medicalCaresController.updateMedicalCare);
+
+medicalCaresRouter.get('/', medicalCaresController.list);
 
 export default medicalCaresRouter;

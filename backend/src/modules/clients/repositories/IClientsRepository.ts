@@ -8,4 +8,5 @@ export default interface IClientsRepository {
     listClients(data?: IListClientWithFilterDTO): Promise<Client[] | undefined>;
     findById(id: string): Promise<Client | undefined>;
     save(client: Client): Promise<Client>;
+    count(): Promise<number>;
 }

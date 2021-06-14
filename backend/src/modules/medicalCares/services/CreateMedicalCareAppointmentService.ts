@@ -1,4 +1,4 @@
-import { isBefore, startOfHour } from 'date-fns';
+import { isBefore, startOfHour, getMinutes, setMinutes } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
 import ISpecialistsRepository from '@modules/specialists/repositories/ISpecialistsRepository';
@@ -14,6 +14,7 @@ interface IRequest {
     status: 'AGENDADO' | 'REALIZADO' | 'CANCELADO';
     client_id: string;
     specialist_id: string; 
+    description: string;
 }
 
 @injectable()
@@ -29,8 +30,14 @@ class CreateMedicalCareAppointmentService {
         private specialistsRepository: ISpecialistsRepository
     ) {}
     
-    public async execute({ date, amount, status, client_id, specialist_id }: IRequest): Promise<MedicalCare> {
-        const appointmentDate = startOfHour(date);
+    public async execute({ date, amount, status, client_id, specialist_id, description }: IRequest): Promise<MedicalCare> {
+        const minutes = getMinutes(date);
+
+        if(minutes < 30) {
+            var appointmentDate = startOfHour(date);
+        } else {
+            var appointmentDate = setMinutes(startOfHour(date), 30);
+        }
 
         if (isBefore(appointmentDate, Date.now())) {
             throw new AppError("You can't create an appointment on a past date");
@@ -58,7 +65,7 @@ class CreateMedicalCareAppointmentService {
         
         const medicalCareAppointment = await this.medicalCaresRepository.create({
             appointment_date,
-            date,
+            date: appointmentDate,
             amount,
             status,
             client_id,
