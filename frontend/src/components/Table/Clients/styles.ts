@@ -27,7 +27,7 @@ export const TableContainer = styled.div`
 
   table {
     margin: 0 auto;
-    height: 300px;
+    height: auto;
 
     thead {
       border-radius: 8px;
