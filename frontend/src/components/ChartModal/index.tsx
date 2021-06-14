@@ -14,7 +14,7 @@ import {
   Col,
   Button,
   FormLabel,
-  Spinner
+  Spinner,
 } from 'react-bootstrap';
 
 import { CgMoreO } from 'react-icons/cg';
@@ -32,7 +32,9 @@ interface ChartsModalProps {
 
 interface RecordHistoric {
   dateFromLasterMedicalCare: string;
-  medicalRecordHistoric: Record[];
+  listMedicalRecords: {
+    medicalRecordHistoric: Record[];
+  };
 }
 
 const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
@@ -47,13 +49,16 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
   useEffect(() => {
     if (currentClient.id) {
       setIsLoading(true);
+
       api
         .get(`medical-records?client_id=${currentClient.id}`, {
           headers: {
             authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
           },
         })
-        .then(response => setCurrentRecordHistoric(response.data))
+        .then(response => {
+          setCurrentRecordHistoric(response.data);
+        })
         .catch(err => {
           if (err.response.data.message === 'Invalid JWT token') {
             logout();
@@ -113,22 +118,22 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
               <Col>
                 <FormLabel>Último atendimento</FormLabel>
                 {isLoading ? (
-                  <div><Spinner animation="border" /></div>
-                ) : !currentRecordHistoric.medicalRecordHistoric.length ? (
+                  <div>
+                    <Spinner animation="border" />
+                  </div>
+                ) : currentRecordHistoric.listMedicalRecords
+                    .medicalRecordHistoric &&
+                  !currentRecordHistoric.listMedicalRecords
+                    .medicalRecordHistoric.length ? (
                   <p>Nenhum atendimento cadastrado.</p>
                 ) : (
                   <Form.Control
                     type="date"
                     value={
                       currentRecordHistoric.dateFromLasterMedicalCare &&
-                      new Intl.DateTimeFormat('default', {
-                        month: '2-digit',
-                        day: '2-digit',
-                      }).format(
-                        new Date(
-                          currentRecordHistoric.dateFromLasterMedicalCare
-                        )
-                      )
+                      currentRecordHistoric.dateFromLasterMedicalCare.split(
+                        'T'
+                      )[0]
                     }
                   />
                 )}
@@ -143,46 +148,53 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
               <Accordion defaultActiveKey="0">
                 <Card>
                   {isLoading ? (
-                     <div><Spinner animation="border" /></div>
-                  ) : !currentRecordHistoric.medicalRecordHistoric.length ? (
+                    <div>
+                      <Spinner animation="border" />
+                    </div>
+                  ) : !currentRecordHistoric.listMedicalRecords
+                      .medicalRecordHistoric.length ? (
                     <div>Nenhum atendimento cadastrado.</div>
                   ) : (
-                    currentRecordHistoric.medicalRecordHistoric.map(record => (
-                      <>
-                        <Card.Header>
-                          <Accordion.Toggle
-                            as={Button}
-                            variant="success"
-                            eventKey="1"
-                          >
-                            {record.date &&
-                              new Intl.DateTimeFormat('pt-BR').format(
-                                new Date(record.date)
-                              )}
-                            <CgMoreO />
-                          </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                          <Card.Body>
-                            <h4>Especialista:</h4>
-                            <p>{record.specialist && record.specialist.name}</p>
-
-                            <h4>Hora do atendimento:</h4>
-                            <p>
+                    currentRecordHistoric.listMedicalRecords.medicalRecordHistoric.map(
+                      record => (
+                        <>
+                          <Card.Header>
+                            <Accordion.Toggle
+                              as={Button}
+                              variant="success"
+                              eventKey="1"
+                            >
                               {record.date &&
-                                new Intl.DateTimeFormat('default', {
-                                  hour: 'numeric',
-                                  minute: 'numeric',
-                                  hour12: false,
-                                }).format(new Date(record.date))}
-                            </p>
+                                new Intl.DateTimeFormat('pt-BR').format(
+                                  new Date(record.date)
+                                )}
+                              <CgMoreO />
+                            </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="1">
+                            <Card.Body>
+                              <h4>Especialista:</h4>
+                              <p>
+                                {record.specialist && record.specialist.name}
+                              </p>
 
-                            <h4>Descrição:</h4>
-                            <p>{record.description}</p>
-                          </Card.Body>
-                        </Accordion.Collapse>
-                      </>
-                    ))
+                              <h4>Hora do atendimento:</h4>
+                              <p>
+                                {record.date &&
+                                  new Intl.DateTimeFormat('default', {
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    hour12: false,
+                                  }).format(new Date(record.date))}
+                              </p>
+
+                              <h4>Descrição:</h4>
+                              <p>{record.description}</p>
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </>
+                      )
+                    )
                   )}
                 </Card>
               </Accordion>
