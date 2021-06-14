@@ -16,12 +16,9 @@ Vitality is an application built for medical clinics to use. Its goal is to prov
 
 ## Table of contents
 
-- [Screenshots](#screenshots)
 - [Folder structure](#folder-structure)
 - [Dependencies](#dependencies)
 - [Project setup](#project-setup)
-
-## Screenshots
 
 ## Folder structure
 
