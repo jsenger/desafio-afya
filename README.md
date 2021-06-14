@@ -1,5 +1,3 @@
-# desafio-afya
-
 # Vitality 
 
 <div align="center">
