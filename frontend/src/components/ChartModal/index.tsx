@@ -14,6 +14,7 @@ import {
   Col,
   Button,
   FormLabel,
+  Spinner
 } from 'react-bootstrap';
 
 import { CgMoreO } from 'react-icons/cg';
@@ -112,7 +113,7 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
               <Col>
                 <FormLabel>Último atendimento</FormLabel>
                 {isLoading ? (
-                  <div>Carregando...</div>
+                  <div><Spinner animation="border" /></div>
                 ) : !currentRecordHistoric.medicalRecordHistoric.length ? (
                   <p>Nenhum atendimento cadastrado.</p>
                 ) : (
@@ -142,7 +143,7 @@ const ChartModal = ({ state, setState, currentClient }: ChartsModalProps) => {
               <Accordion defaultActiveKey="0">
                 <Card>
                   {isLoading ? (
-                    <div>Carregando...</div>
+                     <div><Spinner animation="border" /></div>
                   ) : !currentRecordHistoric.medicalRecordHistoric.length ? (
                     <div>Nenhum atendimento cadastrado.</div>
                   ) : (

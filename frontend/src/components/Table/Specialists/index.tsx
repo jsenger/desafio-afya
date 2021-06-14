@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Spinner, Table } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { api } from '../../../services/api';
 import { logout } from '../../../services/logout';
@@ -69,7 +69,7 @@ const SpecialistsTable = ({
         </thead>
         <tbody>
           {isLoading
-            ? 'Carregando...'
+            ? <div>Carregando...<Spinner animation="border" /></div>
             : !Object.keys(specialists[0]).length
             ? 'Nenhum especialista cadastrado.'
             : specialists.map((specialist, index) => (
