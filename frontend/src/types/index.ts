@@ -17,6 +17,7 @@ export interface Client {
   email: string;
   address: Address;
   new: boolean;
+  created_at?: string;
 }
 
 export interface Profession {
@@ -32,6 +33,14 @@ export interface Specialist {
   email: string;
   profession_name: string;
   address: Address;
+}
+
+export interface Record {
+  date: string;
+  description: string;
+  specialist: {
+    name: string;
+  };
 }
 
 export interface Appointment {
@@ -50,7 +59,13 @@ export interface Appointment {
     name: string;
     profession?: {
       name: string;
-    }
-  }
+    };
+  };
   description?: string;
+  appointment_date?: string;
+}
+
+export interface SelectOption {
+  value: string;
+  label: string;
 }

@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-    },
-    parentElement: {
       position: "relative",
     },
     appBar: {
@@ -106,7 +104,7 @@ export default function Sidebar(props: SideBarProps) {
   };
 
   return (
-    <div className={classes.parentElement}>
+    <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton

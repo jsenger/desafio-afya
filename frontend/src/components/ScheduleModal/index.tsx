@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 import NumberFormat from 'react-number-format';
 
 import { ScheduleContainer } from './styles';
-import { Appointment } from '../../types';
+import { Appointment, SelectOption } from '../../types';
 
 interface ScheduleModalProps {
   state: boolean;
@@ -23,11 +23,8 @@ interface ScheduleModalProps {
   currentAppointment: Appointment;
   setCurrentAppointment: Dispatch<SetStateAction<Appointment>>;
   getAppointments: () => void;
-}
-
-interface SelectOption {
-  value: string;
-  label: string;
+  clients: SelectOption[];
+  specialists: SelectOption[];
 }
 
 const ScheduleModal = ({
@@ -36,88 +33,17 @@ const ScheduleModal = ({
   currentAppointment,
   setCurrentAppointment,
   getAppointments,
+  clients,
+  specialists,
 }: ScheduleModalProps) => {
   const [isLoadingAppointment, setIsLoadingAppointment] =
     useState<boolean>(false);
 
-  const [clients, setClients] = useState<SelectOption[]>([{} as SelectOption]);
-
-  const [specialists, setSpecialists] = useState<SelectOption[]>([
-    {} as SelectOption,
-  ]);
+  const [needDescription, setNeedDescription] = useState<boolean>(false);
 
   const handleModalClose = () => {
     setState(false);
   };
-
-  const getClients = () => {
-    api
-      .get('clients', {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
-        },
-      })
-      .then(response => {
-        setClients(
-          response.data.map((client: any) => {
-            return {
-              value: client.id,
-              label: `${client.name} - CPF: ${client.cpf}`,
-            };
-          })
-        );
-      })
-      .catch(err => {
-        if (err.response.data.message === 'Invalid JWT token') {
-          logout();
-        } else {
-          Swal.fire({
-            title: 'Ops!',
-            text: 'Houve um erro ao carregar seus dados.',
-            icon: 'error',
-            confirmButtonText: 'Atualizar',
-            confirmButtonColor: '#ff312e',
-          }).then(response => window.location.reload());
-        }
-      });
-  };
-
-  const getSpecialists = () => {
-    api
-      .get('specialists', {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('@tokenVitality')}`,
-        },
-      })
-      .then(response => {
-        setSpecialists(
-          response.data.map((specialist: any) => {
-            return {
-              value: specialist.id,
-              label: `${specialist.name} - ${specialist.profession.name}`,
-            };
-          })
-        );
-      })
-      .catch(err => {
-        if (err.response.data.message === 'Invalid JWT token') {
-          logout();
-        } else {
-          Swal.fire({
-            title: 'Ops!',
-            text: 'Houve um erro ao carregar seus dados.',
-            icon: 'error',
-            confirmButtonText: 'Atualizar',
-            confirmButtonColor: '#ff312e',
-          }).then(response => window.location.reload());
-        }
-      });
-  };
-
-  useEffect(() => {
-    getClients();
-    getSpecialists();
-  }, []);
 
   const appointmentSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -131,6 +57,7 @@ const ScheduleModal = ({
         specialist_id: currentAppointment.specialist_id,
         description: currentAppointment.description || '',
       };
+      console.log(appointment);
 
       e.preventDefault();
 
@@ -228,6 +155,10 @@ const ScheduleModal = ({
                   errorMessage =
                     'Já existe um atendimento com o especialista escolhido neste horário.';
                   break;
+                case "You can't modify a medical care appointment status where already finished":
+                  errorMessage =
+                    'Não é possível alterar atendimentos já realizados.';
+                  break;
                 case 'Specialist not found':
                   errorMessage = 'Especialista não encontrado.';
                   break;
@@ -281,7 +212,10 @@ const ScheduleModal = ({
               className="select"
               name="name"
               id="name"
-              disabled={isLoadingAppointment}
+              isDisabled={
+                isLoadingAppointment ||
+                (currentAppointment.status !== 'AGENDADO' && !needDescription)
+              }
               options={clients}
               required
               value={{
@@ -310,7 +244,10 @@ const ScheduleModal = ({
                 type="date"
                 name="date"
                 id="date"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={
                   currentAppointment.date
@@ -342,7 +279,10 @@ const ScheduleModal = ({
                 type="time"
                 name="time"
                 id="time"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={
                   currentAppointment.date
@@ -373,7 +313,10 @@ const ScheduleModal = ({
                 className="form-control"
                 name="amount"
                 id="amount"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={currentAppointment.amount || ''}
                 thousandSeparator={'.'}
@@ -398,15 +341,25 @@ const ScheduleModal = ({
                 className="form-control"
                 name="status"
                 id="status"
-                disabled={isLoadingAppointment}
+                disabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 required
                 value={currentAppointment.status || ''}
-                onChange={e =>
+                onChange={e => {
+                  if (
+                    currentAppointment.status === 'AGENDADO' &&
+                    e.target.value === 'REALIZADO'
+                  )
+                    setNeedDescription(true);
+                  else setNeedDescription(false);
+
                   setCurrentAppointment({
                     ...currentAppointment,
                     status: e.target.value,
-                  })
-                }
+                  });
+                }}
               >
                 <option value="AGENDADO">Agendado</option>
                 <option value="REALIZADO">Realizado</option>
@@ -420,7 +373,10 @@ const ScheduleModal = ({
                 className="select"
                 name="specialists"
                 id="specialists"
-                disabled={isLoadingAppointment}
+                isDisabled={
+                  isLoadingAppointment ||
+                  (currentAppointment.status !== 'AGENDADO' && !needDescription)
+                }
                 options={specialists}
                 required
                 value={{
@@ -449,8 +405,13 @@ const ScheduleModal = ({
             name="description"
             id="description"
             value={currentAppointment.description || ''}
-            disabled={isLoadingAppointment}
+            disabled={isLoadingAppointment || !needDescription}
             required={currentAppointment.status === 'REALIZADO'}
+            placeholder={
+              currentAppointment.status === 'AGENDADO'
+                ? 'Altere o status para realizado para editar a descrição'
+                : ''
+            }
             onChange={e =>
               setCurrentAppointment({
                 ...currentAppointment,

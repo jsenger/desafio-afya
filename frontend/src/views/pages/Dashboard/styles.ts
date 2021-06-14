@@ -10,4 +10,9 @@ export const DashboardContainer = styled.main`
     font-weight: 600;
     padding: 1rem;
   }
+
+  .spinner-border {
+    width: 5rem;
+    height: 5rem;
+  }
 `;

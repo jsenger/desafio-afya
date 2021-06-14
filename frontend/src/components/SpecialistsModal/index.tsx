@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { ModalContainer } from '../../assets/ModalStyles';
 import { api } from '../../services/api';
 import { logout } from '../../services/logout';
-import { Address, Specialist, Profession } from '../../types';
+import { Address, Specialist, Profession, SelectOption } from '../../types';
 import AddressForm from '../AddressForm';
 import Creatable from 'react-select/creatable';
 
@@ -24,11 +24,6 @@ interface SpecialistModalProps {
   setCurrentSpecialist: Dispatch<SetStateAction<Specialist>>;
 }
 
-interface ProfessionOption {
-  value: string;
-  label: string;
-}
-
 const SpecialistsModal = ({
   state,
   setState,
@@ -38,8 +33,8 @@ const SpecialistsModal = ({
   setCurrentSpecialist,
 }: SpecialistModalProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [professions, setProfessions] = useState<ProfessionOption[]>([
-    {} as ProfessionOption,
+  const [professions, setProfessions] = useState<SelectOption[]>([
+    {} as SelectOption,
   ]);
 
   const handleModalClose = () => {
@@ -47,8 +42,8 @@ const SpecialistsModal = ({
   };
 
   const setAddress = (address: Address) => {
-    setCurrentSpecialist({...currentSpecialist, address})
-  }
+    setCurrentSpecialist({ ...currentSpecialist, address });
+  };
 
   const specialistSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -260,7 +255,8 @@ const SpecialistsModal = ({
                       profession_name: e?.value || '',
                     });
                   }}
-                  formatCreateLabel={(label: string) => `Criar ${label}`}styles={{
+                  formatCreateLabel={(label: string) => `Criar ${label}`}
+                  styles={{
                     option: (styles, { isSelected }) => ({
                       ...styles,
                       color: isSelected ? '#fff' : '#495057',
